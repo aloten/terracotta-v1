@@ -1,0 +1,4 @@
+{
+  "mongoURI": "mongodb+srv://aidan:aidan@winedatabase.ye7yx.mongodb.net/terracotta-v1?retryWrites=true&w=majority",
+  "jwtSecret": "secret"
+}

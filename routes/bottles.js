@@ -1,0 +1,115 @@
+const express = require('express');
+const router = express.Router();
+const { check, validationResult } = require('express-validator');
+const auth = require('../middleware/auth');
+const {
+  findByIdAndUpdate,
+  findById,
+  findByIdAndRemove,
+} = require('../models/Bottle');
+
+const Bottle = require('../models/Bottle');
+
+// @route     POST api/bottles
+// @desc      Add a bottle
+// @access    Private
+router.post(
+  '/',
+  [auth, [check('product', 'Product is required').not().isEmpty()]],
+  async (req, res) => {
+    const { product, vintage, countryCode, status } = req.body;
+
+    try {
+      const newBottle = new Bottle({
+        user: req.user.id,
+        product,
+        vintage,
+        countryCode,
+        status,
+      });
+
+      const bottle = await newBottle.save();
+      res.json(bottle);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Server Error');
+    }
+  }
+);
+
+// @route     GET api/bottles
+// @desc      Get all the user's bottles
+// @access    Private
+router.get('/', auth, async (req, res) => {
+  try {
+    const bottles = await Bottle.find({ user: req.user.id }).sort({ date: -1 });
+    res.json(bottles);
+  } catch (error) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
+// @route     PUT api/bottles/:id
+// @desc      Update bottle
+// @access    Private
+router.put('/:id', auth, async (req, res) => {
+  const { product, vintage, countryCode, status } = req.body;
+
+  const bottleFields = {};
+  if (product) bottleFields.product = product;
+  if (vintage) bottleFields.vintage = vintage;
+  if (countryCode) bottleFields.countryCode = countryCode;
+  if (status) bottleFields.status = status;
+
+  try {
+    let bottle = await Bottle.findById(req.params.id);
+
+    if (!bottle) return res.status(404).json({ msg: 'Bottle not found' });
+
+    // Make sure user owns bottle
+    if (bottle.user.toString() !== req.user.id) {
+      return res.status(400).json({ msg: 'Not authorized to edit' });
+    }
+
+    bottle = await findByIdAndUpdate(
+      req.params.id,
+      { $set: bottleFields },
+      { new: true }
+    );
+
+    res.json(bottle);
+  } catch (error) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
+// @route     DELETE api/bottles/:id
+// @desc      Delete bottle
+// @access    Private
+router.delete(
+  '/:id',
+  auth,
+  check('id', 'Bottle id is required').not().isEmpty(),
+  async (req, res) => {
+    try {
+      let bottle = await Bottle.findById(req.params.id);
+
+      if (!bottle) return res.status(404).json({ msg: 'Bottle not found' });
+
+      if (bottle.user.toString() !== req.user.id) {
+        return res.status(401).json({ msg: 'User not authorized' });
+      }
+
+      bottle = await Bottle.findByIdAndRemove(req.params.id);
+
+      res.send(bottle);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Server Error');
+    }
+  }
+);
+
+module.exports = router;
