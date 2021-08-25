@@ -3,10 +3,12 @@ const mongoose = require('mongoose');
 const connectDB = require('./config/db');
 const morgan = require('morgan');
 
+//Connect Database
 connectDB();
 
 const app = express();
 
+// Init middleware
 app.use(express.json({ extended: false }));
 
 // HTTP request logger

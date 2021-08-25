@@ -10,11 +10,28 @@ const bottleSchema = new mongoose.Schema({
     required: true,
   },
   vintage: {
+    type: String,
+  },
+  varietal: {
+    type: String,
+  },
+  count: {
     type: Number,
-    default: 'N/A',
+  },
+  price: {
+    type: Number,
+  },
+  totalCost: {
+    type: Number,
+  },
+  costPerBottle: {
+    type: Number,
   },
   countryCode: {
     type: String,
+  },
+  size: {
+    type: Number,
   },
   status: {
     type: String,

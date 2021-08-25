@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const config = require('config');
 const jwt = require('jsonwebtoken');
-const bcryptjs = require('bcryptjs');
+const bcrypt = require('bcryptjs');
 const { check, validationResult } = require('express-validator');
 const auth = require('../middleware/auth');
 
@@ -20,7 +20,9 @@ router.post(
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      return res
+        .status(400)
+        .json({ msg: 'Please enter valid email and password' });
     }
 
     const { email, password } = req.body;
@@ -30,15 +32,17 @@ router.post(
       let user = await User.findOne({ email: email });
 
       if (user == null) {
-        return res.status(400).send('No such user found');
+        return res
+          .status(400)
+          .json({ msg: "The email you entered isn't connected to an account" });
       }
 
       // compare password to hash
-      await bcryptjs.compare(password, user.password, (error, result) => {
-        if (!result) {
-          res.status(401).send('Invalid Credentials');
-        }
-      });
+      const isMatch = await bcrypt.compare(password, user.password);
+
+      if (!isMatch) {
+        return res.status(400).json({ msg: 'Invalid Credentials' });
+      }
 
       const payload = {
         user: {
@@ -59,7 +63,7 @@ router.post(
         }
       );
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
       res.status(500).send('Server Error');
     }
   }

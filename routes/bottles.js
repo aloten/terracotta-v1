@@ -2,11 +2,6 @@ const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
 const auth = require('../middleware/auth');
-const {
-  findByIdAndUpdate,
-  findById,
-  findByIdAndRemove,
-} = require('../models/Bottle');
 
 const Bottle = require('../models/Bottle');
 
@@ -17,13 +12,33 @@ router.post(
   '/',
   [auth, [check('product', 'Product is required').not().isEmpty()]],
   async (req, res) => {
-    const { product, vintage, countryCode, status } = req.body;
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const {
+      product,
+      vintage,
+      varietal,
+      count,
+      price,
+      costPerBottle,
+      totalCost,
+      countryCode,
+      status,
+    } = req.body;
 
     try {
       const newBottle = new Bottle({
         user: req.user.id,
         product,
         vintage,
+        varietal,
+        count,
+        price,
+        costPerBottle,
+        totalCost,
         countryCode,
         status,
       });
@@ -45,7 +60,7 @@ router.get('/', auth, async (req, res) => {
     const bottles = await Bottle.find({ user: req.user.id }).sort({ date: -1 });
     res.json(bottles);
   } catch (error) {
-    console.error(err.message);
+    console.error(error.message);
     res.status(500).send('Server Error');
   }
 });
@@ -54,11 +69,28 @@ router.get('/', auth, async (req, res) => {
 // @desc      Update bottle
 // @access    Private
 router.put('/:id', auth, async (req, res) => {
-  const { product, vintage, countryCode, status } = req.body;
+  const {
+    product,
+    vintage,
+    varietal,
+    count,
+    price,
+    costPerBottle,
+    totalCost,
+    size,
+    countryCode,
+    status,
+  } = req.body;
 
   const bottleFields = {};
   if (product) bottleFields.product = product;
   if (vintage) bottleFields.vintage = vintage;
+  if (varietal) bottleFields.varietal = varietal;
+  if (count) bottleFields.count = count;
+  if (price) bottleFields.price = price;
+  if (costPerBottle) bottleFields.costPerBottle = costPerBottle;
+  if (totalCost) bottleFields.totalCost = totalCost;
+  if (size) bottleFields.size = size;
   if (countryCode) bottleFields.countryCode = countryCode;
   if (status) bottleFields.status = status;
 
@@ -72,7 +104,7 @@ router.put('/:id', auth, async (req, res) => {
       return res.status(400).json({ msg: 'Not authorized to edit' });
     }
 
-    bottle = await findByIdAndUpdate(
+    bottle = await Bottle.findByIdAndUpdate(
       req.params.id,
       { $set: bottleFields },
       { new: true }
@@ -80,7 +112,7 @@ router.put('/:id', auth, async (req, res) => {
 
     res.json(bottle);
   } catch (error) {
-    console.error(err.message);
+    console.error(error.message);
     res.status(500).send('Server Error');
   }
 });
