@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const connectDB = require('./config/db');
-// const morgan = require('morgan');
+const morgan = require('morgan');
 const path = require('path');
 
 //Connect Database
@@ -13,7 +13,7 @@ const app = express();
 app.use(express.json({ extended: false }));
 
 // HTTP request logger
-// app.use(morgan('tiny'));
+app.use(morgan('tiny'));
 
 // Define routes
 app.use('/api/register', require('./routes/register'));

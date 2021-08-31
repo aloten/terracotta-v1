@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
-import './flag-icon-css-master/flag-icon-css-master/css/flag-icon.css';
+import '../../data/flag-icon-css-master/css/flag-icon.css';
 import BottleContext from '../../context/bottles/BottleContext';
 import PropTypes from 'prop-types';
-const countryData = require('./form/data/country-codes');
+import countryData from '../../data/country-codes';
 
 const BottleItem = ({ bottle }) => {
   const bottleContext = useContext(BottleContext);
@@ -14,7 +14,7 @@ const BottleItem = ({ bottle }) => {
     product,
     vintage,
     varietal,
-    count,
+    quantity,
     price,
     costPerBottle,
     totalCost,
@@ -87,9 +87,9 @@ const BottleItem = ({ bottle }) => {
             <strong>Book return:</strong> {(price / costPerBottle) * 100}%
           </li>
         )}
-        {count && (
+        {quantity && (
           <li>
-            <strong>Count:</strong> {count}
+            <strong>Quantity:</strong> {quantity}
           </li>
         )}
         {totalCost && (
@@ -97,14 +97,14 @@ const BottleItem = ({ bottle }) => {
             <strong>Total cost:</strong> ${totalCost}
           </li>
         )}
-        {count && price && (
+        {quantity && price && (
           <li>
-            <strong>Total value:</strong> ${count * price}
+            <strong>Total value:</strong> ${quantity * price}
           </li>
         )}
-        {count && price && (
+        {quantity && price && (
           <li>
-            <strong>Book profit/loss:</strong> ${price * count - totalCost}
+            <strong>Book profit/loss:</strong> ${price * quantity - totalCost}
           </li>
         )}
       </ul>

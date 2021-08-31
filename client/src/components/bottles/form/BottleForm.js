@@ -2,9 +2,9 @@ import React, { useState, useContext, useEffect } from 'react';
 import BottleContext from '../../../context/bottles/BottleContext';
 import AlertContext from '../../../context/alert/AlertContext';
 import CountryItem from './CountryItem';
-import countryData from './data/country-codes';
+import countryData from '../../../data/country-codes';
 import VarietalItem from './VarietalItem';
-import varietalData from './data/wine-varietals';
+import varietalData from '../../../data/wine-varietals';
 
 const BottleForm = () => {
   const bottleContext = useContext(BottleContext);
@@ -20,8 +20,15 @@ const BottleForm = () => {
       setBottle({
         product: '',
         vintage: '',
+        producer: '',
+        region: '',
+        country: '',
         varietal: '',
-        count: '',
+        style: '',
+        sugar: '',
+        bubbles: '',
+        criticsScore: '',
+        quantity: '',
         price: '',
         totalCost: '',
         costPerBottle: '',
@@ -35,8 +42,15 @@ const BottleForm = () => {
   const [bottle, setBottle] = useState({
     product: '',
     vintage: '',
+    producer: '',
+    region: '',
+    country: '',
     varietal: '',
-    count: '',
+    style: '',
+    sugar: '',
+    bubbles: '',
+    criticsScore: '',
+    quantity: '',
     price: '',
     totalCost: '',
     costPerBottle: '',
@@ -49,7 +63,13 @@ const BottleForm = () => {
     product,
     vintage,
     varietal,
-    count,
+    region,
+    country,
+    style,
+    sugar,
+    bubbles,
+    criticsScore,
+    quantity,
     price,
     totalCost,
     costPerBottle,
@@ -63,22 +83,22 @@ const BottleForm = () => {
       setBottle({
         ...bottle,
         totalCost: e.target.value,
-        costPerBottle: e.target.value / count,
+        costPerBottle: e.target.value / quantity,
       });
     } else if (e.target.name === 'costPerBottle') {
       setBottle({
         ...bottle,
         costPerBottle: e.target.value,
-        totalCost: e.target.value * count,
+        totalCost: e.target.value * quantity,
       });
     } else if (
-      e.target.name === 'count' &&
+      e.target.name === 'quantity' &&
       (costPerBottle > 0 || totalCost > 0)
     ) {
       if (costPerBottle > 0) {
         setBottle({
           ...bottle,
-          count: e.target.value,
+          quantity: e.target.value,
           totalCost: e.target.value * costPerBottle,
         });
       } else {
@@ -112,8 +132,8 @@ const BottleForm = () => {
   };
 
   return (
-    <form onSubmit={onSubmit}>
-      <h2 className='text-primary'>{current ? 'Edit Bottle' : 'Add Bottle'}</h2>
+    <form class='bottle-form' onSubmit={onSubmit}>
+      <h2 className='text-primary'>Edit Bottle</h2>
       <label htmlFor='product'>Product</label>
       <br></br>
       <input
@@ -128,12 +148,52 @@ const BottleForm = () => {
       <label htmlFor='vintage'>Vintage</label>
       <br></br>
       <input
-        // Need to make this a number
-        type='text'
+        type='number'
         id='vintage'
         name='vintage'
         value={vintage}
         placeholder='YYYY'
+        onChange={onChange}
+      />
+      <br></br>
+      <label htmlFor='region'>Region</label>
+      <br></br>
+      <input
+        type='text'
+        id='region'
+        name='region'
+        value={region}
+        placeholder='Region'
+        onChange={onChange}
+      />
+      <label htmlFor='style'>Style</label>
+      <br></br>
+      <input
+        type='text'
+        id='style'
+        name='style'
+        value={style}
+        placeholder='Style'
+        onChange={onChange}
+      />
+      <label htmlFor='sugar'>Sugar</label>
+      <br></br>
+      <input
+        type='text'
+        id='sugar'
+        name='sugar'
+        value={sugar}
+        placeholder='Sugar'
+        onChange={onChange}
+      />
+      <label htmlFor='bubbles'>Bubbles</label>
+      <br></br>
+      <input
+        type='text'
+        id='bubbles'
+        name='bubbles'
+        value={bubbles}
+        placeholder='Bubbles'
         onChange={onChange}
       />
       <br></br>
@@ -148,25 +208,33 @@ const BottleForm = () => {
         onChange={onChange}
       />
       <br></br>
-      <label htmlFor='count'>Count</label>
+      <label htmlFor='quantity'>Quantity</label>
       <br></br>
       <input
         type='number'
-        id='count'
-        name='count'
-        value={count}
-        placeholder='Count'
+        id='quantity'
+        name='quantity'
+        value={quantity}
+        placeholder='Quantity'
         onChange={onChange}
       />
       <br></br>
       <label htmlFor='size'>Size</label>
       <br></br>
       <input
-        type='number'
+        type='text'
         id='size'
         name='size'
         value={size}
-        placeholder='Size in mL'
+        placeholder='Size, specify units'
+        onChange={onChange}
+      />
+      <input
+        type='text'
+        id='criticsScore'
+        name='criticsScore'
+        value={criticsScore}
+        placeholder='Critics scores'
         onChange={onChange}
       />
       <br></br>
@@ -191,7 +259,12 @@ const BottleForm = () => {
         placeholder='Cost per bottle $'
         onChange={onChange}
       />
-      <select name='varietal' value={varietal} onChange={onChange}>
+      <select
+        id='varietal'
+        name='varietal'
+        value={varietal}
+        onChange={onChange}
+      >
         <option value='' disabled>
           Please choose a varietal
         </option>
@@ -200,7 +273,12 @@ const BottleForm = () => {
         ))}
       </select>
       <br></br>
-      <select name='countryCode' value={countryCode} onChange={onChange}>
+      <select
+        id='countryCode'
+        name='countryCode'
+        value={countryCode}
+        onChange={onChange}
+      >
         <option value='' disabled>
           Please choose a country
         </option>
@@ -227,7 +305,7 @@ const BottleForm = () => {
       <div>
         <input
           type='submit'
-          value={current ? 'Update Bottle' : 'Add Bottle'}
+          value={'Save Bottle'}
           className='btn btn-primary btn-block'
         />
       </div>

@@ -1,0 +1,17 @@
+[
+  {
+    "NEXT": "handling form after addBottleBySearch",
+    "progress/notes": ""
+  },
+  {
+    "issue": "eed to take care of Autocomplete errors in addBottleBySearch and probably BottleForm"
+  },
+  {
+    "issue": "No valid auth Alert is set off on initial loading app route '/' "
+  },
+  { "issue": "Change vintage input to type='number and edit across stack" },
+  {
+    "issue": "When searching wine cellar by country, country codes are used as values instead of country names. e.g. 'fr' instead of 'france'"
+  },
+  { "issue": "Rearrange database of bottles, users" }
+]

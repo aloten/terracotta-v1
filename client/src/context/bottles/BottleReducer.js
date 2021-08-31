@@ -22,6 +22,7 @@ const BottleReducer = (state, action) => {
       return {
         ...state,
         bottles: [action.payload, ...state.bottles],
+        current: action.payload, // to update data in form with _id
       };
     case UPDATE_BOTTLE:
       return {

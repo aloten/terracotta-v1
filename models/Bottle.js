@@ -10,12 +10,42 @@ const bottleSchema = new mongoose.Schema({
     required: true,
   },
   vintage: {
-    type: String,
+    type: Number,
   },
   varietal: {
     type: String,
   },
-  count: {
+  style: {
+    type: String,
+  },
+  sugar: {
+    type: String,
+  },
+  bubbles: {
+    type: String,
+  },
+  region: {
+    type: String,
+  },
+  country: {
+    type: String,
+  },
+  countryCode: {
+    type: String,
+  },
+  criticsScore: {
+    type: String,
+  },
+  size: {
+    type: String,
+  },
+  dateOrdered: {
+    type: Date,
+  },
+  dateReceived: {
+    type: Date,
+  },
+  quantity: {
     type: Number,
   },
   price: {
@@ -27,17 +57,23 @@ const bottleSchema = new mongoose.Schema({
   costPerBottle: {
     type: Number,
   },
-  countryCode: {
+  vendor: {
     type: String,
   },
-  size: {
+  location: {
+    type: String,
+  },
+  logNotes: {
+    type: String,
+  },
+  alcoholPct: {
     type: Number,
   },
   status: {
     type: String,
     default: 'unopened',
   },
-  date: {
+  dateAdded: {
     type: Date,
     default: Date.now,
   },

@@ -50,7 +50,7 @@ const Register = () => {
   };
 
   return (
-    <div className='form-container'>
+    <div className='auth-form-container'>
       <h1>
         Account <span className='text-primary'>Register</span>
       </h1>

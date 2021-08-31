@@ -21,11 +21,24 @@ router.post(
       product,
       vintage,
       varietal,
-      count,
-      price,
-      costPerBottle,
-      totalCost,
+      style,
+      sugar,
+      bubbles,
+      region,
+      country,
       countryCode,
+      criticsScore,
+      size,
+      dateOrdered,
+      dateReceived,
+      quantity,
+      price,
+      totalCost,
+      costPerBottle,
+      vendor,
+      location,
+      logNotes,
+      alcoholPct,
       status,
     } = req.body;
 
@@ -35,11 +48,24 @@ router.post(
         product,
         vintage,
         varietal,
-        count,
-        price,
-        costPerBottle,
-        totalCost,
+        style,
+        sugar,
+        bubbles,
+        region,
+        country,
         countryCode,
+        criticsScore,
+        size,
+        dateOrdered,
+        dateReceived,
+        quantity,
+        price,
+        totalCost,
+        costPerBottle,
+        vendor,
+        location,
+        logNotes,
+        alcoholPct,
         status,
       });
 
@@ -73,12 +99,24 @@ router.put('/:id', auth, async (req, res) => {
     product,
     vintage,
     varietal,
-    count,
-    price,
-    costPerBottle,
-    totalCost,
-    size,
+    style,
+    sugar,
+    bubbles,
+    region,
+    country,
     countryCode,
+    criticsScore,
+    size,
+    dateOrdered,
+    dateReceived,
+    quantity,
+    price,
+    totalCost,
+    costPerBottle,
+    vendor,
+    location,
+    logNotes,
+    alcoholPct,
     status,
   } = req.body;
 
@@ -86,12 +124,24 @@ router.put('/:id', auth, async (req, res) => {
   if (product) bottleFields.product = product;
   if (vintage) bottleFields.vintage = vintage;
   if (varietal) bottleFields.varietal = varietal;
-  if (count) bottleFields.count = count;
-  if (price) bottleFields.price = price;
-  if (costPerBottle) bottleFields.costPerBottle = costPerBottle;
-  if (totalCost) bottleFields.totalCost = totalCost;
-  if (size) bottleFields.size = size;
+  if (style) bottleFields.style = style;
+  if (sugar) bottleFields.sugar = sugar;
+  if (bubbles) bottleFields.bubbles = bubbles;
+  if (region) bottleFields.region = region;
+  if (country) bottleFields.country = country;
   if (countryCode) bottleFields.countryCode = countryCode;
+  if (criticsScore) bottleFields.criticsScore = criticsScore;
+  if (size) bottleFields.size = size;
+  if (dateOrdered) bottleFields.dateOrdered = dateOrdered;
+  if (dateReceived) bottleFields.dateReceived = dateReceived;
+  if (quantity) bottleFields.quantity = quantity;
+  if (price) bottleFields.price = price;
+  if (totalCost) bottleFields.totalCost = totalCost;
+  if (costPerBottle) bottleFields.costPerBottle = costPerBottle;
+  if (vendor) bottleFields.vendor = vendor;
+  if (location) bottleFields.location = location;
+  if (logNotes) bottleFields.logNotes = logNotes;
+  if (alcoholPct) bottleFields.alcoholPct = alcoholPct;
   if (status) bottleFields.status = status;
 
   try {
