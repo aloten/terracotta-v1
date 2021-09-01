@@ -4,7 +4,7 @@ import BottleContext from '../../context/bottles/BottleContext';
 const BottleFilter = () => {
   const bottleContext = useContext(BottleContext);
 
-  const { filtered, filterBottles, clearFilter } = bottleContext;
+  const { bottles, filtered, filterBottles, clearFilter } = bottleContext;
 
   const text = useRef('');
 
@@ -22,9 +22,11 @@ const BottleFilter = () => {
     }
   };
 
+  const visible = bottles !== null && bottles.length > 0;
+
   return (
     <form>
-      <input type='text' ref={text} placeholder='search' onChange={onChange} />
+      <input type='search' style={{display: visible?'initial':'none'}} ref={text} placeholder='Search' onChange={onChange} />
     </form>
   );
 };
