@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import BottleContext from '../../../context/bottles/BottleContext';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
-import uniqueBottles from '../../../data/uniqueBottles.json';
+import uniqueBottles from '../../../data/uniqueBottlesSmall.json';
 
 const AddBottleBySearch = () => {
   const bottleContext = useContext(BottleContext);

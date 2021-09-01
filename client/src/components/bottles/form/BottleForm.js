@@ -1,10 +1,11 @@
 import React, { useState, useContext, useEffect } from 'react';
 import BottleContext from '../../../context/bottles/BottleContext';
 import AlertContext from '../../../context/alert/AlertContext';
+
 import CountryItem from './CountryItem';
 import countryData from '../../../data/country-codes';
 import VarietalItem from './VarietalItem';
-import varietalData from '../../../data/wine-varietals';
+import varietalData from '../../../data/varietals';
 
 const BottleForm = () => {
   const bottleContext = useContext(BottleContext);

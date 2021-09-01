@@ -1,7 +1,11 @@
 [
   {
-    "NEXT": "handling form after addBottleBySearch",
-    "progress/notes": ""
+    "NEXT": "handling form after addBottleBySearch--figuring out styling",
+    "progress/notes": "very stuck on styling the form and whole app"
+  },
+  {
+    "issue": "Bottle search doesn't work as of now",
+    "branch": "materialUISweep & addBottleBySearch"
   },
   {
     "issue": "eed to take care of Autocomplete errors in addBottleBySearch and probably BottleForm"
