@@ -12,7 +12,7 @@ const Home = () => {
 
   return (
     <div className='grid-2'>
-      <div>{current ? <TestForm /> : <AddBottleBySearch />}</div>
+      <TestForm />
 
       {/* <div>{current ? <BottleForm /> : <AddBottleBySearch />}</div> */}
       <div>

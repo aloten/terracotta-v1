@@ -1,49 +1,10 @@
-import React, { useState, useContext, useEffect } from 'react';
-import BottleContext from '../../../context/bottles/BottleContext';
-import AlertContext from '../../../context/alert/AlertContext';
-
-import CountryItem from './CountryItem';
-import countryData from '../../../data/country-codes';
-import VarietalItem from './VarietalItem';
-import varietalData from '../../../data/varietals';
-
-import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
+import React, { Fragment, useState } from 'react';
+import AddBottleBySearch from './AddBottleBySearch';
+import FormBottleDetails from './FormBottleDetails';
 
 const TestForm = () => {
-  const bottleContext = useContext(BottleContext);
-  const { addBottle, updateBottle, current, clearCurrent } = bottleContext;
-
-  const alertContext = useContext(AlertContext);
-  const { setAlert } = alertContext;
-
-  useEffect(() => {
-    if (current !== null) {
-      setBottle(current);
-    } else {
-      setBottle({
-        product: '',
-        vintage: '',
-        producer: '',
-        region: '',
-        country: '',
-        varietal: '',
-        style: '',
-        sugar: '',
-        bubbles: '',
-        criticsScore: '',
-        quantity: '',
-        price: '',
-        totalCost: '',
-        costPerBottle: '',
-        size: '',
-        countryCode: '',
-        status: 'unopened',
-      });
-    }
-  }, [bottleContext, current]);
-
-  const [bottle, setBottle] = useState({
+  const [formState, setFormState] = useState({
+    step: 1,
     product: '',
     vintage: '',
     producer: '',
@@ -64,6 +25,7 @@ const TestForm = () => {
   });
 
   const {
+    step,
     product,
     vintage,
     varietal,
@@ -80,76 +42,59 @@ const TestForm = () => {
     size,
     countryCode,
     status,
-  } = bottle;
+  } = formState;
 
-  const onChange = (e) => {
-    if (e.target.name === 'totalCost') {
-      setBottle({
-        ...bottle,
-        totalCost: e.target.value,
-        costPerBottle: e.target.value / quantity,
-      });
-    } else if (e.target.name === 'costPerBottle') {
-      setBottle({
-        ...bottle,
-        costPerBottle: e.target.value,
-        totalCost: e.target.value * quantity,
-      });
-    } else if (
-      e.target.name === 'quantity' &&
-      (costPerBottle > 0 || totalCost > 0)
-    ) {
-      if (costPerBottle > 0) {
-        setBottle({
-          ...bottle,
-          quantity: e.target.value,
-          totalCost: e.target.value * costPerBottle,
-        });
-      } else {
-        setBottle({
-          ...bottle,
-          cost: e.target.value,
-          costPerBottle: totalCost / e.target.value,
-        });
-      }
-    } else {
-      setBottle({ ...bottle, [e.target.name]: e.target.value });
-    }
+  const values = {
+    step,
+    product,
+    vintage,
+    varietal,
+    region,
+    country,
+    style,
+    sugar,
+    bubbles,
+    criticsScore,
+    quantity,
+    price,
+    totalCost,
+    costPerBottle,
+    size,
+    countryCode,
+    status,
   };
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-    if (product === '') {
-      setAlert('Product name required', 'dark');
-    } else {
-      if (vintage === '') {
-        setBottle({ ...bottle, vintage: 'N/A' });
-      }
+  // Proceed to next step
+  const nextStep = () => {
+    setFormState({
+      step: step + 1,
+    });
+  };
 
-      if (current !== null) {
-        updateBottle(bottle);
-      } else {
-        addBottle(bottle);
-      }
-      clearCurrent();
-    }
+  // Return to previous step
+  const prevStep = () => {
+    setFormState({
+      step: step - 1,
+    });
+  };
+
+  // Handle fields change
+  const handleChange = (input) => (e) => {
+    setFormState({ ...formState, [input]: e.target.value });
   };
 
   return (
-    <form onSubmit={onSubmit}>
-      <h2 className='text-primary'>Edit Bottle</h2>
-      <Grid container spacing={1}>
-        <Grid item xs={6}>
-          <TextField id='standard-basic' label='Standard' />
-        </Grid>
-        <Grid item xs={6}>
-          <TextField id='standard-basic' label='Standard' />{' '}
-        </Grid>
-        <Grid item xs={6}>
-          <TextField id='standard-basic' label='Standard' />{' '}
-        </Grid>
-      </Grid>
-    </form>
+    <Fragment>
+      {step === 1 ? (
+        <AddBottleBySearch
+          nextStep={nextStep}
+          handleChange={handleChange}
+          values={values}
+        />
+      ) : (
+        <FormBottleDetails prevStep={prevStep} />
+      )}
+    </Fragment>
   );
 };
 

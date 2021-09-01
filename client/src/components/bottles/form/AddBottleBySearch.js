@@ -1,30 +1,28 @@
-import React, { useContext, useState } from 'react';
+import React, { Fragment, useContext, useState } from 'react';
 import BottleContext from '../../../context/bottles/BottleContext';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+
 import uniqueBottles from '../../../data/uniqueBottlesSmall.json';
 
-const AddBottleBySearch = () => {
-  const bottleContext = useContext(BottleContext);
-  const { setCurrent, addBottle } = bottleContext;
-
+const AddBottleBySearch = ({ nextStep, handleChange, values }) => {
   const [value, setValue] = useState('');
   const [inputValue, setInputValue] = useState('');
 
-  const onSubmit = () => {
-    if (value !== '') {
-    }
-    // need to handle input value when no product matches/exists
+  const onContinue = (e) => {
+    e.preventDefault();
+    nextStep();
   };
 
+  const onChange = (newValue) => {};
+
   return (
-    <div>
+    <Fragment>
       <Autocomplete
         value={value}
         onChange={(event, newValue) => {
           setValue(newValue);
-          setCurrent(newValue); // setCurrent again to capture _id in form after POST req in BottleState.js
-          addBottle(newValue);
         }}
         inputValue={inputValue}
         onInputChange={(event, newInputValue) => {
@@ -34,17 +32,20 @@ const AddBottleBySearch = () => {
         options={uniqueBottles}
         getOptionLabel={(option) => option.product}
         renderInput={(params) => (
-          <TextField
-            {...params}
-            label='Search for a bottle'
-            variant='outlined'
-          />
+          <Fragment>
+            <TextField
+              {...params}
+              label='Search for a bottle'
+              variant='outlined'
+            />
+
+            <Button variant='contained' onClick={onContinue}>
+              Continue
+            </Button>
+          </Fragment>
         )}
       />
-      <div>
-        <button onClick={onSubmit}>Add</button>
-      </div>
-    </div>
+    </Fragment>
   );
 };
 
