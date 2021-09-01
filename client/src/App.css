@@ -1,4 +1,11 @@
-@import url('https://fonts.googleapis.com/css?family=Calibri');
+/* latin */
+@font-face {
+  font-family: 'Calibri';
+  font-style: normal;
+  font-weight: 400;
+  src: url(fonts/calibri.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
 
 /* Global Styles */
 :root {
@@ -20,8 +27,19 @@ body {
   font-family: 'Calibri';
   font-size: 1rem;
   line-height: 1.6;
-  background-color: #fff;
+  background-image: url("img/so-white.png");
+  /* see also: funky-lines.png, herringbone.png, light-grey-terrazzo.png */
   color: #333;
+}
+
+#root {
+  background-color: rgba(245, 222, 179, 0.25); /* "wheat" at 25% opacity */
+  /* other (possibly) good candidates:
+  *  wheat      #F5DEB3 RGBA(245, 222, 179, 1)
+  *  whitesmoke #F5F5F5 RGBA(245, 245, 245, 1)
+  *  seashell   #FFF5EE RGBA(255, 245, 238, 1)
+  *  snow       #FFFAFA RGBA(255, 250, 250, 1)
+  */
 }
 
 a {
@@ -160,6 +178,7 @@ ul {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 2rem;
+  padding: 0.25rem;
 }
 
 .grid-3 {
@@ -291,8 +310,41 @@ ul {
 }
 
 /* Forms */
-input {
-  margin: 1.2rem 0;
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+input, select, fieldset {
+  margin: 0 0 1.2rem 0;
+  padding: 0.4rem;
+  font-size: 1.2rem;
+  border: 1px solid #ccc;
+}
+
+input[type='radio'] {
+  margin: initial;
+}
+
+fieldset.radiogroup {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: flex-start;
+  border: none;
+  padding: 0px;
+}
+
+fieldset.radiogroup legend {
+  font-family: 'Calibri';
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+fieldset.radiogroup label{
+  margin: 0 1em 0 0.25em;
 }
 
 .form-text {
@@ -371,14 +423,49 @@ table th {
   color: #fff;
   padding: 0.45rem;
   margin: 0 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .navbar a:hover {
   color: var(--secondary-color);
 }
 
+.navbar h1 a {
+  padding: initial;
+  margin: initial;
+  display: initial;
+}
+
+.navbar h1 a:hover {
+  color: #fff;
+}
+
 .navbar .welcome span {
   margin-right: 0.6rem;
+}
+
+.navbar ul li {
+  display: flex;
+  align-items: center;
+}
+
+.navbar ul li:first-child {
+  font-style: italic;
+  margin-right: 0.9rem;
+}
+
+.navbar ul li:first-child::after {
+  content: "";
+  margin-left: 1.8rem;
+  width: 0px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  height: 2.5rem;
+}
+
+.navbar i.fa-sign-out-alt {
+  margin-right: 0.25rem;
 }
 
 /* Animation (Add After) */
@@ -396,6 +483,34 @@ table th {
   opacity: 0;
   transition: opacity 500ms ease-in;
 }
+
+/* Login page */
+#login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#bottles-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#bottles-header h2 {
+  min-width: 15rem;;
+  text-align: initial;
+}
+
+#bottles-header input[type="search"] {
+  margin: initial;
+  padding: 0.2rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  width: 10rem;
+}
+
+
 
 /* Mobile Styles */
 @media (max-width: 700px) {

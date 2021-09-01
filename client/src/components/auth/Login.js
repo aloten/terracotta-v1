@@ -47,29 +47,30 @@ const Login = () => {
   };
 
   return (
-    <div className='form-container'>
+    <div id="login-container" className='form-container'>
       <h1>
         Account <span className='text-primary'>Login</span>
       </h1>
+      <p>Sign in to use Terracotta</p>
       <form onSubmit={onSubmit}>
         <div className='form-group'>
+          <label htmlFor='email'>Email</label>
           <input
-            type='text'
+            type='email'
             name='email'
             value={email}
-            placeholder='email'
+            // placeholder='email'
             onChange={onChange}
-            // required
+            required
           />
-        </div>
-        <div className='form-group'>
+          <label htmlFor='password'>Password</label>
           <input
             type='password'
             name='password'
             value={password}
-            placeholder='password'
+            // placeholder='password'
             onChange={onChange}
-            // required
+            required
           />
         </div>
         <input
