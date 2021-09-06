@@ -12,6 +12,9 @@ import {
   CLEAR_BOTTLES,
   FILTER_BOTTLES,
   CLEAR_FILTER,
+  NEXT_STEP,
+  PREV_STEP,
+  CHANGE_FORM,
 } from '../types';
 import axios from 'axios';
 
@@ -21,6 +24,31 @@ const BottleState = (props) => {
     filtered: null,
     current: null,
     error: null,
+    step: 1,
+    bottleForm: {
+      product: '',
+      vintage: '',
+      producer: '',
+      region: '',
+      country: '',
+      varietal: '',
+      style: '',
+      sugar: '',
+      bubbles: '',
+      criticsScore: '',
+      quantity: 1,
+      currency: 'USD',
+      price: 0,
+      totalCost: 0,
+      costPerBottle: '',
+      size: '',
+      alcoholPct: '',
+      countryCode: '',
+      vendor: '',
+      location: '',
+      opened: false,
+      notes: '',
+    },
   };
 
   const [state, dispatch] = useReducer(BottleReducer, initialState);
@@ -106,6 +134,21 @@ const BottleState = (props) => {
     dispatch({ type: CLEAR_FILTER });
   };
 
+  // Increment step in bottle form
+  const nextStep = () => {
+    dispatch({ type: NEXT_STEP });
+  };
+
+  // Decrement step in bottle form
+  const prevStep = () => {
+    dispatch({ type: PREV_STEP });
+  };
+
+  // Change bottle form
+  const changeForm = (key, value) => {
+    dispatch({ type: CHANGE_FORM, payload: { key, value } });
+  };
+
   return (
     <BottleContext.Provider
       value={{
@@ -113,6 +156,8 @@ const BottleState = (props) => {
         current: state.current,
         filtered: state.filtered,
         error: state.error,
+        step: state.step,
+        bottleForm: state.bottleForm,
         getBottles,
         addBottle,
         deleteBottle,
@@ -122,6 +167,9 @@ const BottleState = (props) => {
         clearBottles,
         filterBottles,
         clearFilter,
+        nextStep,
+        prevStep,
+        changeForm,
       }}
     >
       {props.children}

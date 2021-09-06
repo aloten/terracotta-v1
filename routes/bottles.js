@@ -29,17 +29,18 @@ router.post(
       countryCode,
       criticsScore,
       size,
-      dateOrdered,
+      datePurchased,
       dateReceived,
       quantity,
+      currency,
       price,
       totalCost,
       costPerBottle,
       vendor,
       location,
-      logNotes,
+      notes,
       alcoholPct,
-      status,
+      opened,
     } = req.body;
 
     try {
@@ -56,17 +57,18 @@ router.post(
         countryCode,
         criticsScore,
         size,
-        dateOrdered,
+        datePurchased,
         dateReceived,
         quantity,
+        currency,
         price,
         totalCost,
         costPerBottle,
         vendor,
         location,
-        logNotes,
+        notes,
         alcoholPct,
-        status,
+        opened,
       });
 
       const bottle = await newBottle.save();
@@ -107,17 +109,18 @@ router.put('/:id', auth, async (req, res) => {
     countryCode,
     criticsScore,
     size,
-    dateOrdered,
+    datePurchased,
     dateReceived,
     quantity,
+    currency,
     price,
     totalCost,
     costPerBottle,
     vendor,
     location,
-    logNotes,
+    notes,
     alcoholPct,
-    status,
+    opened,
   } = req.body;
 
   const bottleFields = {};
@@ -132,17 +135,18 @@ router.put('/:id', auth, async (req, res) => {
   if (countryCode) bottleFields.countryCode = countryCode;
   if (criticsScore) bottleFields.criticsScore = criticsScore;
   if (size) bottleFields.size = size;
-  if (dateOrdered) bottleFields.dateOrdered = dateOrdered;
+  if (datePurchased) bottleFields.datePurchased = datePurchased;
   if (dateReceived) bottleFields.dateReceived = dateReceived;
   if (quantity) bottleFields.quantity = quantity;
+  if (currency) bottleFields.currency = currency;
   if (price) bottleFields.price = price;
   if (totalCost) bottleFields.totalCost = totalCost;
   if (costPerBottle) bottleFields.costPerBottle = costPerBottle;
   if (vendor) bottleFields.vendor = vendor;
   if (location) bottleFields.location = location;
-  if (logNotes) bottleFields.logNotes = logNotes;
+  if (notes) bottleFields.notes = notes;
   if (alcoholPct) bottleFields.alcoholPct = alcoholPct;
-  if (status) bottleFields.status = status;
+  if (opened) bottleFields.opened = opened;
 
   try {
     let bottle = await Bottle.findById(req.params.id);

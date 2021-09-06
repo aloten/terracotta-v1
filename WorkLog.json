@@ -1,7 +1,7 @@
 [
   {
-    "NEXT": "handling form after addBottleBySearch--figuring out styling",
-    "progress/notes": "very stuck on styling the form and whole app"
+    "NEXT": "handling MUI form progression",
+    "progress/notes": "on to form bottle details and adding autocomplete functionality"
   },
   {
     "issue": "Bottle search doesn't work as of now",

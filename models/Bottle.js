@@ -39,7 +39,7 @@ const bottleSchema = new mongoose.Schema({
   size: {
     type: String,
   },
-  dateOrdered: {
+  datePurchased: {
     type: Date,
   },
   dateReceived: {
@@ -47,6 +47,9 @@ const bottleSchema = new mongoose.Schema({
   },
   quantity: {
     type: Number,
+  },
+  currency: {
+    type: String,
   },
   price: {
     type: Number,
@@ -63,15 +66,15 @@ const bottleSchema = new mongoose.Schema({
   location: {
     type: String,
   },
-  logNotes: {
+  notes: {
     type: String,
   },
   alcoholPct: {
     type: Number,
   },
-  status: {
-    type: String,
-    default: 'unopened',
+  opened: {
+    type: Boolean,
+    default: false,
   },
   dateAdded: {
     type: Date,

@@ -9,6 +9,9 @@ import {
   CLEAR_BOTTLES,
   FILTER_BOTTLES,
   CLEAR_FILTER,
+  NEXT_STEP,
+  PREV_STEP,
+  CHANGE_FORM,
 } from '../types';
 
 const BottleReducer = (state, action) => {
@@ -61,8 +64,7 @@ const BottleReducer = (state, action) => {
           return (
             bottle.product.match(regex) ||
             bottle.vintage.match(regex) ||
-            bottle.countryCode.match(regex) ||
-            bottle.status.match(regex)
+            bottle.countryCode.match(regex)
           );
         }),
       };
@@ -75,6 +77,24 @@ const BottleReducer = (state, action) => {
       return {
         ...state,
         error: action.payload,
+      };
+    case NEXT_STEP:
+      return {
+        ...state,
+        step: state.step + 1,
+      };
+    case PREV_STEP:
+      return {
+        ...state,
+        step: state.step - 1,
+      };
+    case CHANGE_FORM:
+      return {
+        ...state,
+        bottleForm: {
+          ...state.bottleForm,
+          [action.payload.key]: action.payload.value,
+        },
       };
     default:
       return state;
