@@ -7,14 +7,13 @@ import {
   UPDATE_BOTTLE,
   DELETE_BOTTLE,
   BOTTLE_ERROR,
-  SET_CURRENT,
-  CLEAR_CURRENT,
   CLEAR_BOTTLES,
   FILTER_BOTTLES,
   CLEAR_FILTER,
   NEXT_STEP,
   PREV_STEP,
   CHANGE_FORM,
+  CLEAR_FORM,
 } from '../types';
 import axios from 'axios';
 
@@ -22,7 +21,6 @@ const BottleState = (props) => {
   const initialState = {
     bottles: null,
     filtered: null,
-    current: null,
     error: null,
     step: 1,
     bottleForm: {
@@ -30,22 +28,22 @@ const BottleState = (props) => {
       vintage: '',
       producer: '',
       region: '',
-      country: '',
-      varietal: '',
-      style: '',
-      sugar: '',
-      bubbles: '',
+      country: null,
+      varietal: null,
+      style: null,
+      sugar: null,
+      bubbles: null,
       criticsScore: '',
       quantity: 1,
       currency: 'USD',
       price: 0,
       totalCost: 0,
-      costPerBottle: '',
       size: '',
       alcoholPct: '',
-      countryCode: '',
       vendor: '',
       location: '',
+      datePurchased: null,
+      dateReceived: null,
       opened: false,
       notes: '',
     },
@@ -109,16 +107,6 @@ const BottleState = (props) => {
     }
   };
 
-  // Set current
-  const setCurrent = (bottle) => {
-    dispatch({ type: SET_CURRENT, payload: bottle });
-  };
-
-  // Clear current
-  const clearCurrent = () => {
-    dispatch({ type: CLEAR_CURRENT });
-  };
-
   // Clear bottles
   const clearBottles = () => {
     dispatch({ type: CLEAR_BOTTLES });
@@ -149,11 +137,15 @@ const BottleState = (props) => {
     dispatch({ type: CHANGE_FORM, payload: { key, value } });
   };
 
+  // Clear form
+  const clearForm = () => {
+    dispatch({ type: CLEAR_FORM });
+  };
+
   return (
     <BottleContext.Provider
       value={{
         bottles: state.bottles,
-        current: state.current,
         filtered: state.filtered,
         error: state.error,
         step: state.step,
@@ -162,14 +154,13 @@ const BottleState = (props) => {
         addBottle,
         deleteBottle,
         updateBottle,
-        setCurrent,
-        clearCurrent,
         clearBottles,
         filterBottles,
         clearFilter,
         nextStep,
         prevStep,
         changeForm,
+        clearForm,
       }}
     >
       {props.children}

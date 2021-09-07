@@ -28,10 +28,12 @@ const bottleSchema = new mongoose.Schema({
     type: String,
   },
   country: {
-    type: String,
-  },
-  countryCode: {
-    type: String,
+    code: {
+      type: String,
+    },
+    name: {
+      type: String,
+    },
   },
   criticsScore: {
     type: String,
@@ -55,9 +57,6 @@ const bottleSchema = new mongoose.Schema({
     type: Number,
   },
   totalCost: {
-    type: Number,
-  },
-  costPerBottle: {
     type: Number,
   },
   vendor: {

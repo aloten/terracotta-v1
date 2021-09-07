@@ -6,7 +6,7 @@ import Spinner from '../layout/Spinner';
 const Bottles = () => {
   const bottleContext = useContext(BottleContext);
 
-  const { getBottles, bottles, filtered, loading } = bottleContext;
+  const { getBottles, bottles, filtered } = bottleContext;
 
   useEffect(() => {
     getBottles();
@@ -19,7 +19,7 @@ const Bottles = () => {
 
   return (
     <Fragment>
-      {bottles !== null && !loading ? (
+      {bottles !== null ? (
         <Fragment>
           {filtered !== null
             ? filtered.map((bottle) => (

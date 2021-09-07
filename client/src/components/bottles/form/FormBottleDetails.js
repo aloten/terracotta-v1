@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, Fragment } from 'react';
+import React, { useContext, useState, Fragment } from 'react';
 import BottleContext from '../../../context/bottles/BottleContext';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
@@ -13,21 +13,12 @@ import DateFnsUtils from '@date-io/date-fns';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 
-import countries from '../../../data/countries';
+import countries from '../../../data/countries.json';
 import varietals from '../../../data/varietals';
 
 const FormBottleDetails = () => {
   const bottleContext = useContext(BottleContext);
-  const { bottleForm, prevStep, addBottle } = bottleContext;
-
-  useEffect(() => {
-    for (const country of countries) {
-      if (bottleForm.country === country.label) {
-        setBottle({ ...bottle, country: country });
-      }
-    }
-    // eslint-disable-next-line
-  }, []);
+  const { bottleForm, prevStep, clearForm, addBottle } = bottleContext;
 
   const [bottle, setBottle] = useState({
     product: bottleForm.product,
@@ -35,7 +26,7 @@ const FormBottleDetails = () => {
     producer: bottleForm.producer,
     varietal: bottleForm.varietal,
     region: bottleForm.region,
-    country: { label: bottleForm.country },
+    country: bottleForm.country,
     style: bottleForm.style,
     sugar: bottleForm.sugar,
     bubbles: bottleForm.bubbles,
@@ -44,13 +35,11 @@ const FormBottleDetails = () => {
     currency: bottleForm.currency,
     price: bottleForm.price,
     totalCost: bottleForm.totalCost,
-    costPerBottle: bottleForm.costPerBottle,
     size: bottleForm.size,
     alcoholPct: bottleForm.alcoholPct,
     vendor: bottleForm.vendor,
     location: bottleForm.location,
     notes: bottleForm.notes,
-    countryCode: bottleForm.countryCode,
     opened: bottleForm.opened,
     datePurchased: bottleForm.datePurchased,
     dateReceived: bottleForm.dateReceived,
@@ -71,13 +60,11 @@ const FormBottleDetails = () => {
     currency,
     price,
     totalCost,
-    costPerBottle,
     size,
     alcoholPct,
     vendor,
     location,
     notes,
-    countryCode,
     opened,
     datePurchased,
     dateReceived,
@@ -144,6 +131,8 @@ const FormBottleDetails = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     addBottle(bottle);
+    prevStep();
+    clearForm();
   };
 
   const countryToFlag = (isoCode) => {
@@ -264,11 +253,12 @@ const FormBottleDetails = () => {
               setBottle({ ...bottle, country: newValue });
             }}
             options={countries}
-            getOptionLabel={(option) => option.label}
+            getOptionSelected={(option, value) => option.code === value.code}
+            getOptionLabel={(option) => option.name}
             renderOption={(option) => (
               <Fragment>
                 <span>{countryToFlag(option.code)}</span>
-                {option.label} ({option.code})
+                {option.name} ({option.code})
               </Fragment>
             )}
             renderInput={(params) => <TextField {...params} label='Country' />}

@@ -1,8 +1,6 @@
 export const GET_BOTTLES = 'GET_BOTTLES';
 export const ADD_BOTTLE = 'ADD_BOTTLE';
 export const DELETE_BOTTLE = 'DELETE_BOTTLE';
-export const SET_CURRENT = 'SET_CURRENT';
-export const CLEAR_CURRENT = 'CLEAR_CURRENT';
 export const UPDATE_BOTTLE = 'UPDATE_BOTTLE';
 export const FILTER_BOTTLES = 'FILTER_BOTTLES';
 export const CLEAR_BOTTLES = 'CLEAR_BOTTLES';
@@ -21,3 +19,4 @@ export const CLEAR_ERRORS = 'CLEAR_ERRORS';
 export const NEXT_STEP = 'NEXT_STEP';
 export const PREV_STEP = 'PREV_STEP';
 export const CHANGE_FORM = 'CHANGE_FORM';
+export const CLEAR_FORM = 'CLEAR_FORM';

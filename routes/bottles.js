@@ -26,7 +26,6 @@ router.post(
       bubbles,
       region,
       country,
-      countryCode,
       criticsScore,
       size,
       datePurchased,
@@ -35,7 +34,6 @@ router.post(
       currency,
       price,
       totalCost,
-      costPerBottle,
       vendor,
       location,
       notes,
@@ -54,7 +52,6 @@ router.post(
         bubbles,
         region,
         country,
-        countryCode,
         criticsScore,
         size,
         datePurchased,
@@ -63,7 +60,6 @@ router.post(
         currency,
         price,
         totalCost,
-        costPerBottle,
         vendor,
         location,
         notes,
@@ -106,7 +102,6 @@ router.put('/:id', auth, async (req, res) => {
     bubbles,
     region,
     country,
-    countryCode,
     criticsScore,
     size,
     datePurchased,
@@ -115,7 +110,6 @@ router.put('/:id', auth, async (req, res) => {
     currency,
     price,
     totalCost,
-    costPerBottle,
     vendor,
     location,
     notes,
@@ -132,7 +126,6 @@ router.put('/:id', auth, async (req, res) => {
   if (bubbles) bottleFields.bubbles = bubbles;
   if (region) bottleFields.region = region;
   if (country) bottleFields.country = country;
-  if (countryCode) bottleFields.countryCode = countryCode;
   if (criticsScore) bottleFields.criticsScore = criticsScore;
   if (size) bottleFields.size = size;
   if (datePurchased) bottleFields.datePurchased = datePurchased;
@@ -141,7 +134,6 @@ router.put('/:id', auth, async (req, res) => {
   if (currency) bottleFields.currency = currency;
   if (price) bottleFields.price = price;
   if (totalCost) bottleFields.totalCost = totalCost;
-  if (costPerBottle) bottleFields.costPerBottle = costPerBottle;
   if (vendor) bottleFields.vendor = vendor;
   if (location) bottleFields.location = location;
   if (notes) bottleFields.notes = notes;

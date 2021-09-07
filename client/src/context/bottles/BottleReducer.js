@@ -4,8 +4,7 @@ import {
   UPDATE_BOTTLE,
   DELETE_BOTTLE,
   BOTTLE_ERROR,
-  SET_CURRENT,
-  CLEAR_CURRENT,
+  CLEAR_FORM,
   CLEAR_BOTTLES,
   FILTER_BOTTLES,
   CLEAR_FILTER,
@@ -25,7 +24,6 @@ const BottleReducer = (state, action) => {
       return {
         ...state,
         bottles: [action.payload, ...state.bottles],
-        current: action.payload, // to update data in form with _id
       };
     case UPDATE_BOTTLE:
       return {
@@ -41,15 +39,33 @@ const BottleReducer = (state, action) => {
           (bottle) => bottle._id !== action.payload
         ),
       };
-    case SET_CURRENT:
+    case CLEAR_FORM:
       return {
         ...state,
-        current: action.payload,
-      };
-    case CLEAR_CURRENT:
-      return {
-        ...state,
-        current: null,
+        bottleForm: {
+          product: '',
+          vintage: '',
+          producer: '',
+          region: '',
+          country: null,
+          varietal: null,
+          style: null,
+          sugar: null,
+          bubbles: null,
+          criticsScore: '',
+          quantity: 1,
+          currency: 'USD',
+          price: 0,
+          totalCost: 0,
+          size: '',
+          alcoholPct: '',
+          vendor: '',
+          location: '',
+          datePurchased: null,
+          dateReceived: null,
+          opened: false,
+          notes: '',
+        },
       };
     case CLEAR_BOTTLES:
       return {
@@ -61,11 +77,7 @@ const BottleReducer = (state, action) => {
         ...state,
         filtered: state.bottles.filter((bottle) => {
           const regex = new RegExp(action.payload, 'gi');
-          return (
-            bottle.product.match(regex) ||
-            bottle.vintage.match(regex) ||
-            bottle.countryCode.match(regex)
-          );
+          return bottle.product.match(regex) || bottle.vintage.match(regex);
         }),
       };
     case CLEAR_FILTER:

@@ -2,118 +2,84 @@ import React, { useContext } from 'react';
 import '../../data/flag-icon-css-master/css/flag-icon.css';
 import BottleContext from '../../context/bottles/BottleContext';
 import PropTypes from 'prop-types';
-import countryData from '../../data/country-codes';
+import Button from '@material-ui/core/Button';
 
 const BottleItem = ({ bottle }) => {
   const bottleContext = useContext(BottleContext);
 
-  const { setCurrent, clearCurrent, deleteBottle } = bottleContext;
+  const { deleteBottle, changeForm, clearForm, nextStep } = bottleContext;
 
   const {
     _id,
     product,
     vintage,
+    producer,
     varietal,
+    region,
+    country,
+    style,
+    sugar,
+    bubbles,
+    criticsScore,
     quantity,
+    currency,
     price,
-    costPerBottle,
     totalCost,
     size,
-    countryCode,
-    status,
+    alcoholPct,
+    vendor,
+    location,
+    notes,
+    opened,
+    datePurchased,
+    dateReceived,
   } = bottle;
 
   const onEdit = () => {
-    setCurrent(bottle);
+    for (const key in bottle) {
+      changeForm(key, bottle[key]);
+    }
+    nextStep();
   };
 
   const onDelete = () => {
     deleteBottle(_id);
-    clearCurrent();
+    clearForm();
   };
 
   return (
-    <div className='card bg-light'>
-      <h3 className='text-primary text-left'>
-        {product}{' '}
-        <span
-          style={{ float: 'right' }}
-          className={
-            'badge ' +
-            (status === 'unopened' ? 'badge-success' : 'badge-primary')
-          }
-        >
-          {status.charAt(0).toUpperCase() + status.slice(1)}
-        </span>
-      </h3>
-      <ul className='list'>
-        {vintage && (
-          <li>
-            <strong>Vintage:</strong> {vintage}
-          </li>
-        )}
-        {countryCode && (
-          <li>
-            <i
-              className={'flag-icon flag-icon-' + countryCode.toLowerCase()}
-            ></i>{' '}
-            {Object.keys(countryData).map(
-              (key) => countryData[key] === countryCode && key
-            )}
-          </li>
-        )}
-        {varietal && (
-          <li>
-            <strong>Varietal:</strong> {varietal}
-          </li>
-        )}
-        {price && (
-          <li>
-            <strong>Price per bottle:</strong> ${price}
-          </li>
-        )}
-        {costPerBottle && (
-          <li>
-            <strong>Cost per bottle:</strong> ${costPerBottle}
-          </li>
-        )}
-        {size && (
-          <li>
-            <strong>Bottle size:</strong> {size}mL
-          </li>
-        )}
-        {costPerBottle && price && (
-          <li>
-            <strong>Book return:</strong> {(price / costPerBottle) * 100}%
-          </li>
-        )}
-        {quantity && (
-          <li>
-            <strong>Quantity:</strong> {quantity}
-          </li>
-        )}
-        {totalCost && (
-          <li>
-            <strong>Total cost:</strong> ${totalCost}
-          </li>
-        )}
-        {quantity && price && (
-          <li>
-            <strong>Total value:</strong> ${quantity * price}
-          </li>
-        )}
-        {quantity && price && (
-          <li>
-            <strong>Book profit/loss:</strong> ${price * quantity - totalCost}
-          </li>
-        )}
-      </ul>
-      <button className='btn btn-dark btn-sm' onClick={onEdit}>
-        Edit
-      </button>
-      <button className='btn btn-danger btn-sm' onClick={onDelete}>
+    <div>
+      {'---------------------------------'}
+      {_id && <div>{_id}</div>}
+      {product && <div>{product}</div>}
+      {vintage && <div>{vintage}</div>}
+      {producer && <div>{producer}</div>}
+      {varietal && <div>{varietal}</div>}
+      {region && <div>{region}</div>}
+      {country && <div>{country.name}</div>}
+      {style && <div>{style}</div>}
+      {sugar && <div>{sugar}</div>}
+      {bubbles && <div>{bubbles}</div>}
+      {criticsScore && <div>{criticsScore}</div>}
+      {quantity && <div>{quantity}</div>}
+      {currency && <div>{currency}</div>}
+      {price && <div>{price}</div>}
+      {totalCost && <div>{totalCost}</div>}
+      {size && <div>{size}</div>}
+      {alcoholPct && <div>{alcoholPct}</div>}
+      {vendor && <div>{vendor}</div>}
+      {location && <div>{location}</div>}
+      {notes && <div>{product}</div>}
+      {opened && <div>{opened}</div>}
+      {datePurchased && <div>{datePurchased}</div>}
+      {dateReceived && <div>{dateReceived}</div>}
+      <Button variant='contained' onClick={onDelete}>
         Delete
-      </button>
+      </Button>
+      <Button variant='contained' onClick={onEdit}>
+        Edit
+      </Button>
+      {'---------------------------------'}
     </div>
   );
 };

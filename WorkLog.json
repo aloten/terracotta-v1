@@ -1,11 +1,15 @@
 [
   {
     "NEXT": "handling MUI form progression",
-    "progress/notes": "on to form bottle details and adding autocomplete functionality"
+    "progress/notes": "branch: materialUISweep on to form bottle details and adding autocomplete functionality"
   },
   {
     "issue": "Bottle search doesn't work as of now",
     "branch": "materialUISweep & addBottleBySearch"
+  },
+  {
+    "issue": "Update alcohol buckets of unique bottles from MyWineCellar.csv using Python",
+    "branch": "all"
   },
   {
     "issue": "eed to take care of Autocomplete errors in addBottleBySearch and probably BottleForm"

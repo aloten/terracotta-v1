@@ -215,55 +215,6 @@ ul {
   border: solid black 2px;
 }
 
-.bottle-form #product {
-  grid-row: 1;
-  grid-column: 1;
-}
-.bottle-form #vintage {
-  grid-row: 1;
-  grid-column: 2;
-}
-.bottle-form #region {
-  grid-row: 2;
-  grid-column: 1;
-}
-.bottle-form #countryCode {
-  grid-row: 2;
-  grid-column: 2;
-}
-.bottle-form #varietal {
-  grid-row: 3;
-  grid-column: 1;
-}
-.bottle-form #style {
-  grid-row: 3;
-  grid-column: 2;
-}
-.bottle-form #sugar {
-  grid-row: 4;
-  grid-column: 1;
-}
-.bottle-form #bubbles {
-  grid-row: 4;
-  grid-column: 2;
-}
-.bottle-form #price {
-  grid-row: 5;
-  grid-column: 1;
-}
-.bottle-form #quantity {
-  grid-row: 5;
-  grid-column: 2;
-}
-.bottle-form #totalCost {
-  grid-row: 6;
-  grid-column: 1;
-}
-.bottle-form #costPerBottle {
-  grid-row: 6;
-  grid-column: 2;
-}
-
 .bottle-form select,
 input {
   font-size: 10px;
