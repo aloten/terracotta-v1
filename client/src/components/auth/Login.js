@@ -25,6 +25,9 @@ const useStyles = makeStyles((theme) => ({
     color: 'white',
     fontSize: '1rem',
   },
+  text: {
+    align: 'center',
+  },
 }));
 
 const Login = () => {
@@ -32,7 +35,7 @@ const Login = () => {
   const { login, error, isAuthenticated, clearErrors } = authContext;
 
   const alertContext = useContext(AlertContext);
-  const { setAlert, alerts } = alertContext;
+  const { setAlert, loginAlerts } = alertContext;
 
   const classes = useStyles();
 
@@ -44,7 +47,7 @@ const Login = () => {
     }
 
     if (error) {
-      setAlert(error, 'danger');
+      setAlert(error, 'login');
       clearErrors();
     }
     // eslint-disable-next-line
@@ -61,9 +64,8 @@ const Login = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-
     if (email === '' || password === '') {
-      setAlert('Please fill in all fields', 'danger');
+      setAlert('Please fill in all fields', 'login');
     } else {
       login({
         email,
@@ -75,24 +77,28 @@ const Login = () => {
   return (
     <Paper elevation={3} className={classes.paper}>
       <Container className={classes.container} maxWidth='xs'>
+        <Grid align='center'>
+          <h2>Log In</h2>
+        </Grid>
         <form onSubmit={onSubmit}>
           <Grid container spacing={3}>
             <Grid item xs={12}>
               <TextField
-                error={alerts.length > 0}
-                helperText={
-                  alerts.length > 0 ? alerts[alerts.length - 1].msg : ''
-                }
+                error={loginAlerts.length > 0}
+                helperText={loginAlerts.length > 0 ? loginAlerts[0].msg : ''}
                 fullWidth
                 label='Email'
                 name='email'
                 value={email}
                 variant='outlined'
                 onChange={onChange}
+                required
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
+                error={loginAlerts.length > 0}
+                helperText={loginAlerts.length > 0 ? loginAlerts[0].msg : ''}
                 fullWidth
                 type='password'
                 label='Password'
@@ -100,6 +106,7 @@ const Login = () => {
                 value={password}
                 variant='outlined'
                 onChange={onChange}
+                required
               />
             </Grid>
             <Grid item xs={12}>
@@ -111,6 +118,20 @@ const Login = () => {
                 className={classes.btn}
               >
                 Log In
+              </Button>
+            </Grid>
+            <Grid item xs={12}>
+              <span className={classes.text}>Forgot account?</span>
+            </Grid>
+            <Grid item xs={12}>
+              <Button
+                fullWidth
+                // onClick link to /register
+                variant='contained'
+                size='large'
+                className={classes.btn}
+              >
+                Register
               </Button>
             </Grid>
           </Grid>
