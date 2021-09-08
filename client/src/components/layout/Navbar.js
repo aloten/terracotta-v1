@@ -28,7 +28,7 @@ const Navbar = ({ title, icon }) => {
       <li>
         <a onClick={onLogout} href='#!'>
           <i className='fas fa-sign-out-alt'></i>{' '}
-          <span className='hide-sm'>Logout</span>
+          <span className='hide-sm'>Log Out</span>
         </a>
       </li>
     </Fragment>
@@ -37,10 +37,13 @@ const Navbar = ({ title, icon }) => {
   const guestLinks = (
     <Fragment>
       <li>
-        <Link to='/login'>Login</Link>
+        <Link to='/login'>Log In</Link>
       </li>
       <li>
         <Link to='/register'>Register</Link>
+      </li>
+      <li>
+        <Link to='/about'>About</Link>
       </li>
     </Fragment>
   );

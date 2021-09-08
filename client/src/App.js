@@ -6,6 +6,7 @@ import BottleState from './context/bottles/BottleState';
 import AlertState from './context/alert/AlertState';
 import PrivateRoute from './components/routing/PrivateRoute';
 import Navbar from './components/layout/Navbar';
+import Footer from './components/layout/Footer';
 import Home from './components/pages/Home';
 import About from './components/pages/About';
 import Login from './components/auth/Login';
@@ -21,7 +22,6 @@ function App() {
             <Fragment>
               <Navbar />
               <div className='container'>
-                {/* <Alerts /> */}
                 <Switch>
                   <PrivateRoute exact path='/' component={Home} />
                   <Route exact path='/about' component={About} />
@@ -29,6 +29,7 @@ function App() {
                   <Route exact path='/register' component={Register} />
                 </Switch>
               </div>
+              <Footer />
             </Fragment>
           </Router>
         </AlertState>
