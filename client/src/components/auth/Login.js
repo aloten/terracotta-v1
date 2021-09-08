@@ -3,12 +3,38 @@ import { useHistory } from 'react-router-dom';
 import AlertContext from '../../context/alert/AlertContext';
 import AuthContext from '../../context/auth/AuthContext';
 
+import Button from '@material-ui/core/Button';
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
+import TextField from '@material-ui/core/TextField';
+import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+
+const useStyles = makeStyles((theme) => ({
+  container: {
+    padding: theme.spacing(3),
+  },
+  paper: {
+    padding: 20,
+    height: '70vh',
+    width: '40%',
+    margin: '20px auto',
+  },
+  btn: {
+    background: '#800020',
+    color: 'white',
+    fontSize: '1rem',
+  },
+}));
+
 const Login = () => {
   const authContext = useContext(AuthContext);
   const { login, error, isAuthenticated, clearErrors } = authContext;
 
   const alertContext = useContext(AlertContext);
-  const { setAlert } = alertContext;
+  const { setAlert, alerts } = alertContext;
+
+  const classes = useStyles();
 
   const history = useHistory();
 
@@ -47,38 +73,50 @@ const Login = () => {
   };
 
   return (
-    <div className='auth-form-container'>
-      <h1>
-        Account <span className='text-primary'>Login</span>
-      </h1>
-      <form onSubmit={onSubmit}>
-        <div className='form-group'>
-          <input
-            type='text'
-            name='email'
-            value={email}
-            placeholder='email'
-            onChange={onChange}
-            // required
-          />
-        </div>
-        <div className='form-group'>
-          <input
-            type='password'
-            name='password'
-            value={password}
-            placeholder='password'
-            onChange={onChange}
-            // required
-          />
-        </div>
-        <input
-          type='submit'
-          value='Login'
-          className='btn btn-primary btn-block'
-        />
-      </form>
-    </div>
+    <Paper elevation={3} className={classes.paper}>
+      <Container className={classes.container} maxWidth='xs'>
+        <form onSubmit={onSubmit}>
+          <Grid container spacing={3}>
+            <Grid item xs={12}>
+              <TextField
+                error={alerts.length > 0}
+                helperText={
+                  alerts.length > 0 ? alerts[alerts.length - 1].msg : ''
+                }
+                fullWidth
+                label='Email'
+                name='email'
+                value={email}
+                variant='outlined'
+                onChange={onChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                type='password'
+                label='Password'
+                name='password'
+                value={password}
+                variant='outlined'
+                onChange={onChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Button
+                fullWidth
+                type='submit'
+                variant='contained'
+                size='large'
+                className={classes.btn}
+              >
+                Log In
+              </Button>
+            </Grid>
+          </Grid>
+        </form>
+      </Container>
+    </Paper>
   );
 };
 

@@ -5,7 +5,10 @@ import { v4 as uuidv4 } from 'uuid';
 import { SET_ALERT, REMOVE_ALERT } from '../types';
 
 const AlertState = (props) => {
-  const initialState = [];
+  const initialState = {
+    login: [],
+    register: [],
+  };
 
   const [state, dispatch] = useReducer(AlertReducer, initialState);
 
@@ -19,7 +22,13 @@ const AlertState = (props) => {
   };
 
   return (
-    <AlertContext.Provider value={{ alerts: state, setAlert }}>
+    <AlertContext.Provider
+      value={{
+        loginAlerts: state.login,
+        registerAlerts: state.register,
+        setAlert,
+      }}
+    >
       {props.children}
     </AlertContext.Provider>
   );
