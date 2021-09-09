@@ -1,7 +1,11 @@
 [
   {
-    "NEXT": "handling MUI form progression",
-    "progress/notes": "branch: materialUISweep on to form bottle details and adding autocomplete functionality"
+    "CURRENT ISSUE": "handling data grid and home page layout before merging muiSweep branch with main",
+    "progress/notes": "working on data grid and "
+  },
+  {
+    "issue": "country prop is inacessible from bottles in bottleContext--using for data grid",
+    "branch": "materialUISweep"
   },
   {
     "issue": "Bottle search doesn't work as of now",
@@ -12,12 +16,12 @@
     "branch": "all"
   },
   {
-    "issue": "eed to take care of Autocomplete errors in addBottleBySearch and probably BottleForm"
+    "issue": "need to take care of Autocomplete errors in addBottleBySearch and probably BottleForm"
   },
   {
     "issue": "No valid auth Alert is set off on initial loading app route '/' "
   },
-  { "issue": "Change vintage input to type='number and edit across stack" },
+  { "issue": "Decide on a type for vintage" },
   {
     "issue": "When searching wine cellar by country, country codes are used as values instead of country names. e.g. 'fr' instead of 'france'"
   },

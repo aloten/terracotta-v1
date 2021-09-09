@@ -55,7 +55,6 @@ const BottleState = (props) => {
   const getBottles = async () => {
     try {
       const res = await axios.get('/api/bottles');
-
       dispatch({ type: GET_BOTTLES, payload: res.data });
     } catch (error) {
       dispatch({ type: BOTTLE_ERROR, payload: error.response });
@@ -72,7 +71,6 @@ const BottleState = (props) => {
 
     try {
       const res = await axios.post('/api/bottles', bottle, config);
-
       dispatch({ type: ADD_BOTTLE, payload: res.data });
     } catch (error) {
       dispatch({ type: BOTTLE_ERROR, payload: error.response });

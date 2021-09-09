@@ -1,17 +1,21 @@
 import React, { useContext, useState, Fragment } from 'react';
 import BottleContext from '../../../context/bottles/BottleContext';
-import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
-import MenuItem from '@material-ui/core/MenuItem';
-import Button from '@material-ui/core/Button';
+
+import {
+  Grid,
+  TextField,
+  MenuItem,
+  Button,
+  Paper,
+  FormControlLabel,
+  Switch,
+} from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
 
 import countries from '../../../data/countries.json';
 import varietals from '../../../data/varietals';
@@ -203,279 +207,287 @@ const FormBottleDetails = () => {
   const bubbleOptions = ['Still', 'Sparkling', 'Nouveau'];
 
   return (
-    <form>
-      <h2 className='text-primary'>Edit Bottle</h2>
-      <Grid container spacing={1}>
-        <Grid item xs={12}>
-          <TextField
-            id='product-TextF'
-            name='product'
-            value={product}
-            onChange={(e) => handleChange(e)}
-            label='Product Name'
-            fullWidth
-            required
-          />
-        </Grid>
-        <Grid item xs={6}>
-          <TextField
-            id='vintage-TextF'
-            name='vintage'
-            value={vintage}
-            onChange={(e) => handleChange(e)}
-            label='Vintage'
-          />
-        </Grid>
-        <Grid item xs={6}>
-          <TextField
-            id='producer-TextF'
-            label='Producer'
-            name='producer'
-            value={producer}
-            onChange={(e) => handleChange(e)}
-          />
-        </Grid>
-        <Grid item xs={6}>
-          <TextField
-            id='standard-basic'
-            name='region'
-            value={region}
-            onChange={(e) => handleChange(e)}
-            label='Region'
-          />
-        </Grid>
-        <Grid item xs={6}>
-          <Autocomplete
-            id='country-autoC'
-            name='country'
-            value={country}
-            onChange={(event, newValue) => {
-              setBottle({ ...bottle, country: newValue });
-            }}
-            options={countries}
-            getOptionSelected={(option, value) => option.code === value.code}
-            getOptionLabel={(option) => option.name}
-            renderOption={(option) => (
-              <Fragment>
-                <span>{countryToFlag(option.code)}</span>
-                {option.name} ({option.code})
-              </Fragment>
-            )}
-            renderInput={(params) => <TextField {...params} label='Country' />}
-          />
-        </Grid>
-        <Grid item xs={6}>
-          <Autocomplete
-            id='varietal-autoC'
-            name='varietal'
-            value={varietal}
-            onChange={(event, newValue) => {
-              setBottle({ ...bottle, varietal: newValue });
-            }}
-            options={varietals}
-            getOptionLabel={(option) => option}
-            renderInput={(params) => <TextField {...params} label='Varietal' />}
-          />
-        </Grid>
-        <Grid item xs={6}>
-          <Autocomplete
-            id='style-autoC'
-            name='style'
-            value={style}
-            onChange={(event, newValue) => {
-              setBottle({ ...bottle, style: newValue });
-            }}
-            options={styleOptions}
-            getOptionLabel={(option) => option}
-            renderInput={(params) => <TextField {...params} label='Style' />}
-          />
-        </Grid>
-        <Grid item xs={6}>
-          <Autocomplete
-            id='sugar-autoC'
-            name='sugar'
-            value={sugar}
-            onChange={(event, newValue) => {
-              setBottle({ ...bottle, sugar: newValue });
-            }}
-            options={sugarOptions}
-            getOptionLabel={(option) => option}
-            renderInput={(params) => <TextField {...params} label='Sugar' />}
-          />
-        </Grid>
-        <Grid item xs={6}>
-          <Autocomplete
-            id='bubbles-autoC'
-            name='bubbles'
-            value={bubbles}
-            onChange={(event, newValue) => {
-              setBottle({ ...bottle, bubbles: newValue });
-            }}
-            options={bubbleOptions}
-            getOptionLabel={(option) => option}
-            renderInput={(params) => <TextField {...params} label='Bubbles' />}
-          />
-        </Grid>
-        <Grid item xs={2}>
-          <TextField
-            id='standard-basic'
-            name='quantity'
-            value={quantity}
-            onChange={(e) => handleChange(e)}
-            label='Quantity'
-            type='number'
-          />
-        </Grid>
-        <Grid item xs={2}>
-          <TextField
-            id='standard-basic'
-            name='currency'
-            value={currency}
-            onChange={(e) => handleChange(e)}
-            label='Currency'
-            select
-            fullWidth
-          >
-            {currencies.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.label}
-              </MenuItem>
-            ))}
-          </TextField>
-        </Grid>
-        <Grid item xs={2}>
-          <TextField
-            id='standard-basic'
-            name='price'
-            value={price}
-            onChange={(e) => handleChange(e)}
-            label='Price'
-            type='number'
-          />
-        </Grid>
-        <Grid item xs={4}>
-          <TextField
-            id='standard-basic'
-            name='totalCost'
-            value={totalCost}
-            onChange={(e) => handleChange(e)}
-            label='Total Cost'
-            type='number'
-          />
-        </Grid>
-        <Grid item xs={2}>
-          <TextField
-            id='standard-basic'
-            name='size'
-            value={size}
-            onChange={(e) => handleChange(e)}
-            label='Bottle size'
-          />
-        </Grid>
-        <Grid item xs={2}>
-          <TextField
-            label='Alc %'
-            name='alcoholPct'
-            value={alcoholPct}
-            onChange={(e) => handleChange(e)}
-          />
-        </Grid>
-        <Grid item xs={5}>
-          <TextField
-            id='standard-basic'
-            name='vendor'
-            value={vendor}
-            onChange={(e) => handleChange(e)}
-            label='Vendor'
-          />
-        </Grid>
-        <Grid item xs={5}>
-          <TextField
-            id='standard-basic'
-            name='location'
-            value={location}
-            onChange={(e) => handleChange(e)}
-            label='Location'
-          />
-        </Grid>
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-          <Grid item xs={6}>
-            <KeyboardDatePicker
-              disableToolbar
-              variant='inline'
-              format='MM/dd/yyyy'
-              margin='normal'
-              id='date-picker-inline'
-              label='Date Purchased'
-              name='datePurchased'
-              value={datePurchased}
-              onChange={datePurchasedChange}
-              KeyboardButtonProps={{
-                'aria-label': 'change date',
-              }}
+    <Paper elevation={3}>
+      <form>
+        <h2 className='text-primary'>Edit Bottle</h2>
+        <Grid container spacing={1}>
+          <Grid item xs={12}>
+            <TextField
+              id='product-TextF'
+              name='product'
+              value={product}
+              onChange={(e) => handleChange(e)}
+              label='Product Name'
+              fullWidth
+              required
             />
           </Grid>
           <Grid item xs={6}>
-            <KeyboardDatePicker
-              disableToolbar
-              variant='inline'
-              format='MM/dd/yyyy'
-              margin='normal'
-              id='date-picker-inline'
-              label='Date Received'
-              name='dateReceived'
-              value={dateReceived}
-              onChange={dateReceivedChange}
-              KeyboardButtonProps={{
-                'aria-label': 'change date',
-              }}
+            <TextField
+              id='vintage-TextF'
+              name='vintage'
+              value={vintage}
+              onChange={(e) => handleChange(e)}
+              label='Vintage'
             />
           </Grid>
-        </MuiPickersUtilsProvider>
-        <Grid item xs={6}>
-          <TextField
-            id='standard-basic'
-            label='Critic Scores'
-            value={criticsScore}
-            name='criticsScore'
-            onChange={(e) => handleChange(e)}
-          />
-        </Grid>
-        <Grid item xs={6}>
-          <FormControlLabel
-            control={
-              <Switch
-                checked={opened}
-                onChange={handleChange}
-                name='opened'
-                color='primary'
+          <Grid item xs={6}>
+            <TextField
+              id='producer-TextF'
+              label='Producer'
+              name='producer'
+              value={producer}
+              onChange={(e) => handleChange(e)}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              id='standard-basic'
+              name='region'
+              value={region}
+              onChange={(e) => handleChange(e)}
+              label='Region'
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <Autocomplete
+              id='country-autoC'
+              name='country'
+              value={country}
+              onChange={(event, newValue) => {
+                setBottle({ ...bottle, country: newValue });
+              }}
+              options={countries}
+              getOptionSelected={(option, value) => option.code === value.code}
+              getOptionLabel={(option) => option.name}
+              renderOption={(option) => (
+                <Fragment>
+                  <span>{countryToFlag(option.code)}</span>
+                  {option.name} ({option.code})
+                </Fragment>
+              )}
+              renderInput={(params) => (
+                <TextField {...params} label='Country' />
+              )}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <Autocomplete
+              id='varietal-autoC'
+              name='varietal'
+              value={varietal}
+              onChange={(event, newValue) => {
+                setBottle({ ...bottle, varietal: newValue });
+              }}
+              options={varietals}
+              getOptionLabel={(option) => option}
+              renderInput={(params) => (
+                <TextField {...params} label='Varietal' />
+              )}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <Autocomplete
+              id='style-autoC'
+              name='style'
+              value={style}
+              onChange={(event, newValue) => {
+                setBottle({ ...bottle, style: newValue });
+              }}
+              options={styleOptions}
+              getOptionLabel={(option) => option}
+              renderInput={(params) => <TextField {...params} label='Style' />}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <Autocomplete
+              id='sugar-autoC'
+              name='sugar'
+              value={sugar}
+              onChange={(event, newValue) => {
+                setBottle({ ...bottle, sugar: newValue });
+              }}
+              options={sugarOptions}
+              getOptionLabel={(option) => option}
+              renderInput={(params) => <TextField {...params} label='Sugar' />}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <Autocomplete
+              id='bubbles-autoC'
+              name='bubbles'
+              value={bubbles}
+              onChange={(event, newValue) => {
+                setBottle({ ...bottle, bubbles: newValue });
+              }}
+              options={bubbleOptions}
+              getOptionLabel={(option) => option}
+              renderInput={(params) => (
+                <TextField {...params} label='Bubbles' />
+              )}
+            />
+          </Grid>
+          <Grid item xs={2}>
+            <TextField
+              id='standard-basic'
+              name='quantity'
+              value={quantity}
+              onChange={(e) => handleChange(e)}
+              label='Quantity'
+              type='number'
+            />
+          </Grid>
+          <Grid item xs={2}>
+            <TextField
+              id='standard-basic'
+              name='currency'
+              value={currency}
+              onChange={(e) => handleChange(e)}
+              label='Currency'
+              select
+              fullWidth
+            >
+              {currencies.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </TextField>
+          </Grid>
+          <Grid item xs={2}>
+            <TextField
+              id='standard-basic'
+              name='price'
+              value={price}
+              onChange={(e) => handleChange(e)}
+              label='Price'
+              type='number'
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <TextField
+              id='standard-basic'
+              name='totalCost'
+              value={totalCost}
+              onChange={(e) => handleChange(e)}
+              label='Total Cost'
+              type='number'
+            />
+          </Grid>
+          <Grid item xs={2}>
+            <TextField
+              id='standard-basic'
+              name='size'
+              value={size}
+              onChange={(e) => handleChange(e)}
+              label='Bottle size'
+            />
+          </Grid>
+          <Grid item xs={2}>
+            <TextField
+              label='Alc %'
+              name='alcoholPct'
+              value={alcoholPct}
+              onChange={(e) => handleChange(e)}
+            />
+          </Grid>
+          <Grid item xs={5}>
+            <TextField
+              id='standard-basic'
+              name='vendor'
+              value={vendor}
+              onChange={(e) => handleChange(e)}
+              label='Vendor'
+            />
+          </Grid>
+          <Grid item xs={5}>
+            <TextField
+              id='standard-basic'
+              name='location'
+              value={location}
+              onChange={(e) => handleChange(e)}
+              label='Location'
+            />
+          </Grid>
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <Grid item xs={6}>
+              <KeyboardDatePicker
+                disableToolbar
+                variant='inline'
+                format='MM/dd/yyyy'
+                margin='normal'
+                id='date-picker-inline'
+                label='Date Purchased'
+                name='datePurchased'
+                value={datePurchased}
+                onChange={datePurchasedChange}
+                KeyboardButtonProps={{
+                  'aria-label': 'change date',
+                }}
               />
-            }
-            label={opened ? 'Opened' : 'Unopened'}
-          />
+            </Grid>
+            <Grid item xs={6}>
+              <KeyboardDatePicker
+                disableToolbar
+                variant='inline'
+                format='MM/dd/yyyy'
+                margin='normal'
+                id='date-picker-inline'
+                label='Date Received'
+                name='dateReceived'
+                value={dateReceived}
+                onChange={dateReceivedChange}
+                KeyboardButtonProps={{
+                  'aria-label': 'change date',
+                }}
+              />
+            </Grid>
+          </MuiPickersUtilsProvider>
+          <Grid item xs={6}>
+            <TextField
+              id='standard-basic'
+              label='Critic Scores'
+              value={criticsScore}
+              name='criticsScore'
+              onChange={(e) => handleChange(e)}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={opened}
+                  onChange={handleChange}
+                  name='opened'
+                  color='primary'
+                />
+              }
+              label={opened ? 'Opened' : 'Unopened'}
+            />
+          </Grid>
+          <Grid item xs={12} />
+          <Grid item xs={12}>
+            <TextField
+              id='outlined-multiline-static'
+              label='Notes'
+              value={notes}
+              multiline
+              rows={4}
+              variant='outlined'
+              fullWidth
+            />
+          </Grid>
         </Grid>
-        <Grid item xs={12} />
-        <Grid item xs={12}>
-          <TextField
-            id='outlined-multiline-static'
-            label='Notes'
-            value={notes}
-            multiline
-            rows={4}
-            variant='outlined'
-            fullWidth
-          />
-        </Grid>
-      </Grid>
 
-      <br />
-      <Button variant='contained' onClick={onBack}>
-        Back
-      </Button>
-      <Button variant='contained' onClick={onSubmit}>
-        Submit
-      </Button>
-    </form>
+        <br />
+        <Button variant='contained' onClick={onBack}>
+          Back
+        </Button>
+        <Button variant='contained' onClick={onSubmit}>
+          Submit
+        </Button>
+      </form>
+    </Paper>
   );
 };
 

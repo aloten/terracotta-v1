@@ -39,9 +39,9 @@ ul {
 
 /* Utilities */
 .container {
-  border: 1px solid black;
+  /* border: 10px solid black; */
   /* max-width: 1100px; */
-  /* height: '100vh'; */
+  height: '90vh';
   box-sizing: content-box;
   background-color: #f4f4f4;
   margin: none;
@@ -218,7 +218,7 @@ ul {
   padding: 0.7rem 2rem;
   z-index: 1;
   width: 100%;
-  border-bottom: solid 1px var(--primary-color);
+  border-bottom: solid 15px var(--secondary-color);
   opacity: 0.9;
   margin-bottom: 1rem;
 }

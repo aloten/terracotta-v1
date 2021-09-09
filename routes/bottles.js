@@ -82,6 +82,7 @@ router.post(
 router.get('/', auth, async (req, res) => {
   try {
     const bottles = await Bottle.find({ user: req.user.id }).sort({ date: -1 });
+
     res.json(bottles);
   } catch (error) {
     console.error(error.message);

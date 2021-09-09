@@ -25,14 +25,10 @@ const Inventory = () => {
     );
   }
 
-  if (bottles === null || bottles.length === 0) {
-    return <h4>Please add a bottle</h4>;
-  } else {
+  if (bottles !== null && bottles.length !== 0) {
     bottles.forEach((bottle) => {
       bottle.id = bottle._id;
-      if (bottle.country) {
-        bottle.country = bottle.country.name;
-      }
+      bottle.countryName = bottle.country.name;
       delete bottle.user;
     });
 
@@ -78,7 +74,7 @@ const Inventory = () => {
         width: 150,
       },
       {
-        field: 'country',
+        field: 'countryName',
         headerName: 'Country',
         width: 150,
       },
@@ -163,6 +159,7 @@ const Inventory = () => {
                 <DataGrid
                   rows={bottles}
                   columns={columns}
+                  rowHeight={25}
                   components={{
                     Toolbar: CustomToolbar,
                   }}
@@ -175,6 +172,8 @@ const Inventory = () => {
         )}
       </Fragment>
     );
+  } else {
+    return <h4>Please add a bottle</h4>;
   }
 };
 
