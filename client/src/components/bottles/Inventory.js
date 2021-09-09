@@ -28,7 +28,9 @@ const Inventory = () => {
   if (bottles !== null && bottles.length !== 0) {
     bottles.forEach((bottle) => {
       bottle.id = bottle._id;
-      bottle.countryName = bottle.country.name;
+      if (bottle.country) {
+        bottle.countryName = bottle.country.name;
+      }
       delete bottle.user;
     });
 

@@ -8,8 +8,8 @@ import {
   CLEAR_BOTTLES,
   FILTER_BOTTLES,
   CLEAR_FILTER,
-  NEXT_STEP,
-  PREV_STEP,
+  OPEN_BOTTLE_FORM,
+  CLOSE_BOTTLE_FORM,
   CHANGE_FORM,
 } from '../types';
 
@@ -90,15 +90,15 @@ const BottleReducer = (state, action) => {
         ...state,
         error: action.payload,
       };
-    case NEXT_STEP:
+    case OPEN_BOTTLE_FORM:
       return {
         ...state,
-        step: state.step + 1,
+        bottleFormOpen: true,
       };
-    case PREV_STEP:
+    case CLOSE_BOTTLE_FORM:
       return {
         ...state,
-        step: state.step - 1,
+        bottleFormOpen: false,
       };
     case CHANGE_FORM:
       return {

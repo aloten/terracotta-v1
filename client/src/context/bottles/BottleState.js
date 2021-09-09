@@ -10,8 +10,8 @@ import {
   CLEAR_BOTTLES,
   FILTER_BOTTLES,
   CLEAR_FILTER,
-  NEXT_STEP,
-  PREV_STEP,
+  OPEN_BOTTLE_FORM,
+  CLOSE_BOTTLE_FORM,
   CHANGE_FORM,
   CLEAR_FORM,
 } from '../types';
@@ -22,7 +22,7 @@ const BottleState = (props) => {
     bottles: null,
     filtered: null,
     error: null,
-    step: 1,
+    bottleFormOpen: false,
     bottleForm: {
       product: '',
       vintage: '',
@@ -120,14 +120,14 @@ const BottleState = (props) => {
     dispatch({ type: CLEAR_FILTER });
   };
 
-  // Increment step in bottle form
-  const nextStep = () => {
-    dispatch({ type: NEXT_STEP });
+  // Set bottle form dialog to open
+  const openBottleForm = () => {
+    dispatch({ type: OPEN_BOTTLE_FORM });
   };
 
-  // Decrement step in bottle form
-  const prevStep = () => {
-    dispatch({ type: PREV_STEP });
+  // Set bottle form dialog to close
+  const closeBottleForm = () => {
+    dispatch({ type: CLOSE_BOTTLE_FORM });
   };
 
   // Change bottle form
@@ -146,7 +146,7 @@ const BottleState = (props) => {
         bottles: state.bottles,
         filtered: state.filtered,
         error: state.error,
-        step: state.step,
+        bottleFormOpen: state.bottleFormOpen,
         bottleForm: state.bottleForm,
         getBottles,
         addBottle,
@@ -155,8 +155,8 @@ const BottleState = (props) => {
         clearBottles,
         filterBottles,
         clearFilter,
-        nextStep,
-        prevStep,
+        openBottleForm,
+        closeBottleForm,
         changeForm,
         clearForm,
       }}
