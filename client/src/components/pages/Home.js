@@ -1,17 +1,15 @@
-import React from 'react';
-import Bottles from '../bottles/Bottles';
+import React, { Fragment } from 'react';
 import BottleForm from '../bottles/form/BottleForm';
-import BottleFilter from '../bottles/BottleFilter';
+import Inventory from '../bottles/Inventory';
 
 const Home = () => {
   return (
-    <div className='grid-2'>
-      <BottleForm />
-      <div>
-        <BottleFilter />
-        <Bottles />
+    <Fragment>
+      <div className='grid-2'>
+        <BottleForm />
       </div>
-    </div>
+      <Inventory />
+    </Fragment>
   );
 };
 

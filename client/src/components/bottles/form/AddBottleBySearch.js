@@ -6,6 +6,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
 import uniqueBottles from '../../../data/uniqueBottlesSmall.json';
+import { Grid } from '@material-ui/core';
 
 const AddBottleBySearch = () => {
   const bottleContext = useContext(BottleContext);
@@ -39,33 +40,39 @@ const AddBottleBySearch = () => {
 
   return (
     <form onSubmit={onContinue}>
-      <Autocomplete
-        freeSolo
-        value={value}
-        onChange={(event, newValue) => {
-          setValue(newValue);
-        }}
-        inputValue={inputValue}
-        onInputChange={(event, newInputValue) => {
-          setInputValue(newInputValue);
-        }}
-        style={{ padding: '10px' }}
-        options={uniqueBottles}
-        getOptionLabel={(option) => option.product}
-        renderInput={(params) => (
-          <Fragment>
-            <TextField
-              {...params}
-              label='Search for a bottle'
-              variant='outlined'
-            />
-            <br />
-            <Button variant='contained' onClick={onContinue}>
-              Continue
-            </Button>
-          </Fragment>
-        )}
-      />
+      <Grid container spacing={1}>
+        <Grid item xs={6}>
+          <Autocomplete
+            size='small'
+            freeSolo
+            value={value}
+            onChange={(event, newValue) => {
+              setValue(newValue);
+            }}
+            inputValue={inputValue}
+            onInputChange={(event, newInputValue) => {
+              setInputValue(newInputValue);
+            }}
+            style={{ padding: '10px' }}
+            options={uniqueBottles}
+            getOptionLabel={(option) => option.product}
+            renderInput={(params) => (
+              <Fragment>
+                <TextField
+                  {...params}
+                  label='Search for a bottle'
+                  variant='outlined'
+                />
+              </Fragment>
+            )}
+          />
+        </Grid>
+        <Grid item xs={4} style={{ margin: 'auto 0' }}>
+          <Button variant='contained' onClick={onContinue}>
+            Continue
+          </Button>
+        </Grid>
+      </Grid>
     </form>
   );
 };
