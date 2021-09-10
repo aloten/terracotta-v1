@@ -9,6 +9,9 @@ const bottleSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  producer: {
+    type: String,
+  },
   vintage: {
     type: Number,
   },

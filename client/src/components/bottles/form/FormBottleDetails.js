@@ -1,14 +1,14 @@
 import React, { useContext, Fragment } from 'react';
 import BottleContext from '../../../context/bottles/BottleContext';
 
-import {
-  Grid,
-  TextField,
-  MenuItem,
-  FormControlLabel,
-  Switch,
-} from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
+import TextField from '@material-ui/core/TextField';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
+
 import Autocomplete from '@material-ui/lab/Autocomplete';
+
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,

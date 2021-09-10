@@ -1,7 +1,7 @@
 [
   {
     "CURRENT ISSUE": "handling data grid and home page layout before merging muiSweep branch with main",
-    "progress/notes": "working on data grid and "
+    "progress/notes": "working on edit row on DataGrid in Inventory, need to update data in grid after successful put request"
   },
   {
     "issue": "country prop is inacessible from bottles in bottleContext--using for data grid",

@@ -19,6 +19,7 @@ router.post(
 
     const {
       product,
+      producer,
       vintage,
       varietal,
       style,
@@ -45,6 +46,7 @@ router.post(
       const newBottle = new Bottle({
         user: req.user.id,
         product,
+        producer,
         vintage,
         varietal,
         style,
@@ -96,6 +98,7 @@ router.get('/', auth, async (req, res) => {
 router.put('/:id', auth, async (req, res) => {
   const {
     product,
+    producer,
     vintage,
     varietal,
     style,
@@ -120,6 +123,7 @@ router.put('/:id', auth, async (req, res) => {
 
   const bottleFields = {};
   if (product) bottleFields.product = product;
+  if (producer) bottleFields.producer = producer;
   if (vintage) bottleFields.vintage = vintage;
   if (varietal) bottleFields.varietal = varietal;
   if (style) bottleFields.style = style;

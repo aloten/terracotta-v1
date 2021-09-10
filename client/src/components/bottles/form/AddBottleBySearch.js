@@ -38,14 +38,15 @@ const AddBottleBySearch = () => {
             // onInputChange={(event, newInputValue) => {
             //   setInputValue(newInputValue);
             // }}
-            style={{ padding: '10px' }}
+            style={{ padding: '10px 0' }}
             options={uniqueBottles}
             getOptionLabel={(option) => option.product}
             renderInput={(params) => (
               <Fragment>
                 <TextField
                   {...params}
-                  label='Search for a bottle'
+                  label='Search for a bottle to add'
+                  style={{ background: 'white' }}
                   variant='outlined'
                   required
                 />

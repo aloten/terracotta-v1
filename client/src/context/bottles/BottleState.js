@@ -24,6 +24,7 @@ const BottleState = (props) => {
     error: null,
     bottleFormOpen: false,
     bottleForm: {
+      _id: null,
       product: '',
       vintage: '',
       producer: '',

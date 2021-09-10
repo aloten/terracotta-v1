@@ -10,8 +10,14 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 const FormDialog = () => {
   const bottleContext = useContext(BottleContext);
-  const { addBottle, bottleForm, bottleFormOpen, closeBottleForm, clearForm } =
-    bottleContext;
+  const {
+    addBottle,
+    updateBottle,
+    bottleForm,
+    bottleFormOpen,
+    closeBottleForm,
+    clearForm,
+  } = bottleContext;
 
   const handleClose = () => {
     closeBottleForm();
@@ -21,7 +27,10 @@ const FormDialog = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     if (bottleForm.product === '') {
-      // setAlert();
+      // TODO setAlert();
+    } else if (bottleForm._id !== null) {
+      updateBottle(bottleForm);
+      handleClose();
     } else {
       addBottle(bottleForm);
       handleClose();

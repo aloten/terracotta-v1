@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, Fragment } from 'react';
+import React, { useContext, useState, useEffect, Fragment } from 'react';
 import BottleContext from '../../context/bottles/BottleContext';
 import Spinner from '../layout/Spinner';
 
@@ -6,31 +6,81 @@ import {
   DataGrid,
   GridToolbarContainer,
   GridToolbarExport,
+  GridToolbarColumnsButton,
+  GridToolbarFilterButton,
+  GridToolbarDensitySelector,
 } from '@mui/x-data-grid';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
 
 const Inventory = () => {
   const bottleContext = useContext(BottleContext);
-  const { getBottles, bottles } = bottleContext;
+  const { deleteBottle, getBottles, bottles, changeForm, openBottleForm } =
+    bottleContext;
 
   useEffect(() => {
     getBottles();
     // eslint-disable-next-line
   }, []);
 
-  function CustomToolbar() {
+  const [selected, setSelected] = useState(null);
+
+  const [actions, setActions] = useState({
+    delete: false,
+    edit: true,
+  });
+
+  useEffect(() => {
+    if (selected !== null) {
+      if (actions.delete === true) {
+        deleteBottle(
+          bottles[bottles.findIndex((bottle) => bottle.id === selected)]._id
+        );
+        setActions({ ...actions, delete: false });
+        setSelected(null);
+      } else if (actions.edit === true) {
+        console.log(bottles);
+        const bottle =
+          bottles[bottles.findIndex((bottle) => bottle.id === selected)];
+        delete bottle.id;
+        for (const prop in bottle) {
+          changeForm(prop, bottle[prop]);
+        }
+        openBottleForm();
+        setActions({ ...actions, edit: false });
+      }
+    }
+    // eslint-disable-next-line
+  }, [actions]);
+
+  const onSelectionModelChange = (model) => {
+    setSelected(model[0]);
+  };
+
+  const onDelete = () => {
+    setActions({ ...actions, delete: true });
+  };
+
+  const onEdit = () => {
+    setActions({ ...actions, edit: true });
+  };
+
+  const CustomToolbar = () => {
     return (
       <GridToolbarContainer>
+        <GridToolbarColumnsButton />
+        <GridToolbarFilterButton />
+        <GridToolbarDensitySelector />
         <GridToolbarExport />
       </GridToolbarContainer>
     );
-  }
+  };
 
+  // format data for data grid rows
   if (bottles !== null && bottles.length !== 0) {
     bottles.forEach((bottle) => {
       bottle.id = bottle._id;
-      if (bottle.country) {
-        bottle.countryName = bottle.country.name;
-      }
       delete bottle.user;
     });
 
@@ -44,51 +94,22 @@ const Inventory = () => {
         field: 'product',
         headerName: 'Product',
         width: 200,
+        renderCell: (params) => (
+          <Fragment>
+            <IconButton onClick={onEdit}>
+              <EditIcon />
+            </IconButton>
+            <IconButton onClick={onDelete}>
+              <DeleteIcon />
+            </IconButton>
+            {params.value}
+          </Fragment>
+        ),
       },
       {
         field: 'vintage',
         headerName: 'Vintage',
-        width: 90,
-      },
-      {
-        field: 'varietal',
-        headerName: 'Varietal',
-        width: 150,
-      },
-      {
-        field: 'style',
-        headerName: 'Style',
-        width: 150,
-      },
-      {
-        field: 'sugar',
-        headerName: 'Sugar',
-        width: 150,
-      },
-      {
-        field: 'bubbles',
-        headerName: 'Bubbles',
-        width: 150,
-      },
-      {
-        field: 'region',
-        headerName: 'Region',
-        width: 150,
-      },
-      {
-        field: 'countryName',
-        headerName: 'Country',
-        width: 150,
-      },
-      {
-        field: 'criticsScore',
-        headerName: 'Critic Scores',
-        width: 150,
-      },
-      {
-        field: 'size',
-        headerName: 'Size',
-        width: 100,
+        width: 120,
       },
       {
         field: 'datePurchased',
@@ -103,17 +124,17 @@ const Inventory = () => {
       {
         field: 'quantity',
         headerName: 'Quantity',
-        width: 150,
+        width: 120,
       },
       {
         field: 'currency',
         headerName: 'Currency',
-        width: 90,
+        width: 130,
       },
       {
         field: 'price',
         headerName: 'Price',
-        width: 100,
+        width: 110,
       },
       {
         field: 'totalCost',
@@ -126,36 +147,24 @@ const Inventory = () => {
         width: 150,
       },
       {
-        field: 'location',
-        headerName: 'Location',
-        width: 150,
-      },
-      {
-        field: 'notes',
-        headerName: 'Notes',
-        width: 150,
-      },
-      {
-        field: 'alcoholPct',
-        headerName: 'Alc %',
-        width: 100,
-      },
-      {
-        field: 'opened',
-        headerName: 'Opened',
-        width: 100,
-      },
-      {
         field: 'dateAdded',
         headerName: 'Date Added',
         width: 150,
+        hide: true,
       },
     ];
 
     return (
       <Fragment>
         {bottles !== null ? (
-          <div style={{ height: 500, width: '100%' }}>
+          <div
+            style={{
+              height: 500,
+              width: '100%',
+              background: 'white',
+              marginBottom: '30px',
+            }}
+          >
             <div style={{ display: 'flex', height: '100%' }}>
               <div style={{ flexGrow: 1 }}>
                 <DataGrid
@@ -165,6 +174,8 @@ const Inventory = () => {
                   components={{
                     Toolbar: CustomToolbar,
                   }}
+                  hideFooterSelectedRowCount
+                  onSelectionModelChange={onSelectionModelChange}
                 />
               </div>
             </div>
