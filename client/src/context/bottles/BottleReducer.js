@@ -10,7 +10,7 @@ import {
   CLEAR_FILTER,
   OPEN_BOTTLE_FORM,
   CLOSE_BOTTLE_FORM,
-  CHANGE_FORM,
+  CHANGE_FORM_PROP,
 } from '../types';
 
 const BottleReducer = (state, action) => {
@@ -100,7 +100,7 @@ const BottleReducer = (state, action) => {
         ...state,
         bottleFormOpen: false,
       };
-    case CHANGE_FORM:
+    case CHANGE_FORM_PROP:
       return {
         ...state,
         bottleForm: {

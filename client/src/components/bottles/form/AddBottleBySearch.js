@@ -9,7 +9,7 @@ import { Grid } from '@material-ui/core';
 
 const AddBottleBySearch = () => {
   const bottleContext = useContext(BottleContext);
-  const { openBottleForm, changeForm } = bottleContext;
+  const { openBottleForm, changeFormProp } = bottleContext;
 
   const [value, setValue] = useState(null);
   // const [inputValue, setInputValue] = useState('');
@@ -17,8 +17,12 @@ const AddBottleBySearch = () => {
   const onContinue = (e) => {
     e.preventDefault();
     for (const key in value) {
-      changeForm(key, value[key]);
+      if (value[key] !== '') {
+        changeFormProp(key, value[key]);
+      }
     }
+    changeFormProp('totalCost', parseFloat(value['price']));
+
     setValue(null);
     openBottleForm();
   };

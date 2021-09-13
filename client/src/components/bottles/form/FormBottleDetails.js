@@ -17,10 +17,11 @@ import DateFnsUtils from '@date-io/date-fns';
 
 import countries from '../../../data/countries.json';
 import varietals from '../../../data/varietals';
+import currencies from '../../../data/currencies';
 
 const FormBottleDetails = () => {
   const bottleContext = useContext(BottleContext);
-  const { bottleForm, changeForm } = bottleContext;
+  const { bottleForm, changeFormProp } = bottleContext;
 
   const {
     product,
@@ -55,37 +56,37 @@ const FormBottleDetails = () => {
     ) {
       handlePriceCalc(e);
     } else if (e.target.name === 'opened') {
-      changeForm(e.target.name, e.target.checked);
+      changeFormProp(e.target.name, e.target.checked);
     } else {
-      changeForm(e.target.name, e.target.value);
+      changeFormProp(e.target.name, e.target.value);
     }
   };
 
   // Dynamically update price, quantity, and total cost
   const handlePriceCalc = (e) => {
     if (e.target.name === 'totalCost') {
-      changeForm('totalCost', parseFloat(e.target.value));
-      changeForm('price', parseFloat(e.target.value) / quantity);
+      changeFormProp('totalCost', parseFloat(e.target.value));
+      changeFormProp('price', parseFloat(e.target.value) / quantity);
     } else if (e.target.name === 'price') {
-      changeForm('price', parseFloat(e.target.value));
-      changeForm('totalCost', parseFloat(e.target.value) * quantity);
+      changeFormProp('price', parseFloat(e.target.value));
+      changeFormProp('totalCost', parseFloat(e.target.value) * quantity);
     } else if (e.target.name === 'quantity' && (price > 0 || totalCost > 0)) {
       if (price > 0) {
-        changeForm('quantity', parseFloat(e.target.value));
-        changeForm('totalCost', parseFloat(e.target.value) * price);
+        changeFormProp('quantity', parseFloat(e.target.value));
+        changeFormProp('totalCost', parseFloat(e.target.value) * price);
       } else {
-        changeForm('totalCost', parseFloat(e.target.value));
-        changeForm('price', totalCost / parseFloat(e.target.value));
+        changeFormProp('totalCost', parseFloat(e.target.value));
+        changeFormProp('price', totalCost / parseFloat(e.target.value));
       }
     }
   };
 
   const datePurchasedChange = (date) => {
-    changeForm('datePurchased', date);
+    changeFormProp('datePurchased', date);
   };
 
   const dateReceivedChange = (date) => {
-    changeForm('dateReceived', date);
+    changeFormProp('dateReceived', date);
   };
 
   const countryToFlag = (isoCode) => {
@@ -128,29 +129,6 @@ const FormBottleDetails = () => {
     'Medium Dry',
     'Medium',
     'Bitter',
-  ];
-
-  const currencies = [
-    {
-      value: 'USD',
-      label: '$',
-    },
-    {
-      value: 'GBP',
-      label: '£',
-    },
-    {
-      value: 'EUR',
-      label: '€',
-    },
-    {
-      value: 'BTC',
-      label: '฿',
-    },
-    {
-      value: 'JPY',
-      label: '¥',
-    },
   ];
 
   const bubbleOptions = ['Still', 'Sparkling', 'Nouveau'];
@@ -202,7 +180,7 @@ const FormBottleDetails = () => {
             name='country'
             value={country}
             onChange={(event, newValue) => {
-              changeForm('country', newValue);
+              changeFormProp('country', newValue);
             }}
             options={countries}
             getOptionSelected={(option, value) => option.code === value.code}
@@ -222,7 +200,7 @@ const FormBottleDetails = () => {
             name='varietal'
             value={varietal}
             onChange={(event, newValue) => {
-              changeForm('varietal', newValue);
+              changeFormProp('varietal', newValue);
             }}
             options={varietals}
             getOptionLabel={(option) => option}
@@ -235,7 +213,7 @@ const FormBottleDetails = () => {
             name='style'
             value={style}
             onChange={(event, newValue) => {
-              changeForm('style', newValue);
+              changeFormProp('style', newValue);
             }}
             options={styleOptions}
             getOptionLabel={(option) => option}
@@ -248,7 +226,7 @@ const FormBottleDetails = () => {
             name='sugar'
             value={sugar}
             onChange={(event, newValue) => {
-              changeForm('sugar', newValue);
+              changeFormProp('sugar', newValue);
             }}
             options={sugarOptions}
             getOptionLabel={(option) => option}
@@ -261,7 +239,7 @@ const FormBottleDetails = () => {
             name='bubbles'
             value={bubbles}
             onChange={(event, newValue) => {
-              changeForm('bubbles', newValue);
+              changeFormProp('bubbles', newValue);
             }}
             options={bubbleOptions}
             getOptionLabel={(option) => option}

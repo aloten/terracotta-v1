@@ -27,8 +27,9 @@ const FormDialog = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     if (bottleForm.product === '') {
+      return;
       // TODO setAlert();
-    } else if (bottleForm._id !== null) {
+    } else if (bottleForm._id) {
       updateBottle(bottleForm);
       handleClose();
     } else {

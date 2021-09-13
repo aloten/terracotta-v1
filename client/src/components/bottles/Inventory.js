@@ -1,6 +1,5 @@
 import React, { useContext, useState, useEffect, Fragment } from 'react';
 import BottleContext from '../../context/bottles/BottleContext';
-import Spinner from '../layout/Spinner';
 
 import {
   DataGrid,
@@ -14,9 +13,11 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 
+// import currencies from '../../data/currencies';
+
 const Inventory = () => {
   const bottleContext = useContext(BottleContext);
-  const { deleteBottle, getBottles, bottles, changeForm, openBottleForm } =
+  const { deleteBottle, getBottles, bottles, setForm, openBottleForm } =
     bottleContext;
 
   useEffect(() => {
@@ -40,13 +41,13 @@ const Inventory = () => {
         setActions({ ...actions, delete: false });
         setSelected(null);
       } else if (actions.edit === true) {
-        console.log(bottles);
         const bottle =
           bottles[bottles.findIndex((bottle) => bottle.id === selected)];
         delete bottle.id;
-        for (const prop in bottle) {
-          changeForm(prop, bottle[prop]);
-        }
+        delete bottle.dateReceivedStr;
+        delete bottle.datePurchasedStr;
+        delete bottle.dateAddedStr;
+        setForm(bottle);
         openBottleForm();
         setActions({ ...actions, edit: false });
       }
@@ -81,113 +82,126 @@ const Inventory = () => {
   if (bottles !== null && bottles.length !== 0) {
     bottles.forEach((bottle) => {
       bottle.id = bottle._id;
-      delete bottle.user;
+      if (bottle.dateReceived) {
+        const year = bottle.dateReceived.slice(0, 4);
+        const month = bottle.dateReceived.slice(5, 7);
+        const day = bottle.dateReceived.slice(8, 10);
+        bottle.dateReceivedStr = month + '/' + day + '/' + year;
+      }
+      if (bottle.datePurchased) {
+        const year = bottle.datePurchased.slice(0, 4);
+        const month = bottle.datePurchased.slice(5, 7);
+        const day = bottle.datePurchased.slice(8, 10);
+        bottle.datePurchasedStr = month + '/' + day + '/' + year;
+      }
+      if (bottle.dateAdded) {
+        const year = bottle.dateAdded.slice(0, 4);
+        const month = bottle.dateAdded.slice(5, 7);
+        const day = bottle.dateAdded.slice(8, 10);
+        bottle.dateAddedStr = month + '/' + day + '/' + year;
+      }
     });
-
-    const columns = [
-      {
-        field: 'id',
-        headerName: 'ID',
-        hide: true,
-      },
-      {
-        field: 'product',
-        headerName: 'Product',
-        width: 200,
-        renderCell: (params) => (
-          <Fragment>
-            <IconButton onClick={onEdit}>
-              <EditIcon />
-            </IconButton>
-            <IconButton onClick={onDelete}>
-              <DeleteIcon />
-            </IconButton>
-            {params.value}
-          </Fragment>
-        ),
-      },
-      {
-        field: 'vintage',
-        headerName: 'Vintage',
-        width: 120,
-      },
-      {
-        field: 'datePurchased',
-        headerName: 'Date Purchased',
-        width: 150,
-      },
-      {
-        field: 'dateReceived',
-        headerName: 'Date Received',
-        width: 150,
-      },
-      {
-        field: 'quantity',
-        headerName: 'Quantity',
-        width: 120,
-      },
-      {
-        field: 'currency',
-        headerName: 'Currency',
-        width: 130,
-      },
-      {
-        field: 'price',
-        headerName: 'Price',
-        width: 110,
-      },
-      {
-        field: 'totalCost',
-        headerName: 'Total Cost',
-        width: 150,
-      },
-      {
-        field: 'vendor',
-        headerName: 'Vendor',
-        width: 150,
-      },
-      {
-        field: 'dateAdded',
-        headerName: 'Date Added',
-        width: 150,
-        hide: true,
-      },
-    ];
-
-    return (
-      <Fragment>
-        {bottles !== null ? (
-          <div
-            style={{
-              height: 500,
-              width: '100%',
-              background: 'white',
-              marginBottom: '30px',
-            }}
-          >
-            <div style={{ display: 'flex', height: '100%' }}>
-              <div style={{ flexGrow: 1 }}>
-                <DataGrid
-                  rows={bottles}
-                  columns={columns}
-                  rowHeight={25}
-                  components={{
-                    Toolbar: CustomToolbar,
-                  }}
-                  hideFooterSelectedRowCount
-                  onSelectionModelChange={onSelectionModelChange}
-                />
-              </div>
-            </div>
-          </div>
-        ) : (
-          <Spinner />
-        )}
-      </Fragment>
-    );
-  } else {
-    return <h4>Please add a bottle</h4>;
   }
+
+  const columns = [
+    {
+      field: 'id',
+      headerName: 'ID',
+      hide: true,
+    },
+    {
+      field: 'product',
+      headerName: 'Product',
+      width: 300,
+      headerAlign: 'center',
+      renderCell: (params) => (
+        <Fragment>
+          <IconButton onClick={onEdit}>
+            <EditIcon />
+          </IconButton>
+          <IconButton onClick={onDelete}>
+            <DeleteIcon />
+          </IconButton>
+          {params.value}
+        </Fragment>
+      ),
+    },
+    {
+      field: 'vintage',
+      headerName: 'Vin.',
+      description: 'Vintage',
+      width: 120,
+    },
+    {
+      field: 'quantity',
+      headerName: '#',
+      description: 'Quantity',
+      width: 85,
+    },
+    {
+      field: 'currency',
+      headerName: 'Currency',
+      width: 100,
+    },
+    {
+      field: 'price',
+      headerName: 'Price',
+      width: 110,
+      renderCell: (params) => <Fragment>{params.value}</Fragment>,
+    },
+    {
+      field: 'totalCost',
+      headerName: 'Total Cost',
+      width: 150,
+    },
+    {
+      field: 'datePurchasedStr',
+      headerName: 'Date Purchased',
+      width: 150,
+    },
+    {
+      field: 'dateReceivedStr',
+      headerName: 'Date Received',
+      width: 150,
+    },
+    {
+      field: 'vendor',
+      headerName: 'Vendor',
+      width: 150,
+    },
+    {
+      field: 'dateAddedStr',
+      headerName: 'Date Added',
+      width: 150,
+      hide: true,
+    },
+  ];
+
+  return (
+    <div
+      style={{
+        height: 500,
+        width: '100%',
+        background: 'white',
+        marginBottom: '30px',
+      }}
+    >
+      <div style={{ display: 'flex', height: '100%' }}>
+        <div style={{ flexGrow: 1 }}>
+          <DataGrid
+            rows={bottles ? bottles : []}
+            columns={columns}
+            rowHeight={25}
+            components={{
+              Toolbar: CustomToolbar,
+            }}
+            hideFooterSelectedRowCount
+            onSelectionModelChange={onSelectionModelChange}
+          />
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Inventory;

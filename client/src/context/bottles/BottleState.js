@@ -12,7 +12,7 @@ import {
   CLEAR_FILTER,
   OPEN_BOTTLE_FORM,
   CLOSE_BOTTLE_FORM,
-  CHANGE_FORM,
+  CHANGE_FORM_PROP,
   CLEAR_FORM,
 } from '../types';
 import axios from 'axios';
@@ -131,9 +131,16 @@ const BottleState = (props) => {
     dispatch({ type: CLOSE_BOTTLE_FORM });
   };
 
-  // Change bottle form
-  const changeForm = (key, value) => {
-    dispatch({ type: CHANGE_FORM, payload: { key, value } });
+  // Set form to bottle
+  const setForm = (bottle) => {
+    for (const prop in bottle) {
+      changeFormProp(prop, bottle[prop]);
+    }
+  };
+
+  // Change bottle form property
+  const changeFormProp = (key, value) => {
+    dispatch({ type: CHANGE_FORM_PROP, payload: { key, value } });
   };
 
   // Clear form
@@ -158,7 +165,8 @@ const BottleState = (props) => {
         clearFilter,
         openBottleForm,
         closeBottleForm,
-        changeForm,
+        setForm,
+        changeFormProp,
         clearForm,
       }}
     >

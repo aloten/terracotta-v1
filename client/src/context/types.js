@@ -18,5 +18,5 @@ export const LOGOUT = 'LOGOUT';
 export const CLEAR_ERRORS = 'CLEAR_ERRORS';
 export const OPEN_BOTTLE_FORM = 'OPEN_BOTTLE_FORM';
 export const CLOSE_BOTTLE_FORM = 'CLOSE_BOTTLE_FORM';
-export const CHANGE_FORM = 'CHANGE_FORM';
+export const CHANGE_FORM_PROP = 'CHANGE_FORM_PROP';
 export const CLEAR_FORM = 'CLEAR_FORM';
