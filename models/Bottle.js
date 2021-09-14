@@ -72,7 +72,7 @@ const bottleSchema = new mongoose.Schema({
     type: String,
   },
   alcoholPct: {
-    type: Number,
+    type: String,
   },
   opened: {
     type: Boolean,

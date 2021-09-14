@@ -277,7 +277,7 @@ const FormBottleDetails = () => {
           <TextField
             id='standard-basic'
             name='price'
-            value={price}
+            value={isNaN(price) ? '' : price}
             onChange={(e) => handleChange(e)}
             label='Price'
             type='number'
@@ -287,7 +287,7 @@ const FormBottleDetails = () => {
           <TextField
             id='standard-basic'
             name='totalCost'
-            value={totalCost}
+            value={isNaN(totalCost) ? '' : totalCost}
             onChange={(e) => handleChange(e)}
             label='Total Cost'
             type='number'
