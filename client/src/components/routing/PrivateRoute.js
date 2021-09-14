@@ -1,12 +1,17 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import AuthContext from '../../context/auth/AuthContext';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { loadUser } from '../../actions/authActions';
+
 import Spinner from '../layout/Spinner';
 
-const PrivateRoute = ({ component: Component, ...rest }) => {
-  const authContext = useContext(AuthContext);
-  const { isAuthenticated, loading, loadUser } = authContext;
-
+const PrivateRoute = ({
+  component: Component,
+  authState: { isAuthenticated, loading },
+  loadUser,
+  ...rest
+}) => {
   useEffect(() => {
     loadUser();
     // eslint-disable-next-line
@@ -28,4 +33,14 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   );
 };
 
-export default PrivateRoute;
+PrivateRoute.propTypes = {
+  authState: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  authState: state.authState,
+});
+
+export default connect(mapStateToProps, {
+  loadUser,
+})(PrivateRoute);

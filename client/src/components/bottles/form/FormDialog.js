@@ -1,5 +1,12 @@
-import React, { useContext } from 'react';
-import BottleContext from '../../../context/bottles/BottleContext';
+import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import {
+  addBottle,
+  updateBottle,
+  closeBottleForm,
+  clearForm,
+} from '../../../actions/bottleActions';
 import FormBottleDetails from './FormBottleDetails';
 
 import Button from '@material-ui/core/Button';
@@ -8,17 +15,13 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-const FormDialog = () => {
-  const bottleContext = useContext(BottleContext);
-  const {
-    addBottle,
-    updateBottle,
-    bottleForm,
-    bottleFormOpen,
-    closeBottleForm,
-    clearForm,
-  } = bottleContext;
-
+const FormDialog = ({
+  bottleState: { bottleForm, bottleFormOpen },
+  addBottle,
+  updateBottle,
+  closeBottleForm,
+  clearForm,
+}) => {
   const handleClose = () => {
     closeBottleForm();
     clearForm();
@@ -58,4 +61,17 @@ const FormDialog = () => {
   );
 };
 
-export default FormDialog;
+FormDialog.propTypes = {
+  bottleState: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  bottleState: state.bottleState,
+});
+
+export default connect(mapStateToProps, {
+  addBottle,
+  updateBottle,
+  closeBottleForm,
+  clearForm,
+})(FormDialog);

@@ -1,5 +1,12 @@
-import React, { useContext, useState, useEffect, Fragment } from 'react';
-import BottleContext from '../../context/bottles/BottleContext';
+import React, { useState, useEffect, Fragment } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import {
+  deleteBottle,
+  getBottles,
+  changeFormProp,
+  openBottleForm,
+} from '../../actions/bottleActions';
 
 import {
   DataGrid,
@@ -15,11 +22,13 @@ import EditIcon from '@material-ui/icons/Edit';
 
 // import currencies from '../../data/currencies';
 
-const Inventory = () => {
-  const bottleContext = useContext(BottleContext);
-  const { deleteBottle, getBottles, bottles, setForm, openBottleForm } =
-    bottleContext;
-
+const Inventory = ({
+  bottleState: { bottles },
+  deleteBottle,
+  getBottles,
+  changeFormProp,
+  openBottleForm,
+}) => {
   useEffect(() => {
     getBottles();
     // eslint-disable-next-line
@@ -47,7 +56,9 @@ const Inventory = () => {
         delete bottle.dateReceivedStr;
         delete bottle.datePurchasedStr;
         delete bottle.dateAddedStr;
-        setForm(bottle);
+        for (const prop in bottle) {
+          changeFormProp(prop, bottle[prop]);
+        }
         openBottleForm();
         setActions({ ...actions, edit: false });
       }
@@ -204,4 +215,17 @@ const Inventory = () => {
   );
 };
 
-export default Inventory;
+Inventory.propTypes = {
+  bottleState: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  bottleState: state.bottleState,
+});
+
+export default connect(mapStateToProps, {
+  deleteBottle,
+  getBottles,
+  changeFormProp,
+  openBottleForm,
+})(Inventory);

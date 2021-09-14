@@ -11,9 +11,41 @@ import {
   OPEN_BOTTLE_FORM,
   CLOSE_BOTTLE_FORM,
   CHANGE_FORM_PROP,
-} from '../types';
+} from '../actions/types';
 
-const BottleReducer = (state, action) => {
+const initialState = {
+  bottles: null,
+  filtered: null,
+  error: null,
+  bottleFormOpen: false,
+  bottleForm: {
+    _id: null,
+    product: '',
+    vintage: '',
+    producer: '',
+    region: '',
+    country: null,
+    varietal: null,
+    style: null,
+    sugar: null,
+    bubbles: null,
+    criticsScore: '',
+    quantity: 1,
+    currency: 'USD',
+    price: 0,
+    totalCost: 0,
+    size: '',
+    alcoholPct: '',
+    vendor: '',
+    location: '',
+    datePurchased: null,
+    dateReceived: null,
+    opened: false,
+    notes: '',
+  },
+};
+
+const BottleReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_BOTTLES:
       return {

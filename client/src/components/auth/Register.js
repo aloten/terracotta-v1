@@ -1,7 +1,10 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { register, loadUser, clearErrors } from '../../actions/authActions';
+import { setAlert, removeAlert } from '../../actions/alertActions';
+
 import { useHistory } from 'react-router-dom';
-import AlertContext from '../../context/alert/AlertContext';
-import AuthContext from '../../context/auth/AuthContext';
 import { Link } from 'react-router-dom';
 
 import Button from '@material-ui/core/Button';
@@ -49,13 +52,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Register = () => {
-  const authContext = useContext(AuthContext);
-  const { register, isAuthenticated, error, clearErrors } = authContext;
-
-  const alertContext = useContext(AlertContext);
-  const { setAlert, registerAlerts } = alertContext;
-
+const Register = ({
+  authState: { error, isAuthenticated },
+  register,
+  loadUser,
+  clearErrors,
+  alertState: { registerAlerts },
+  setAlert,
+  removeAlert,
+}) => {
   const classes = useStyles();
 
   const history = useHistory();
@@ -68,7 +73,9 @@ const Register = () => {
       // setAlert(error.msg, 'register');
       // clearErrors();
     } else {
-      setAlert(error, 'register');
+      setAlert(error, 'register').then((id, timeout) => {
+        removeAlert(id, timeout);
+      });
       clearErrors();
     }
 
@@ -96,15 +103,21 @@ const Register = () => {
       password === '' ||
       password2 === ''
     ) {
-      setAlert('Please fill in all fields', 'register');
+      setAlert('Please fill in all fields', 'register').then((id, timeout) => {
+        removeAlert(id, timeout);
+      });
     } else if (password !== password2) {
-      setAlert('Passwords must match', 'register');
+      setAlert('Passwords must match', 'register').then((id, timeout) => {
+        removeAlert(id, timeout);
+      });
     } else {
       register({
         firstName,
         lastName,
         email,
         password,
+      }).then(() => {
+        loadUser();
       });
     }
   };
@@ -261,4 +274,20 @@ const Register = () => {
   );
 };
 
-export default Register;
+Register.propTypes = {
+  authState: PropTypes.object.isRequired,
+  alertState: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  authState: state.authState,
+  alertState: state.alertState,
+});
+
+export default connect(mapStateToProps, {
+  register,
+  loadUser,
+  clearErrors,
+  setAlert,
+  removeAlert,
+})(Register);

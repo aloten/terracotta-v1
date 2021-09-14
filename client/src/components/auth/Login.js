@@ -1,7 +1,10 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { login, loadUser, clearErrors } from '../../actions/authActions';
+import { setAlert, removeAlert } from '../../actions/alertActions';
+
 import { useHistory } from 'react-router-dom';
-import AlertContext from '../../context/alert/AlertContext';
-import AuthContext from '../../context/auth/AuthContext';
 
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
@@ -51,13 +54,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Login = () => {
-  const authContext = useContext(AuthContext);
-  const { login, error, isAuthenticated, clearErrors } = authContext;
-
-  const alertContext = useContext(AlertContext);
-  const { setAlert, loginAlerts } = alertContext;
-
+const Login = ({
+  authState: { error, isAuthenticated },
+  login,
+  loadUser,
+  clearErrors,
+  alertState: { loginAlerts },
+  setAlert,
+  removeAlert,
+}) => {
   const classes = useStyles();
 
   const history = useHistory();
@@ -68,7 +73,9 @@ const Login = () => {
     }
 
     if (error) {
-      setAlert(error, 'login');
+      setAlert(error, 'login').then((id, timeout) => {
+        removeAlert(id, timeout);
+      });
       clearErrors();
     }
     // eslint-disable-next-line
@@ -95,11 +102,15 @@ const Login = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     if (email === '' || password === '') {
-      setAlert('Please fill in all fields', 'login');
+      setAlert('Please fill in all fields', 'login').then((id, timeout) => {
+        removeAlert(id, timeout);
+      });
     } else {
       login({
         email,
         password,
+      }).then(() => {
+        loadUser();
       });
     }
   };
@@ -196,4 +207,20 @@ const Login = () => {
   );
 };
 
-export default Login;
+Login.propTypes = {
+  authState: PropTypes.object.isRequired,
+  alertState: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  authState: state.authState,
+  alertState: state.alertState,
+});
+
+export default connect(mapStateToProps, {
+  login,
+  loadUser,
+  clearErrors,
+  setAlert,
+  removeAlert,
+})(Login);

@@ -1,16 +1,17 @@
-import React, { Fragment, useContext } from 'react';
+import React, { Fragment } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import AuthContext from '../../context/auth/AuthContext';
-import BottleContext from '../../context/bottles/BottleContext';
+import { clearBottles } from '../../actions/bottleActions';
+import { logout } from '../../actions/authActions';
 import { Link } from 'react-router-dom';
 
-const Navbar = ({ title, icon }) => {
-  const authContext = useContext(AuthContext);
-  const { logout, isAuthenticated, user } = authContext;
-
-  const bottleContext = useContext(BottleContext);
-  const { clearBottles } = bottleContext;
-
+const Navbar = ({
+  title,
+  icon,
+  clearBottles,
+  authState: { isAuthenticated, user },
+  logout,
+}) => {
   const onLogout = () => {
     logout();
     clearBottles();
@@ -61,6 +62,8 @@ const Navbar = ({ title, icon }) => {
 Navbar.propTypes = {
   title: PropTypes.string.isRequired,
   icon: PropTypes.string,
+  bottleState: PropTypes.object.isRequired,
+  authState: PropTypes.object.isRequired,
 };
 
 Navbar.defaultProps = {
@@ -68,4 +71,12 @@ Navbar.defaultProps = {
   icon: 'fas fa-wine-bottle',
 };
 
-export default Navbar;
+const mapStateToProps = (state) => ({
+  bottleState: state.bottleState,
+  authState: state.authState,
+});
+
+export default connect(mapStateToProps, {
+  logout,
+  clearBottles,
+})(Navbar);

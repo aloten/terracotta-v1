@@ -1,5 +1,7 @@
-import React, { Fragment, useContext, useState } from 'react';
-import BottleContext from '../../../context/bottles/BottleContext';
+import React, { Fragment, useState } from 'react';
+import { connect } from 'react-redux';
+import { openBottleForm, changeFormProp } from '../../../actions/bottleActions';
+
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -7,10 +9,7 @@ import Button from '@material-ui/core/Button';
 import uniqueBottles from '../../../data/uniqueBottlesSmall.json';
 import { Grid } from '@material-ui/core';
 
-const AddBottleBySearch = () => {
-  const bottleContext = useContext(BottleContext);
-  const { openBottleForm, changeFormProp } = bottleContext;
-
+const AddBottleBySearch = ({ openBottleForm, changeFormProp }) => {
   const [value, setValue] = useState(null);
   // const [inputValue, setInputValue] = useState('');
 
@@ -68,4 +67,6 @@ const AddBottleBySearch = () => {
   );
 };
 
-export default AddBottleBySearch;
+export default connect(null, { openBottleForm, changeFormProp })(
+  AddBottleBySearch
+);

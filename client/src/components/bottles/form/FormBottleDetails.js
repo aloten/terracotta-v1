@@ -1,5 +1,7 @@
-import React, { useContext, Fragment } from 'react';
-import BottleContext from '../../../context/bottles/BottleContext';
+import React, { Fragment } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { changeFormProp } from '../../../actions/bottleActions';
 
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
@@ -19,10 +21,7 @@ import countries from '../../../data/countries.json';
 import varietals from '../../../data/varietals';
 import currencies from '../../../data/currencies';
 
-const FormBottleDetails = () => {
-  const bottleContext = useContext(BottleContext);
-  const { bottleForm, changeFormProp } = bottleContext;
-
+const FormBottleDetails = ({ bottleState: { bottleForm }, changeFormProp }) => {
   const {
     product,
     vintage,
@@ -401,4 +400,14 @@ const FormBottleDetails = () => {
   );
 };
 
-export default FormBottleDetails;
+FormBottleDetails.propTypes = {
+  bottleState: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  bottleState: state.bottleState,
+});
+
+export default connect(mapStateToProps, {
+  changeFormProp,
+})(FormBottleDetails);
