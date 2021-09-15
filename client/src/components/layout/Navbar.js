@@ -19,7 +19,7 @@ const Navbar = ({
 
   const authLinks = (
     <Fragment>
-      <li>Hello, {user && user.firstName}</li>
+      <li>Hi, {user && user.firstName}</li>
       <li>
         <Link to='/'>Home</Link>
       </li>

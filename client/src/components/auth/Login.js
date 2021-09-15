@@ -78,10 +78,12 @@ const Login = ({
     }
 
     if (error) {
-      setAlert(error, 'login').then((id, timeout) => {
-        removeAlert(id, timeout);
-      });
-      clearErrors();
+      if (error !== 'No token, authorization denied.') {
+        setAlert(error, 'login').then((id, timeout) => {
+          removeAlert(id, timeout);
+        });
+        clearErrors();
+      }
     }
     // eslint-disable-next-line
   }, [error, isAuthenticated, history]);
@@ -203,17 +205,7 @@ const Login = ({
                 </Paper>
               </Popper>
             </Grid>
-            <Grid item xs={6}>
-              <Button
-                fullWidth
-                variant='contained'
-                size='large'
-                className={classes.register}
-                onClick={clickRegister}
-              >
-                Register
-              </Button>
-            </Grid>
+
             <Grid item xs={6}>
               <Button
                 fullWidth
@@ -223,6 +215,17 @@ const Login = ({
                 onClick={onGuestLogin}
               >
                 Log in as guest
+              </Button>
+            </Grid>
+            <Grid item xs={6}>
+              <Button
+                fullWidth
+                variant='contained'
+                size='large'
+                className={classes.register}
+                onClick={clickRegister}
+              >
+                Register
               </Button>
             </Grid>
           </Grid>

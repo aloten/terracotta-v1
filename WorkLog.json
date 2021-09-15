@@ -11,8 +11,5 @@
     "issue": "Update alcohol buckets of unique bottles from MyWineCellar.csv using Python",
     "branch": "all"
   },
-  {
-    "issue": "'No valid auth' Alert is set off on initial loading app route '/' "
-  },
   { "issue": "Decide on a type for vintage" }
 ]
