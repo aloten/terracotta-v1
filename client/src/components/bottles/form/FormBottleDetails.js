@@ -69,12 +69,11 @@ const FormBottleDetails = ({ bottleState: { bottleForm }, changeFormProp }) => {
     } else if (e.target.name === 'price') {
       changeFormProp('price', parseFloat(e.target.value));
       changeFormProp('totalCost', parseFloat(e.target.value) * quantity);
-    } else if (e.target.name === 'quantity' && (price > 0 || totalCost > 0)) {
+    } else if (e.target.name === 'quantity') {
+      changeFormProp('quantity', parseFloat(e.target.value));
       if (price > 0) {
-        changeFormProp('quantity', parseFloat(e.target.value));
         changeFormProp('totalCost', parseFloat(e.target.value) * price);
-      } else {
-        changeFormProp('totalCost', parseFloat(e.target.value));
+      } else if (totalCost > 0) {
         changeFormProp('price', totalCost / parseFloat(e.target.value));
       }
     }

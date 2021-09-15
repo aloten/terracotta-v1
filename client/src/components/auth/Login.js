@@ -35,6 +35,11 @@ const useStyles = makeStyles((theme) => ({
     color: 'white',
     fontSize: '1rem',
   },
+  guest: {
+    background: 'grey',
+    color: 'white',
+    fontSize: '1rem',
+  },
   text: {
     fontWeight: 'bold',
   },
@@ -115,7 +120,18 @@ const Login = ({
     }
   };
 
-  const clickRegister = () => {
+  const onGuestLogin = (e) => {
+    e.preventDefault();
+    login({
+      email: 'guest@terracotta.com',
+      password: '123456',
+    }).then(() => {
+      loadUser();
+    });
+  };
+
+  const clickRegister = (e) => {
+    e.preventDefault();
     history.push('/register');
   };
 
@@ -187,7 +203,6 @@ const Login = ({
                 </Paper>
               </Popper>
             </Grid>
-            <Grid item xs={3} />
             <Grid item xs={6}>
               <Button
                 fullWidth
@@ -199,7 +214,17 @@ const Login = ({
                 Register
               </Button>
             </Grid>
-            <Grid item xs={3} />
+            <Grid item xs={6}>
+              <Button
+                fullWidth
+                variant='contained'
+                size='large'
+                className={classes.guest}
+                onClick={onGuestLogin}
+              >
+                Log in as guest
+              </Button>
+            </Grid>
           </Grid>
         </form>
       </Container>

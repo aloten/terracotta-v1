@@ -1,29 +1,18 @@
 [
   {
-    "CURRENT ISSUE": "handling data grid and home page layout before merging muiSweep branch with main",
-    "progress/notes": "working on edit row on DataGrid in Inventory, need to update data in grid after successful put request"
+    "CURRENT ISSUE": "dashboard feature",
+    "progress/notes": ""
   },
   {
-    "issue": "country prop is inacessible from bottles in bottleContext--using for data grid",
-    "branch": "materialUISweep"
-  },
-  {
-    "issue": "Bottle search doesn't work as of now",
-    "branch": "materialUISweep & addBottleBySearch"
+    "issue": "Bottle search feature",
+    "branch": ""
   },
   {
     "issue": "Update alcohol buckets of unique bottles from MyWineCellar.csv using Python",
     "branch": "all"
   },
   {
-    "issue": "need to take care of Autocomplete errors in addBottleBySearch and probably BottleForm"
+    "issue": "'No valid auth' Alert is set off on initial loading app route '/' "
   },
-  {
-    "issue": "No valid auth Alert is set off on initial loading app route '/' "
-  },
-  { "issue": "Decide on a type for vintage" },
-  {
-    "issue": "When searching wine cellar by country, country codes are used as values instead of country names. e.g. 'fr' instead of 'france'"
-  },
-  { "issue": "Rearrange database of bottles, users" }
+  { "issue": "Decide on a type for vintage" }
 ]
