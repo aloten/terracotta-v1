@@ -55,6 +55,10 @@ ul {
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 2rem;
 }
+/* 
+.dashboard-container {
+  
+} */
 
 .bg-primary {
   background: var(--primary-color);

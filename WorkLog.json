@@ -11,5 +11,9 @@
     "issue": "Update alcohol buckets of unique bottles from MyWineCellar.csv using Python",
     "branch": "all"
   },
+  {
+    "issue": "More efficient data structure if there are many users and many bottles",
+    "branch": ""
+  },
   { "issue": "Decide on a type for vintage" }
 ]

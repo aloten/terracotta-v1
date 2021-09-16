@@ -11,17 +11,24 @@ import {
   OPEN_BOTTLE_FORM,
   CLOSE_BOTTLE_FORM,
   CHANGE_FORM_PROP,
+  CHANGE_CELLAR_STATS,
+  LOAD_CELLAR_STATS,
 } from './types';
 import axios from 'axios';
 
 // Get user's bottles
-export const getBottles = () => async (dispatch) => {
-  try {
-    const res = await axios.get('/api/bottles');
-    dispatch({ type: GET_BOTTLES, payload: res.data });
-  } catch (error) {
-    dispatch({ type: BOTTLE_ERROR, payload: error.response });
-  }
+export const getBottles = () => {
+  return (dispatch) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const res = await axios.get('/api/bottles');
+        dispatch({ type: GET_BOTTLES, payload: res.data });
+        resolve();
+      } catch (error) {
+        dispatch({ type: BOTTLE_ERROR, payload: error.response });
+      }
+    });
+  };
 };
 
 // Add bottle
@@ -101,4 +108,40 @@ export const changeFormProp = (key, value) => (dispatch) => {
 // Clear form
 export const clearForm = () => (dispatch) => {
   dispatch({ type: CLEAR_FORM });
+};
+
+// Load cellar stats based on get bottles request response
+export const loadCellarStats = () => (dispatch, getState) => {
+  const bottles = getState().bottleState.bottles;
+
+  let _wineInCellar = 0;
+  let _winePending = 0;
+  // let _wineConsumed = 0;
+  let _winePurchased = 0;
+  // let _readyToDrink = 0;
+  let _totalValue = 0;
+
+  if (bottles) {
+    bottles.forEach((bottle) => {
+      if (bottle.quantity) {
+        _wineInCellar += bottle.quantity;
+        _winePurchased += bottle.quantity;
+      }
+      if (bottle.dateReceived === null) {
+        _winePending += 1;
+      }
+      if (bottle.totalCost) {
+        _totalValue += bottle.totalCost;
+      }
+    });
+    dispatch({
+      type: LOAD_CELLAR_STATS,
+      payload: { _wineInCellar, _winePending, _winePurchased, _totalValue },
+    });
+  }
+};
+
+// Change cellar stats
+export const changeCellarStats = (prop, value) => (dispatch) => {
+  dispatch({ type: CHANGE_CELLAR_STATS, payload: { prop, value } });
 };

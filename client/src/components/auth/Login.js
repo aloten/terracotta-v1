@@ -187,13 +187,12 @@ const Login = ({
             </Grid>
             <Grid item xs={12} className={classes.link}>
               <Button className={classes.link} onClick={handlePopper}>
-                <u>Forgot account?</u>
+                Forgot account?
               </Button>
               <Popper id={id} open={open} anchorEl={anchorEl}>
                 <Paper className={classes.popper}>
                   <Typography>
-                    Sorry! I don't get paid enough to implement this, future
-                    updates pending...
+                    Sorry! I don't get paid enough for this feature...
                   </Typography>
                   <Button
                     className={classes.popper.btn}

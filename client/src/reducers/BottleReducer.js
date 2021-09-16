@@ -11,10 +11,20 @@ import {
   OPEN_BOTTLE_FORM,
   CLOSE_BOTTLE_FORM,
   CHANGE_FORM_PROP,
+  CHANGE_CELLAR_STATS,
+  LOAD_CELLAR_STATS,
 } from '../actions/types';
 
 const initialState = {
   bottles: null,
+  cellarStats: {
+    wineInCellar: 0,
+    winePending: 0,
+    wineConsumed: 0,
+    winePurchased: 0,
+    readyToDrink: 0,
+    totalValue: 0,
+  },
   filtered: null,
   error: null,
   bottleFormOpen: false,
@@ -138,6 +148,25 @@ const BottleReducer = (state = initialState, action) => {
         bottleForm: {
           ...state.bottleForm,
           [action.payload.key]: action.payload.value,
+        },
+      };
+    case LOAD_CELLAR_STATS:
+      return {
+        ...state,
+        cellarStats: {
+          ...state.cellarStats,
+          wineInCellar: action.payload._wineInCellar,
+          winePending: action.payload._wineInCellar,
+          winePurchased: action.payload._winePurchased,
+          totalValue: action.payload._totalValue,
+        },
+      };
+    case CHANGE_CELLAR_STATS:
+      return {
+        ...state,
+        cellarStats: {
+          ...state.cellarStats,
+          [action.payload.prop]: action.payload.value,
         },
       };
     default:

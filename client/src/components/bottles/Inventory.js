@@ -6,6 +6,7 @@ import {
   getBottles,
   changeFormProp,
   openBottleForm,
+  loadCellarStats,
 } from '../../actions/bottleActions';
 
 import {
@@ -28,9 +29,12 @@ const Inventory = ({
   getBottles,
   changeFormProp,
   openBottleForm,
+  loadCellarStats,
 }) => {
   useEffect(() => {
-    getBottles();
+    getBottles().then(() => {
+      loadCellarStats();
+    });
     // eslint-disable-next-line
   }, []);
 
@@ -228,4 +232,5 @@ export default connect(mapStateToProps, {
   getBottles,
   changeFormProp,
   openBottleForm,
+  loadCellarStats,
 })(Inventory);

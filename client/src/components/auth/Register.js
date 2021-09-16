@@ -264,7 +264,7 @@ const Register = ({
             </Grid>
             <Grid item xs={10} className={classes.link}>
               <Link className={classes.link} to='/login'>
-                <u>Already have an account?</u>
+                Already have an account?
               </Link>
             </Grid>
           </Grid>
