@@ -156,7 +156,7 @@ const BottleReducer = (state = initialState, action) => {
         cellarStats: {
           ...state.cellarStats,
           wineInCellar: action.payload._wineInCellar,
-          winePending: action.payload._wineInCellar,
+          winePending: action.payload._winePending,
           winePurchased: action.payload._winePurchased,
           totalValue: action.payload._totalValue,
         },

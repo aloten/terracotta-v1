@@ -3,20 +3,22 @@ import BottleForm from '../bottles/form/BottleForm';
 import Inventory from '../bottles/Inventory';
 import Dashboard from '../bottles/Dashboard';
 
+import Grid from '@material-ui/core/Grid';
+
 const Home = () => {
   return (
     <Fragment>
-      <div className='grid-2'>
-        <div className='dashboard-container'>
-          {' '}
+      <Grid container spacing={2}>
+        <Grid item xs={12} sm={6}>
           <Dashboard />
-        </div>
-        <div>
-          {' '}
+        </Grid>
+        <Grid item xs={12} sm={6}>
           <BottleForm />
-        </div>
-      </div>
-      <Inventory />
+        </Grid>
+        <Grid item xs={12}>
+          <Inventory />
+        </Grid>
+      </Grid>
     </Fragment>
   );
 };

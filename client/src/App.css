@@ -2,12 +2,21 @@
 
 /* Global Styles */
 :root {
+  --three-tint-primary: #dfbfc7;
+  --two-tint-primary: #c08090;
+  --one-tint-primary: #90606c;
   --primary-color: #800020;
-  --secondary-color: #e2725b;
-  --dark-color: #333333;
-  --light-color: #f4f4f4;
-  --danger-color: #dc3545;
-  --success-color: #28a745;
+  --one-shade-primary: #600018;
+  --two-shade-primary: #400010;
+  --three-shade-primary: #30000c;
+  --triadic-green: #208000;
+  --triadic-blue: #002080;
+  --analogous-orange: #802000;
+  --analogous-pink: #800060;
+  --split-complements-green: #008020;
+  --split-complements-blue: #006080;
+  --complementary-color: #008060;
+  --secondary-color: #e2725b; /* maybe won't use this */
 }
 
 * {
@@ -55,10 +64,6 @@ ul {
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 2rem;
 }
-/* 
-.dashboard-container {
-  
-} */
 
 .bg-primary {
   background: var(--primary-color);

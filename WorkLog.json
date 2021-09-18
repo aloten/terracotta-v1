@@ -1,7 +1,8 @@
 [
   {
     "CURRENT ISSUE": "dashboard feature",
-    "progress/notes": ""
+    "progress/notes": "working on making pages resonsive and with monochrome coloring. Need to make prettier, work out fixed forex conversions for value calc, and finally change data structure --> purchases : bottles in purhcases",
+    "cont.": "need to add/change mongoose schema to adapt to purchases/bottles"
   },
   {
     "issue": "Bottle search feature",

@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     padding: 20,
-    height: '70vh',
+    height: '80%',
     width: '35%',
     margin: '20px auto',
   },
@@ -31,11 +31,13 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '1rem',
   },
   register: {
-    background: '#e2725b',
+    height: '100%',
+    background: '#90606c',
     color: 'white',
     fontSize: '1rem',
   },
   guest: {
+    height: '100%',
     background: 'grey',
     color: 'white',
     fontSize: '1rem',
@@ -139,9 +141,9 @@ const Login = ({
 
   return (
     <Paper elevation={3} className={classes.paper}>
-      <Container className={classes.container} maxWidth='xs'>
+      <Grid container className={classes.container} maxWidth='xs'>
         <form onSubmit={onSubmit}>
-          <Grid container spacing={3}>
+          <Grid container item spacing={3}>
             <Grid item xs={12}>
               <Typography className={classes.text} variant='h5' align='center'>
                 Log In
@@ -229,7 +231,7 @@ const Login = ({
             </Grid>
           </Grid>
         </form>
-      </Container>
+      </Grid>
     </Paper>
   );
 };
