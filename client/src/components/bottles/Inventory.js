@@ -50,7 +50,9 @@ const Inventory = ({
       if (actions.delete === true) {
         deleteBottle(
           bottles[bottles.findIndex((bottle) => bottle.id === selected)]._id
-        );
+        ).then(() => {
+          loadCellarStats();
+        });
         setActions({ ...actions, delete: false });
         setSelected(null);
       } else if (actions.edit === true) {

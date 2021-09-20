@@ -7,7 +7,6 @@ import { setAlert, removeAlert } from '../../actions/alertActions';
 import { useHistory } from 'react-router-dom';
 
 import Button from '@material-ui/core/Button';
-import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
@@ -32,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
   },
   register: {
     height: '100%',
-    background: '#90606c',
+    background: '#c08090',
     color: 'white',
     fontSize: '1rem',
   },

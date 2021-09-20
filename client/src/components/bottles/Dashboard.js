@@ -68,7 +68,10 @@ const Dashboard = ({ bottleState: { cellarStats } }) => {
         <Paper className={classes.item}>
           <span className={classes.title}> Total estimated value</span>
           <br />
-          <h3 className={classes.number}>{totalValue}</h3>
+          <h3 className={classes.number}>
+            $
+            {totalValue.toLocaleString(undefined, { maximumFractionDigits: 2 })}
+          </h3>
         </Paper>
       </Grid>
     </Grid>

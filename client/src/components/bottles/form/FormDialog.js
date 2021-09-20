@@ -6,6 +6,7 @@ import {
   updateBottle,
   closeBottleForm,
   clearForm,
+  loadCellarStats,
 } from '../../../actions/bottleActions';
 import FormBottleDetails from './FormBottleDetails';
 
@@ -21,6 +22,7 @@ const FormDialog = ({
   updateBottle,
   closeBottleForm,
   clearForm,
+  loadCellarStats,
 }) => {
   const handleClose = () => {
     closeBottleForm();
@@ -33,12 +35,15 @@ const FormDialog = ({
       return;
       // TODO setAlert();
     } else if (bottleForm._id) {
-      updateBottle(bottleForm);
-      handleClose();
+      updateBottle(bottleForm).then(() => {
+        loadCellarStats();
+      });
     } else {
-      addBottle(bottleForm);
-      handleClose();
+      addBottle(bottleForm).then(() => {
+        loadCellarStats();
+      });
     }
+    handleClose();
   };
 
   return (
@@ -74,4 +79,5 @@ export default connect(mapStateToProps, {
   updateBottle,
   closeBottleForm,
   clearForm,
+  loadCellarStats,
 })(FormDialog);

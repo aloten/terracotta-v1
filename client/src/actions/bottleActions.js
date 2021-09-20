@@ -11,7 +11,6 @@ import {
   OPEN_BOTTLE_FORM,
   CLOSE_BOTTLE_FORM,
   CHANGE_FORM_PROP,
-  CHANGE_CELLAR_STATS,
   LOAD_CELLAR_STATS,
 } from './types';
 import axios from 'axios';
@@ -32,47 +31,65 @@ export const getBottles = () => {
 };
 
 // Add bottle
-export const addBottle = (bottle) => async (dispatch) => {
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  };
+export const addBottle = (bottle) => {
+  return (dispatch) => {
+    return new Promise(async (resolve, reject) => {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
 
-  try {
-    const res = await axios.post('/api/bottles', bottle, config);
-    dispatch({ type: ADD_BOTTLE, payload: res.data });
-  } catch (error) {
-    dispatch({ type: BOTTLE_ERROR, payload: error.response });
-  }
+      try {
+        const res = await axios.post('/api/bottles', bottle, config);
+        dispatch({ type: ADD_BOTTLE, payload: res.data });
+        resolve();
+      } catch (error) {
+        dispatch({ type: BOTTLE_ERROR, payload: error.response });
+      }
+    });
+  };
 };
 
 // Update bottle
-export const updateBottle = (bottle) => async (dispatch) => {
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-    },
+export const updateBottle = (bottle) => {
+  return (dispatch) => {
+    return new Promise(async (resolve, reject) => {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+      try {
+        const res = await axios.put(
+          `/api/bottles/${bottle._id}`,
+          bottle,
+          config
+        );
+
+        dispatch({ type: UPDATE_BOTTLE, payload: res.data });
+        resolve();
+      } catch (error) {
+        dispatch({ type: BOTTLE_ERROR, payload: error.response.msg });
+      }
+    });
   };
-
-  try {
-    const res = await axios.put(`/api/bottles/${bottle._id}`, bottle, config);
-
-    dispatch({ type: UPDATE_BOTTLE, payload: res.data });
-  } catch (error) {
-    dispatch({ type: BOTTLE_ERROR, payload: error.response.msg });
-  }
 };
 
 // Delete bottle
-export const deleteBottle = (id) => async (dispatch) => {
-  try {
-    await axios.delete(`/api/bottles/${id}`);
+export const deleteBottle = (id) => {
+  return (dispatch) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        await axios.delete(`/api/bottles/${id}`);
 
-    dispatch({ type: DELETE_BOTTLE, payload: id });
-  } catch (error) {
-    dispatch({ type: BOTTLE_ERROR, payload: error.response });
-  }
+        dispatch({ type: DELETE_BOTTLE, payload: id });
+        resolve();
+      } catch (error) {
+        dispatch({ type: BOTTLE_ERROR, payload: error.response });
+      }
+    });
+  };
 };
 
 // Clear bottles
@@ -124,7 +141,6 @@ export const loadCellarStats = () => (dispatch, getState) => {
   if (bottles) {
     bottles.forEach((bottle) => {
       if (bottle.quantity) {
-        _wineInCellar += bottle.quantity;
         _winePurchased += bottle.quantity;
       }
       if (bottle.dateReceived === null) {
@@ -134,14 +150,10 @@ export const loadCellarStats = () => (dispatch, getState) => {
         _totalValue += bottle.totalCost;
       }
     });
+    _wineInCellar = _winePurchased - _winePending;
     dispatch({
       type: LOAD_CELLAR_STATS,
       payload: { _wineInCellar, _winePending, _winePurchased, _totalValue },
     });
   }
-};
-
-// Change cellar stats
-export const changeCellarStats = (prop, value) => (dispatch) => {
-  dispatch({ type: CHANGE_CELLAR_STATS, payload: { prop, value } });
 };
