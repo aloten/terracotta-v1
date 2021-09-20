@@ -144,7 +144,7 @@ export const loadCellarStats = () => (dispatch, getState) => {
         _winePurchased += bottle.quantity;
       }
       if (bottle.dateReceived === null) {
-        _winePending += 1;
+        _winePending += bottle.quantity;
       }
       if (bottle.totalCost) {
         _totalValue += bottle.totalCost;
