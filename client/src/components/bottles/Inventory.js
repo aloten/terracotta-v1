@@ -6,6 +6,7 @@ import {
   getBottles,
   changeFormProp,
   openBottleForm,
+  loadCellarStats,
 } from '../../actions/bottleActions';
 
 import {
@@ -28,9 +29,12 @@ const Inventory = ({
   getBottles,
   changeFormProp,
   openBottleForm,
+  loadCellarStats,
 }) => {
   useEffect(() => {
-    getBottles();
+    getBottles().then(() => {
+      loadCellarStats();
+    });
     // eslint-disable-next-line
   }, []);
 
@@ -46,7 +50,9 @@ const Inventory = ({
       if (actions.delete === true) {
         deleteBottle(
           bottles[bottles.findIndex((bottle) => bottle.id === selected)]._id
-        );
+        ).then(() => {
+          loadCellarStats();
+        });
         setActions({ ...actions, delete: false });
         setSelected(null);
       } else if (actions.edit === true) {
@@ -228,4 +234,5 @@ export default connect(mapStateToProps, {
   getBottles,
   changeFormProp,
   openBottleForm,
+  loadCellarStats,
 })(Inventory);

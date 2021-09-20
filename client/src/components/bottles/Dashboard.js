@@ -1,34 +1,89 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
+import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 
-const Dashboard = () => {
+const useStyles = makeStyles((theme) => ({
+  item: {
+    height: '100%',
+    padding: '5px',
+    textAlign: 'center',
+  },
+  title: {
+    color: '#575757',
+  },
+  number: {
+    color: 'black',
+  },
+}));
+
+const Dashboard = ({ bottleState: { cellarStats } }) => {
+  const classes = useStyles();
+
+  const {
+    wineInCellar,
+    winePending,
+    wineConsumed,
+    winePurchased,
+    readyToDrink,
+    totalValue,
+  } = cellarStats;
+
   return (
-    <Grid container spacing={1}>
-      <Grid item xs={4}>
-        <Paper> Wine in cellar</Paper>
+    <Grid container spacing={2} className={classes.container}>
+      <Grid item xs={6} lg={4}>
+        <Paper className={classes.item}>
+          <span className={classes.title}>Wine in cellar</span> <br />
+          <h3 className={classes.number}>{wineInCellar}</h3>
+        </Paper>
       </Grid>
-      <Grid item xs={4}>
-        <Paper> Wine pending delivery</Paper>
+      <Grid item xs={6} lg={4}>
+        <Paper className={classes.item}>
+          <span className={classes.title}> Wine pending delivery</span> <br />
+          <h3 className={classes.number}>{winePending}</h3>
+        </Paper>
       </Grid>
-      <Grid item xs={4}>
-        <Paper>Wine consumed</Paper>
+      <Grid item xs={6} lg={4}>
+        <Paper className={classes.item}>
+          <span className={classes.title}> Wine consumed</span> <br />
+          <h3 className={classes.number}>{wineConsumed}</h3>
+        </Paper>
       </Grid>
-      <Grid item xs={4}>
-        <Paper>Wine purchased</Paper>
+      <Grid item xs={6} lg={4}>
+        <Paper className={classes.item}>
+          <span className={classes.title}> Wine purchased</span> <br />
+          <h3 className={classes.number}>{winePurchased}</h3>
+        </Paper>
       </Grid>
-      <Grid item xs={3}>
-        <Paper>Wine ready to drink</Paper>
+      <Grid item xs={6} lg={4}>
+        <Paper className={classes.item}>
+          <span className={classes.title}> Wine ready to drink</span> <br />
+          <h3 className={classes.number}>{readyToDrink}</h3>
+        </Paper>
       </Grid>
-      <Grid item xs={3}>
-        <Paper>Total estimated value</Paper>
-      </Grid>
-      <Grid item xs={2}>
-        <Paper>Estimated return</Paper>
+      <Grid item xs={6} lg={4}>
+        <Paper className={classes.item}>
+          <span className={classes.title}> Total estimated value</span>
+          <br />
+          <h3 className={classes.number}>
+            $
+            {totalValue.toLocaleString(undefined, { maximumFractionDigits: 2 })}
+          </h3>
+        </Paper>
       </Grid>
     </Grid>
   );
 };
 
-export default Dashboard;
+Dashboard.propTypes = {
+  bottleState: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  bottleState: state.bottleState,
+});
+
+export default connect(mapStateToProps)(Dashboard);

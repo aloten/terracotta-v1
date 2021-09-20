@@ -28,7 +28,7 @@ const AddBottleBySearch = ({ openBottleForm, changeFormProp }) => {
 
   return (
     <form onSubmit={onContinue}>
-      <Grid container spacing={1}>
+      <Grid container spacing={1} style={{ justifyContent: 'center' }}>
         <Grid item xs={6}>
           <Autocomplete
             size='small'
@@ -48,7 +48,7 @@ const AddBottleBySearch = ({ openBottleForm, changeFormProp }) => {
               <Fragment>
                 <TextField
                   {...params}
-                  label='Search for a bottle to add'
+                  label='Add a bottle'
                   style={{ background: 'white' }}
                   variant='outlined'
                   required
@@ -58,7 +58,11 @@ const AddBottleBySearch = ({ openBottleForm, changeFormProp }) => {
           />
         </Grid>
         <Grid item xs={4} style={{ margin: 'auto 0' }}>
-          <Button variant='contained' type='submit'>
+          <Button
+            variant='contained'
+            type='submit'
+            style={{ background: '#dfbfc7' }}
+          >
             Continue
           </Button>
         </Grid>

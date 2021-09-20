@@ -7,7 +7,6 @@ import { setAlert, removeAlert } from '../../actions/alertActions';
 import { useHistory } from 'react-router-dom';
 
 import Button from '@material-ui/core/Button';
-import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
@@ -21,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     padding: 20,
-    height: '70vh',
+    height: '80%',
     width: '35%',
     margin: '20px auto',
   },
@@ -31,11 +30,13 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '1rem',
   },
   register: {
-    background: '#e2725b',
+    height: '100%',
+    background: '#c08090',
     color: 'white',
     fontSize: '1rem',
   },
   guest: {
+    height: '100%',
     background: 'grey',
     color: 'white',
     fontSize: '1rem',
@@ -139,9 +140,9 @@ const Login = ({
 
   return (
     <Paper elevation={3} className={classes.paper}>
-      <Container className={classes.container} maxWidth='xs'>
+      <Grid container className={classes.container} maxWidth='xs'>
         <form onSubmit={onSubmit}>
-          <Grid container spacing={3}>
+          <Grid container item spacing={3}>
             <Grid item xs={12}>
               <Typography className={classes.text} variant='h5' align='center'>
                 Log In
@@ -187,13 +188,12 @@ const Login = ({
             </Grid>
             <Grid item xs={12} className={classes.link}>
               <Button className={classes.link} onClick={handlePopper}>
-                <u>Forgot account?</u>
+                Forgot account?
               </Button>
               <Popper id={id} open={open} anchorEl={anchorEl}>
                 <Paper className={classes.popper}>
                   <Typography>
-                    Sorry! I don't get paid enough to implement this, future
-                    updates pending...
+                    Sorry! I don't get paid enough for this feature...
                   </Typography>
                   <Button
                     className={classes.popper.btn}
@@ -230,7 +230,7 @@ const Login = ({
             </Grid>
           </Grid>
         </form>
-      </Container>
+      </Grid>
     </Paper>
   );
 };
