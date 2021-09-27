@@ -48,8 +48,6 @@ ul {
 
 /* Utilities */
 .container {
-  /* border: 5px solid black; */
-  height: '90vh';
   min-height: 500px;
   box-sizing: content-box;
   background-color: #f4f4f4;
