@@ -5,6 +5,8 @@ import { clearBottles } from '../../actions/bottleActions';
 import { logout } from '../../actions/authActions';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
+import { StyledNavbar } from '../styles/Navbar.styled';
+
 import Button from '@material-ui/core/Button';
 
 const Navbar = ({
@@ -59,14 +61,14 @@ const Navbar = ({
   );
 
   return (
-    <div className='navbar bg-primary'>
+    <StyledNavbar>
       <Button onClick={onLogoClick}>
         <h1 style={{ color: 'white' }}>
           <i className={icon} /> {title}
         </h1>
       </Button>
       <ul>{isAuthenticated ? authLinks : guestLinks}</ul>
-    </div>
+    </StyledNavbar>
   );
 };
 
