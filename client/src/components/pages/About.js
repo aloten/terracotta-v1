@@ -20,7 +20,11 @@ const About = () => {
       </p>
       <ul>
         <li className={classes.item}>
-          <a href='https://github.com/aloten/terracotta-v1' target='_blank'>
+          <a
+            href='https://github.com/aloten/terracotta-v1'
+            target='_blank'
+            rel='noreferrer'
+          >
             <i class='fab fa-github-square'></i>
           </a>
         </li>
@@ -28,6 +32,7 @@ const About = () => {
           <a
             href='https://www.linkedin.com/in/aidan-loten-a009b9141/'
             target='_blank'
+            rel='noreferrer'
           >
             <i class='fab fa-linkedin'></i>
           </a>
