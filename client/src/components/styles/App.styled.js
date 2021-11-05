@@ -8,11 +8,11 @@ export const StyledApp = styled.div`
 
   .main {
     padding: 1rem;
+    background-color: ${(props) => props.theme.colors.bgGrey};
   }
 
   .footer {
     padding: 1rem;
     text-align: center;
-    background-color: ${(props) => props.theme.colors.bgGrey};
   }
 `;

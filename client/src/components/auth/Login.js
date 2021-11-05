@@ -1,10 +1,11 @@
-import React, { Fragment } from 'react';
+import React from 'react';
+import { StyledLogin } from '../styles/Login.styled';
 
-const LoginNew = () => {
+const Login = () => {
   return (
-    <Fragment>
+    <StyledLogin>
       <div className='paper'>
-        <form>
+        <form className='login-form'>
           <input type='text' name='email' />
           <input type='text' name='password' />
           <input type='submit' />
@@ -15,8 +16,8 @@ const LoginNew = () => {
           <button>Register</button>
         </div>
       </div>
-    </Fragment>
+    </StyledLogin>
   );
 };
 
-export default LoginNew;
+export default Login;
