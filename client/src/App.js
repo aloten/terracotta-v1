@@ -1,5 +1,4 @@
 import { ThemeProvider } from 'styled-components';
-import './App.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import PrivateRoute from './components/routing/PrivateRoute';
 import Navbar from './components/layout/Navbar';

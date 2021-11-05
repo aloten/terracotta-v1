@@ -28,12 +28,7 @@ body {
 }
 
 a {
-  color: var(--primary-color);
   text-decoration: none;
-}
-
-a:hover {
-  color: #666;
 }
 
 ul {

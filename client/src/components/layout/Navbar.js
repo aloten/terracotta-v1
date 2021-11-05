@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { useEffect, Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { clearBottles } from '../../actions/bottleActions';
@@ -28,14 +28,28 @@ const Navbar = ({
     history.push('/');
   };
 
+  // Create toggle effect for mobile nav hamburger
+  useEffect(() => {
+    const hamburgerToggle = document.querySelector('.hamburger-toggle');
+    const navLinks = document.querySelector('.nav-links');
+
+    hamburgerToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
+  }, []);
+
   const authLinks = (
     <Fragment>
       <li>Hi, {user && user.firstName}</li>
       <li>
-        <Link to='/'>Home</Link>
+        <Link className='nav-link' to='/'>
+          Home
+        </Link>
       </li>
       <li>
-        <Link to='/about'>About</Link>
+        <Link className='nav-link' to='/about'>
+          About
+        </Link>
       </li>
       <li>
         <a onClick={onLogout} href='#!'>
@@ -49,13 +63,19 @@ const Navbar = ({
   const guestLinks = (
     <Fragment>
       <li>
-        <Link to='/login'>Log In</Link>
+        <Link className='nav-link' to='/login'>
+          Log In
+        </Link>
       </li>
       <li>
-        <Link to='/register'>Register</Link>
+        <Link className='nav-link' to='/register'>
+          Register
+        </Link>
       </li>
       <li>
-        <Link to='/about'>About</Link>
+        <Link className='nav-link' to='/about'>
+          About
+        </Link>
       </li>
     </Fragment>
   );
@@ -67,7 +87,12 @@ const Navbar = ({
           <i className={icon} /> {title}
         </h1>
       </Button>
-      <ul>{isAuthenticated ? authLinks : guestLinks}</ul>
+      <a href='#' className='hamburger-toggle'>
+        <span className='bar'></span>
+        <span className='bar'></span>
+        <span className='bar'></span>
+      </a>
+      <ul className='nav-links'>{isAuthenticated ? authLinks : guestLinks}</ul>
     </StyledNavbar>
   );
 };
