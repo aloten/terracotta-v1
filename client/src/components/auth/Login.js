@@ -85,7 +85,7 @@ const Login = ({
             type='email'
             name='email'
             value={email}
-            placeholder='email'
+            placeholder='Email'
             onChange={onChange}
             required
           />
@@ -93,7 +93,7 @@ const Login = ({
             type='password'
             name='password'
             value={password}
-            placeholder='password'
+            placeholder='Password'
             onChange={onChange}
             required
           />

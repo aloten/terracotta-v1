@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const StyledLogin = styled.div`
+export const StyledRegister = styled.div`
   height: 100%;
   width: 100%;
   display: flex;
@@ -25,25 +25,14 @@ export const StyledLogin = styled.div`
     text-align: center;
   }
 
-  .login-form {
+  .register-form {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     gap: 1rem;
   }
 
-  .forgot-acct-link {
+  .login-link {
     text-align: center;
-  }
-
-  .gst-reg-btns {
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-  }
-
-  .gst-reg-btns button {
-    width: 100%;
-    font-size: 1rem;
   }
 `;
