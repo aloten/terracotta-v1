@@ -1,28 +1,31 @@
 import React from 'react';
+import styled from 'styled-components';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
+const StyledDashboard = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
 
-const useStyles = makeStyles((theme) => ({
-  item: {
-    height: '100%',
-    padding: '5px',
-    textAlign: 'center',
-  },
-  title: {
-    color: '#575757',
-  },
-  number: {
-    color: 'black',
-  },
-}));
+  .box {
+    padding: 0.5rem;
+    border-radius: 3px;
+    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.24);
+    text-align: center;
+    background-color: white;
+  }
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (min-width: 1100px) {
+    grid-template-columns: repeat(6, 1fr);
+  }
+`;
 
 const Dashboard = ({ bottleState: { cellarStats } }) => {
-  const classes = useStyles();
-
   const {
     wineInCellar,
     winePending,
@@ -33,48 +36,40 @@ const Dashboard = ({ bottleState: { cellarStats } }) => {
   } = cellarStats;
 
   return (
-    <Grid container spacing={2} className={classes.container}>
-      <Grid item xs={6} lg={4}>
-        <Paper className={classes.item}>
-          <span className={classes.title}>Wine in cellar</span> <br />
-          <h3 className={classes.number}>{wineInCellar}</h3>
-        </Paper>
-      </Grid>
-      <Grid item xs={6} lg={4}>
-        <Paper className={classes.item}>
-          <span className={classes.title}> Wine pending delivery</span> <br />
-          <h3 className={classes.number}>{winePending}</h3>
-        </Paper>
-      </Grid>
-      <Grid item xs={6} lg={4}>
-        <Paper className={classes.item}>
-          <span className={classes.title}> Wine consumed</span> <br />
-          <h3 className={classes.number}>{wineConsumed}</h3>
-        </Paper>
-      </Grid>
-      <Grid item xs={6} lg={4}>
-        <Paper className={classes.item}>
-          <span className={classes.title}> Wine purchased</span> <br />
-          <h3 className={classes.number}>{winePurchased}</h3>
-        </Paper>
-      </Grid>
-      <Grid item xs={6} lg={4}>
-        <Paper className={classes.item}>
-          <span className={classes.title}> Wine ready to drink</span> <br />
-          <h3 className={classes.number}>{readyToDrink}</h3>
-        </Paper>
-      </Grid>
-      <Grid item xs={6} lg={4}>
-        <Paper className={classes.item}>
-          <span className={classes.title}> Total estimated value</span>
-          <br />
-          <h3 className={classes.number}>
-            $
-            {totalValue.toLocaleString(undefined, { maximumFractionDigits: 2 })}
-          </h3>
-        </Paper>
-      </Grid>
-    </Grid>
+    <StyledDashboard>
+      <div class='box'>
+        <span class='title'>Wine in cellar</span> <br />
+        <h3 class='number'>{wineInCellar}</h3>
+      </div>
+      <div class='box'>
+        <span class='title'>Wine pending delivery</span>
+        <br />
+        <h3 class='number'>{winePending}</h3>
+      </div>
+      <div class='box'>
+        <span class='title'>Wine consumed</span>
+        <br />
+        <h3 class='number'>{wineConsumed}</h3>
+      </div>
+      <div class='box'>
+        <span class='title'>Wine Purchased</span>
+        <br />
+        <h3 class='number'>{winePurchased}</h3>
+      </div>
+      <div class='box'>
+        <span class='title'>Wine ready to drink</span>
+        <br />
+        <h3 class='number'>{readyToDrink}</h3>
+      </div>
+      <div class='box'>
+        <span class='title'>Total estimated value</span>
+        <br />
+        <h3 class='number'>
+          {' '}
+          ${totalValue.toLocaleString(undefined, { maximumFractionDigits: 2 })}
+        </h3>
+      </div>
+    </StyledDashboard>
   );
 };
 
