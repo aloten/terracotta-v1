@@ -1,9 +1,13 @@
 import styled from 'styled-components';
 
 export const StyledNavbar = styled.nav`
-  /* .hide-sm {
+  .hide-sm {
     display: none;
-  } */
+  }
+
+  a {
+    color: white;
+  }
 
   display: block;
   text-align: center;
@@ -38,6 +42,14 @@ export const StyledNavbar = styled.nav`
     border-radius: 10px;
   }
 
+  .greeting {
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    padding: 0.5rem;
+    color: white;
+  }
+
   .nav-link {
     display: inline-block;
     height: 100%;
@@ -69,15 +81,25 @@ export const StyledNavbar = styled.nav`
       display: flex;
     }
 
+    .greeting {
+      margin-right: 1rem;
+    }
+
     .nav-link {
       border: none;
-      padding: 0.45rem;
-      margin: 0 0.25rem;
     }
 
     .nav-link:hover {
       background-color: transparent;
       color: ${(props) => props.theme.colors.threeShadePrimary};
+    }
+
+    .logout {
+      min-width: 100px;
+    }
+
+    .hide-sm {
+      display: inline;
     }
   }
 `;

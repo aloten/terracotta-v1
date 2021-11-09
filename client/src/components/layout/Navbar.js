@@ -40,7 +40,7 @@ const Navbar = ({
 
   const authLinks = (
     <Fragment>
-      <li>Hi, {user && user.firstName}</li>
+      <li className='greeting'>Hi, {user && user.firstName}</li>
       <li>
         <Link className='nav-link' to='/'>
           Home
@@ -52,7 +52,7 @@ const Navbar = ({
         </Link>
       </li>
       <li>
-        <a onClick={onLogout} href='#!'>
+        <a className='nav-link logout' onClick={onLogout} href='#!'>
           <i className='fas fa-sign-out-alt'></i>{' '}
           <span className='hide-sm'>Log Out</span>
         </a>
