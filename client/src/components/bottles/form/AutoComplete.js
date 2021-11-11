@@ -15,7 +15,6 @@ const StyledAutocomplete = styled.div`
     padding: 0.2rem 0.2rem;
     outline: none;
     border-radius: 0;
-    // make this look better
   }
 
   input[type='submit'] {
@@ -30,9 +29,10 @@ const StyledAutocomplete = styled.div`
 
   .options {
     position: absolute;
+    width: 59.3%;
     display: flex;
     flex-direction: column;
-    max-height: 5rem;
+    max-height: 10rem;
     overflow: scroll;
     border: 1px solid gray;
     border-top: none;
@@ -50,7 +50,7 @@ const StyledAutocomplete = styled.div`
 
   .options li:hover,
   .options .option-active {
-    background-color: ${(props) => props.theme.colors.bgGrey};
+    background-color: lightgray;
   }
 `;
 
