@@ -25,7 +25,7 @@ const About = () => {
             target='_blank'
             rel='noreferrer'
           >
-            <i class='fab fa-github-square'></i>
+            <i className='fab fa-github-square'></i>
           </a>
         </li>
         <li className={classes.item}>
@@ -34,20 +34,20 @@ const About = () => {
             target='_blank'
             rel='noreferrer'
           >
-            <i class='fab fa-linkedin'></i>
+            <i className='fab fa-linkedin'></i>
           </a>
         </li>
       </ul>
-      <ul class='nolink-icon'>
+      <ul className='nolink-icon'>
         <li>
           <a href='#'>
-            <i class='fas fa-envelope-square'></i>
+            <i className='fas fa-envelope-square'></i>
           </a>{' '}
           asloten@gmail.com
         </li>
         <li id='phone-icon'>
           <a href='#'>
-            <i class='fas fa-phone-square'></i>
+            <i className='fas fa-phone-square'></i>
           </a>{' '}
           +1 (914) 274-7643
         </li>

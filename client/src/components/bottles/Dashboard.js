@@ -37,34 +37,34 @@ const Dashboard = ({ bottleState: { cellarStats } }) => {
 
   return (
     <StyledDashboard>
-      <div class='box'>
-        <span class='title'>Wine in cellar</span> <br />
-        <h3 class='number'>{wineInCellar}</h3>
+      <div className='box'>
+        <span className='title'>Wine in cellar</span> <br />
+        <h3 className='number'>{wineInCellar}</h3>
       </div>
-      <div class='box'>
-        <span class='title'>Wine pending delivery</span>
+      <div className='box'>
+        <span className='title'>Wine pending delivery</span>
         <br />
-        <h3 class='number'>{winePending}</h3>
+        <h3 className='number'>{winePending}</h3>
       </div>
-      <div class='box'>
-        <span class='title'>Wine consumed</span>
+      <div className='box'>
+        <span className='title'>Wine consumed</span>
         <br />
-        <h3 class='number'>{wineConsumed}</h3>
+        <h3 className='number'>{wineConsumed}</h3>
       </div>
-      <div class='box'>
-        <span class='title'>Wine Purchased</span>
+      <div className='box'>
+        <span className='title'>Wine Purchased</span>
         <br />
-        <h3 class='number'>{winePurchased}</h3>
+        <h3 className='number'>{winePurchased}</h3>
       </div>
-      <div class='box'>
-        <span class='title'>Wine ready to drink</span>
+      <div className='box'>
+        <span className='title'>Wine ready to drink</span>
         <br />
-        <h3 class='number'>{readyToDrink}</h3>
+        <h3 className='number'>{readyToDrink}</h3>
       </div>
-      <div class='box'>
-        <span class='title'>Total estimated value</span>
+      <div className='box'>
+        <span className='title'>Total estimated value</span>
         <br />
-        <h3 class='number'>
+        <h3 className='number'>
           {' '}
           ${totalValue.toLocaleString(undefined, { maximumFractionDigits: 2 })}
         </h3>

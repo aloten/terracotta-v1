@@ -9,6 +9,8 @@ import {
   loadCellarStats,
 } from '../../actions/bottleActions';
 
+import styled from 'styled-components';
+
 import {
   DataGrid,
   GridToolbarContainer,
@@ -22,6 +24,8 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 
 // import currencies from '../../data/currencies';
+
+const StyledInventory = styled.div``;
 
 const Inventory = ({
   bottleState: { bottles },
@@ -195,29 +199,30 @@ const Inventory = ({
   ];
 
   return (
-    <div
-      style={{
-        height: 500,
-        width: '100%',
-        background: 'white',
-        marginBottom: '30px',
-      }}
-    >
-      <div style={{ display: 'flex', height: '100%' }}>
-        <div style={{ flexGrow: 1 }}>
-          <DataGrid
-            rows={bottles ? bottles : []}
-            columns={columns}
-            rowHeight={25}
-            components={{
-              Toolbar: CustomToolbar,
-            }}
-            hideFooterSelectedRowCount
-            onSelectionModelChange={onSelectionModelChange}
-          />
+    <StyledInventory>
+      <div
+        style={{
+          height: 500,
+          width: '100%',
+          background: 'white',
+        }}
+      >
+        <div style={{ display: 'flex', height: '100%' }}>
+          <div style={{ flexGrow: 1 }}>
+            <DataGrid
+              rows={bottles ? bottles : []}
+              columns={columns}
+              rowHeight={25}
+              components={{
+                Toolbar: CustomToolbar,
+              }}
+              hideFooterSelectedRowCount
+              onSelectionModelChange={onSelectionModelChange}
+            />
+          </div>
         </div>
       </div>
-    </div>
+    </StyledInventory>
   );
 };
 
