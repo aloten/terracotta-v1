@@ -46,7 +46,7 @@ ul {
 
 /* Input */
 input,
-select {
+select, textarea {
   border: none;
   appearance: none;
   background: white;

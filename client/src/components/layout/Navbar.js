@@ -53,8 +53,7 @@ const Navbar = ({
       </li>
       <li>
         <a className='nav-link logout' onClick={onLogout} href='#!'>
-          <i className='fas fa-sign-out-alt'></i>{' '}
-          <span className='hide-sm'>Log Out</span>
+          <i className='fas fa-sign-out-alt'></i> <span>Log Out</span>
         </a>
       </li>
     </Fragment>

@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
@@ -10,14 +11,65 @@ import {
 } from '../../../actions/bottleActions';
 import FormBottleDetails from './FormBottleDetails';
 
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
+const StyledFormDialog = styled.div`
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.5);
+
+  .dialog-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    background-color: white;
+    padding: 1rem;
+    width: 100%;
+    height: 100%;
+    overflow: scroll;
+    border-radius: 5px;
+  }
+
+  .dialog-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .dialog-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+  }
+
+  .close-btn {
+    float: right;
+    color: darkgray;
+    font-size: 2rem;
+    font-weight: bold;
+  }
+
+  .close-btn:hover {
+    color: gray;
+    cursor: pointer;
+  }
+
+  @media (min-width: 768px) {
+    .dialog-content {
+      width: 75%;
+      height: 75%;
+    }
+  }
+`;
 
 const FormDialog = ({
-  bottleState: { bottleForm, bottleFormOpen },
+  bottleState: { bottleForm },
   addBottle,
   updateBottle,
   closeBottleForm,
@@ -47,22 +99,25 @@ const FormDialog = ({
   };
 
   return (
-    <div>
-      <Dialog open={bottleFormOpen} onClose={handleClose}>
-        <DialogTitle>Edit Bottle</DialogTitle>
-        <DialogContent>
-          <FormBottleDetails />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color='secondary'>
+    <StyledFormDialog>
+      <div className='dialog-content'>
+        <div className='dialog-header'>
+          <h3>Edit purchase details</h3>
+          <span onClick={handleClose} className='close-btn'>
+            &times;
+          </span>
+        </div>
+        <FormBottleDetails />
+        <div className='dialog-footer'>
+          <button onClick={handleClose} className='btn btn-danger'>
             Cancel
-          </Button>
-          <Button onClick={onSubmit} color='primary'>
+          </button>
+          <button onClick={onSubmit} className='btn btn-success'>
             Save
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </div>
+          </button>
+        </div>
+      </div>
+    </StyledFormDialog>
   );
 };
 

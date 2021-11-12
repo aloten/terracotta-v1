@@ -1,19 +1,29 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import AddBottleBySearch from './AddBottleBySearch';
 import FormDialog from './FormDialog';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const StyledBottleForm = styled.div`
   z-index: 1;
 `;
 
-const BottleForm = () => {
+const BottleForm = ({ bottleState: { bottleFormOpen } }) => {
   return (
     <StyledBottleForm>
       <AddBottleBySearch />
-      <FormDialog />
+      {bottleFormOpen && <FormDialog />}
     </StyledBottleForm>
   );
 };
 
-export default BottleForm;
+BottleForm.propTypes = {
+  bottleState: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  bottleState: state.bottleState,
+});
+
+export default connect(mapStateToProps)(BottleForm);

@@ -1,10 +1,6 @@
 import styled from 'styled-components';
 
 export const StyledNavbar = styled.nav`
-  .hide-sm {
-    display: none;
-  }
-
   a {
     color: white;
   }
@@ -96,10 +92,6 @@ export const StyledNavbar = styled.nav`
 
     .logout {
       min-width: 100px;
-    }
-
-    .hide-sm {
-      display: inline;
     }
   }
 `;

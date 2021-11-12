@@ -18,6 +18,7 @@ const AddBottleBySearch = ({ openBottleForm, changeFormProp }) => {
         for (const key in bottle) {
           changeFormProp(key, bottle[key]);
         }
+        changeFormProp('totalCost', parseFloat(bottle['price']));
         openBottleForm();
         return;
       }
