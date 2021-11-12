@@ -12,9 +12,19 @@ import currencies from '../../../data/currencies';
 
 const StyledFormBottleDetails = styled.div`
   form {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+
+  input,
+  textarea {
+    padding: 0.1rem 0.3rem;
   }
 `;
 
@@ -131,201 +141,246 @@ const FormBottleDetails = ({ bottleState: { bottleForm }, changeFormProp }) => {
   return (
     <StyledFormBottleDetails>
       <form>
-        <label for='product'>Product</label>
-        <input
-          type='text'
-          id='product'
-          name='product'
-          value={product}
-          onChange={(e) => handleChange(e)}
-          required
-        />
-        <label for='product'>Vintage</label>
+        <div className='form-group'>
+          <label for='product'>Product</label>
+          <input
+            type='text'
+            id='product'
+            name='product'
+            value={product}
+            onChange={(e) => handleChange(e)}
+            required
+          />
+        </div>
+        <div className='form-group'>
+          <label for='vintage'>Vintage</label>
 
-        <input
-          type='text'
-          id='vintage'
-          name='vintage'
-          value={vintage}
-          onChange={(e) => handleChange(e)}
-        />
-        <label for='producer'>Producer</label>
-        <input
-          type='text'
-          id='producer'
-          name='producer'
-          value={producer}
-          onChange={(e) => handleChange(e)}
-        />
-        <label for='region'>Region</label>
-        <input
-          type='text'
-          id='region'
-          name='region'
-          value={region}
-          onChange={(e) => handleChange(e)}
-        />
-        <label for='country'>Country</label>
-        <input
-          //change to AutoComplete
-          type='text'
-          id='country'
-          name='country'
-          value={country}
-          // onChange={(e) => handleChange(e)}
-        />
-        <label for='varietal'>Varietal</label>
-        <input
-          //change to AutoComplete
-          type='text'
-          id='varietal'
-          name='varietal'
-          value={varietal}
-          // onChange={(e) => handleChange(e)}
-        />
-        <label for='style'>Style</label>
-        <input
-          //change to AutoComplete
-          type='text'
-          id='style'
-          name='style'
-          value={style}
-          // onChange={(e) => handleChange(e)}
-        />
-        <label for='sugar'>Sugar</label>
-        <input
-          //change to AutoComplete
-          type='text'
-          id='sugar'
-          name='sugar'
-          value={sugar}
-          // onChange={(e) => handleChange(e)}
-        />
-        <label for='bubbles'>Bubbles</label>
-        <input
-          //change to AutoComplete
-          type='text'
-          id='bubbles'
-          name='bubbles'
-          value={bubbles}
-          // onChange={(e) => handleChange(e)}
-        />
-        <label for='quantity'>Quantity</label>
-        <input
-          type='number'
-          id='quantity'
-          name='quantity'
-          value={quantity}
-          onChange={(e) => handleChange(e)}
-        />
-        <label for='currency'>Currency</label>
-        <select
-          // TO DO
-          name='currency'
-          id='currency'
-          value={currency}
-          id=''
-          onChange={(e) => handleChange(e)}
-        >
-          <option value='$'>$</option>
-          <option value='&yen;'>&yen;</option>
-        </select>
-        <label for='price'>Price</label>
-        <input
-          type='number'
-          id='price'
-          name='price'
-          value={price}
-          onChange={(e) => handleChange(e)}
-        />
-        <label for='totalCost'>Total cost</label>
-        <input
-          type='number'
-          id='totalCost'
-          name='totalCost'
-          value={totalCost}
-          onChange={(e) => handleChange(e)}
-        />
-        <label for='size'>Bottle size</label>
-        <input
-          type='text'
-          id='size'
-          name='size'
-          value={size}
-          onChange={(e) => handleChange(e)}
-        />
-        <label for='alcoholPct'>Alc %</label>
-        <input
-          type='text'
-          id='alcoholPct'
-          name='alcoholPct'
-          value={alcoholPct}
-          onChange={(e) => handleChange(e)}
-        />
-        <label for='vendor'>Vendor</label>
-        <input
-          type='text'
-          id='vendor'
-          name='vendor'
-          value={vendor}
-          onChange={(e) => handleChange(e)}
-        />
-        <label for='location'>Location</label>
-        <input
-          type='text'
-          id='location'
-          name='location'
-          value={location}
-          onChange={(e) => handleChange(e)}
-        />
-        <label for='datePurchased'>Date purchased</label>
-        <input
-          type='date'
-          id='datePurchased'
-          name='datePurchased'
-          value={datePurchased}
-          onChange={(e) => handleChange(e)}
-        />
-        <label for='dateReceived'>Date received</label>
-        <input
-          type='date'
-          id='dateReceived'
-          name='dateReceived'
-          value={dateReceived}
-          onChange={(e) => handleChange(e)}
-        />
-
-        <label for='criticsScore'>Critic scores</label>
-        <input
-          type='text'
-          id='criticsScore'
-          name='criticsScore'
-          value={criticsScore}
-          onChange={(e) => handleChange(e)}
-        />
-        <label for='opened'>Opened</label>
-        <input
-          type='radio'
-          id='opened'
-          name='opened'
-          value={true}
-          onChange={(e) => handleChange(e)}
-        />
-        <label for='unopened'>Unopened</label>
-        <input
-          type='radio'
-          id='opened'
-          name='opened'
-          value={false}
-          onChange={(e) => handleChange(e)}
-        />
-        <label for='notes'>Notes</label>
-        <textarea
-          id='notes'
-          name='notes'
-          value={notes}
-          onChange={(e) => handleChange(e)}
-        />
+          <input
+            type='text'
+            id='vintage'
+            name='vintage'
+            value={vintage}
+            onChange={(e) => handleChange(e)}
+          />
+        </div>
+        <div className='form-group'>
+          <label for='producer'>Producer</label>
+          <input
+            type='text'
+            id='producer'
+            name='producer'
+            value={producer}
+            onChange={(e) => handleChange(e)}
+          />
+        </div>
+        <div className='form-group'>
+          <label for='region'>Region</label>
+          <input
+            type='text'
+            id='region'
+            name='region'
+            value={region}
+            onChange={(e) => handleChange(e)}
+          />
+        </div>
+        <div className='form-group'>
+          <label for='country'>Country</label>
+          <input
+            //change to AutoComplete
+            type='text'
+            id='country'
+            name='country'
+            value={country}
+            // onChange={(e) => handleChange(e)}
+          />
+        </div>
+        <div className='form-group'>
+          <label for='varietal'>Varietal</label>
+          <input
+            //change to AutoComplete
+            type='text'
+            id='varietal'
+            name='varietal'
+            value={varietal}
+            // onChange={(e) => handleChange(e)}
+          />
+        </div>
+        <div className='form-group'>
+          <label for='style'>Style</label>
+          <input
+            //change to AutoComplete
+            type='text'
+            id='style'
+            name='style'
+            value={style}
+            // onChange={(e) => handleChange(e)}
+          />
+        </div>
+        <div className='form-group'>
+          <label for='sugar'>Sugar</label>
+          <input
+            //change to AutoComplete
+            type='text'
+            id='sugar'
+            name='sugar'
+            value={sugar}
+            // onChange={(e) => handleChange(e)}
+          />
+        </div>
+        <div className='form-group'>
+          <label for='bubbles'>Bubbles</label>
+          <input
+            //change to AutoComplete
+            type='text'
+            id='bubbles'
+            name='bubbles'
+            value={bubbles}
+            // onChange={(e) => handleChange(e)}
+          />
+        </div>
+        <div className='form-group'>
+          <label for='quantity'>Quantity</label>
+          <input
+            type='number'
+            id='quantity'
+            name='quantity'
+            value={quantity}
+            onChange={(e) => handleChange(e)}
+          />
+        </div>
+        <div className='form-group'>
+          <label for='currency'>Currency</label>
+          <select
+            // TO DO
+            name='currency'
+            id='currency'
+            value={currency}
+            id=''
+            onChange={(e) => handleChange(e)}
+          >
+            <option value='$'>$</option>
+            <option value='&yen;'>&yen;</option>
+          </select>
+        </div>
+        <div className='form-group'>
+          <label for='price'>Price</label>
+          <input
+            type='number'
+            id='price'
+            name='price'
+            value={price}
+            onChange={(e) => handleChange(e)}
+          />
+        </div>
+        <div className='form-group'>
+          <label for='totalCost'>Total cost</label>
+          <input
+            type='number'
+            id='totalCost'
+            name='totalCost'
+            value={totalCost}
+            onChange={(e) => handleChange(e)}
+          />
+        </div>
+        <div className='form-group'>
+          <label for='size'>Bottle size</label>
+          <input
+            type='text'
+            id='size'
+            name='size'
+            value={size}
+            onChange={(e) => handleChange(e)}
+          />
+        </div>
+        <div className='form-group'>
+          <label for='alcoholPct'>Alc %</label>
+          <input
+            type='text'
+            id='alcoholPct'
+            name='alcoholPct'
+            value={alcoholPct}
+            onChange={(e) => handleChange(e)}
+          />
+        </div>
+        <div className='form-group'>
+          <label for='vendor'>Vendor</label>
+          <input
+            type='text'
+            id='vendor'
+            name='vendor'
+            value={vendor}
+            onChange={(e) => handleChange(e)}
+          />
+        </div>
+        <div className='form-group'>
+          <label for='location'>Location</label>
+          <input
+            type='text'
+            id='location'
+            name='location'
+            value={location}
+            onChange={(e) => handleChange(e)}
+          />
+        </div>
+        <div className='form-group'>
+          <label for='datePurchased'>Date purchased</label>
+          <input
+            type='date'
+            id='datePurchased'
+            name='datePurchased'
+            value={datePurchased}
+            onChange={(e) => handleChange(e)}
+          />
+        </div>
+        <div className='form-group'>
+          <label for='dateReceived'>Date received</label>
+          <input
+            type='date'
+            id='dateReceived'
+            name='dateReceived'
+            value={dateReceived}
+            onChange={(e) => handleChange(e)}
+          />
+        </div>
+        <div className='form-group'>
+          <label for='criticsScore'>Critic scores</label>
+          <input
+            type='text'
+            id='criticsScore'
+            name='criticsScore'
+            value={criticsScore}
+            onChange={(e) => handleChange(e)}
+          />
+        </div>
+        <div className='form-group'>
+          <label for='opened'>Opened</label>
+          <input
+            type='radio'
+            id='opened'
+            name='opened'
+            value={true}
+            onChange={(e) => handleChange(e)}
+          />
+        </div>
+        <div className='form-group'>
+          <label for='unopened'>Unopened</label>
+          <input
+            type='radio'
+            id='opened'
+            name='opened'
+            value={false}
+            onChange={(e) => handleChange(e)}
+          />
+        </div>
+        <div className='form-group'>
+          <label for='notes'>Notes</label>
+          <textarea
+            id='notes'
+            name='notes'
+            value={notes}
+            onChange={(e) => handleChange(e)}
+          />
+        </div>
       </form>
     </StyledFormBottleDetails>
   );

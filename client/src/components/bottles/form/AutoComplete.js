@@ -3,11 +3,8 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 const StyledAutocomplete = styled.div`
-  .form {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    grid-column-gap: 1rem;
-  }
+  display: flex;
+  flex-direction: column;
 
   input[type='text'] {
     grid-column: 1;
@@ -15,16 +12,6 @@ const StyledAutocomplete = styled.div`
     padding: 0.2rem 0.2rem;
     outline: none;
     border-radius: 0;
-  }
-
-  input[type='submit'] {
-    grid-column: 2;
-    grid-row: 1;
-  }
-
-  .search-results {
-    grid-column: 1;
-    grid-row: 2;
   }
 
   .options {
@@ -54,7 +41,7 @@ const StyledAutocomplete = styled.div`
   }
 `;
 
-const AutoComplete = ({ options, onSubmit }) => {
+const AutoComplete = ({ options }) => {
   const [state, setState] = useState({
     showOptions: false,
     filteredOptions: [],
@@ -136,24 +123,17 @@ const AutoComplete = ({ options, onSubmit }) => {
 
   return (
     <StyledAutocomplete>
-      <form className='form' onSubmit={onSubmit}>
-        <input
-          type='text'
-          placeholder='Search for wine to add'
-          className='search-box'
-          onChange={onChange}
-          onKeyDown={onKeyDown}
-          name='userInput'
-          value={userInput}
-          required
-        />
-        <div className='search-results'>{optionList}</div>
-        <input
-          type='submit'
-          value='Continue'
-          className='btn btn-primary search-btn'
-        />
-      </form>
+      <input
+        type='text'
+        placeholder='Search for wine to add'
+        className='search-box'
+        onChange={onChange}
+        onKeyDown={onKeyDown}
+        name='userInput'
+        value={userInput}
+        required
+      />
+      <div className='search-results'>{optionList}</div>
     </StyledAutocomplete>
   );
 };

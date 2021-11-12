@@ -26,7 +26,18 @@ const AddBottleBySearch = ({ openBottleForm, changeFormProp }) => {
     changeFormProp('product', userInput);
     openBottleForm();
   };
-  return <AutoComplete options={uniqueProductNames} onSubmit={onContinue} />;
+  return (
+    <>
+      <form className='form' onSubmit={onContinue}>
+        <AutoComplete options={uniqueProductNames} />
+        <input
+          type='submit'
+          value='Continue'
+          className='btn btn-primary search-btn'
+        />
+      </form>
+    </>
+  );
 };
 
 export default connect(null, { openBottleForm, changeFormProp })(
