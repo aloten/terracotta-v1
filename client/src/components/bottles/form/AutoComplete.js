@@ -54,7 +54,7 @@ const StyledAutocomplete = styled.div`
   }
 `;
 
-const AutoComplete = ({ options }) => {
+const AutoComplete = ({ options, onSubmit }) => {
   const [state, setState] = useState({
     showOptions: false,
     filteredOptions: [],
@@ -134,10 +134,6 @@ const AutoComplete = ({ options }) => {
     optionList = <div className='no-options'></div>;
   }
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-  };
-
   return (
     <StyledAutocomplete>
       <form className='form' onSubmit={onSubmit}>
@@ -147,7 +143,9 @@ const AutoComplete = ({ options }) => {
           className='search-box'
           onChange={onChange}
           onKeyDown={onKeyDown}
+          name='userInput'
           value={userInput}
+          required
         />
         <div className='search-results'>{optionList}</div>
         <input
