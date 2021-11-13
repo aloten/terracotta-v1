@@ -41,7 +41,7 @@ const StyledAutocomplete = styled.div`
   }
 `;
 
-const AutoComplete = ({ options }) => {
+const AutoComplete = ({ options, placeholderText }) => {
   const [state, setState] = useState({
     showOptions: false,
     filteredOptions: [],
@@ -125,7 +125,7 @@ const AutoComplete = ({ options }) => {
     <StyledAutocomplete>
       <input
         type='text'
-        placeholder='Search for wine to add'
+        placeholder={placeholderText}
         className='search-box'
         onChange={onChange}
         onKeyDown={onKeyDown}

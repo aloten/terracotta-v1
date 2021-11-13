@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { changeFormProp } from '../../../actions/bottleActions';
+import AutoComplete from './AutoComplete';
 
 import DateFnsUtils from '@date-io/date-fns';
 
@@ -185,30 +186,31 @@ const FormBottleDetails = ({ bottleState: { bottleForm }, changeFormProp }) => {
         </div>
         <div className='form-group'>
           <label for='country'>Country</label>
-          <input
-            //change to AutoComplete
-            type='text'
+          <AutoComplete
+            options={countries.map((country) => {
+              return country.name + ' ' + countryToFlag(country.code);
+            })}
             id='country'
             name='country'
             value={country}
-            // onChange={(e) => handleChange(e)}
+            onChange={(e) => handleChange(e)}
           />
         </div>
         <div className='form-group'>
           <label for='varietal'>Varietal</label>
-          <input
-            //change to AutoComplete
+          <AutoComplete
+            options={varietals}
             type='text'
             id='varietal'
             name='varietal'
             value={varietal}
-            // onChange={(e) => handleChange(e)}
+            onChange={(e) => handleChange(e)}
           />
         </div>
         <div className='form-group'>
           <label for='style'>Style</label>
-          <input
-            //change to AutoComplete
+          <AutoComplete
+            options={styleOptions}
             type='text'
             id='style'
             name='style'

@@ -29,7 +29,10 @@ const AddBottleBySearch = ({ openBottleForm, changeFormProp }) => {
   return (
     <>
       <form className='form' onSubmit={onContinue}>
-        <AutoComplete options={uniqueProductNames} />
+        <AutoComplete
+          options={uniqueProductNames}
+          placeholderText='Search for wine to add'
+        />
         <input
           type='submit'
           value='Continue'
