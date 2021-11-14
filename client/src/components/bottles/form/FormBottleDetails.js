@@ -200,7 +200,6 @@ const FormBottleDetails = ({ bottleState: { bottleForm }, changeFormProp }) => {
           <label for='varietal'>Varietal</label>
           <AutoComplete
             options={varietals}
-            type='text'
             id='varietal'
             name='varietal'
             value={varietal}
@@ -211,33 +210,30 @@ const FormBottleDetails = ({ bottleState: { bottleForm }, changeFormProp }) => {
           <label for='style'>Style</label>
           <AutoComplete
             options={styleOptions}
-            type='text'
             id='style'
             name='style'
             value={style}
-            // onChange={(e) => handleChange(e)}
+            onChange={(e) => handleChange(e)}
           />
         </div>
         <div className='form-group'>
           <label for='sugar'>Sugar</label>
-          <input
-            //change to AutoComplete
-            type='text'
+          <AutoComplete
+            options={sugarOptions}
             id='sugar'
             name='sugar'
             value={sugar}
-            // onChange={(e) => handleChange(e)}
+            onChange={(e) => handleChange(e)}
           />
         </div>
         <div className='form-group'>
           <label for='bubbles'>Bubbles</label>
-          <input
-            //change to AutoComplete
-            type='text'
+          <AutoComplete
+            options={bubbleOptions}
             id='bubbles'
             name='bubbles'
             value={bubbles}
-            // onChange={(e) => handleChange(e)}
+            onChange={(e) => handleChange(e)}
           />
         </div>
         <div className='form-group'>

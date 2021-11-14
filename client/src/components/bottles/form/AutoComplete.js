@@ -16,7 +16,7 @@ const StyledAutocomplete = styled.div`
 
   .options {
     position: absolute;
-    width: 59.3%;
+    width: 70%;
     display: flex;
     flex-direction: column;
     max-height: 10rem;
@@ -65,7 +65,7 @@ const AutoComplete = ({ options, placeholderText }) => {
   const onClick = (e) => {
     setState({
       activeOption: 0,
-      filteredOption: [],
+      filteredOptions: [],
       showOptions: false,
       userInput: e.currentTarget.innerText,
     });
@@ -98,8 +98,24 @@ const AutoComplete = ({ options, placeholderText }) => {
     );
   }
 
+  const onFocus = () => {
+    if (userInput === '') {
+      setState({ ...state, filteredOptions: options, showOptions: true });
+    } else {
+      setState({ ...state, showOptions: true });
+    }
+  };
+
+  const onBlur = () => {
+    setState({ ...state, showOptions: false });
+  };
+
+  const onOptionMouseDown = (e) => {
+    e.preventDefault();
+  };
+
   let optionList;
-  if (showOptions && userInput) {
+  if (showOptions) {
     if (filteredOptions.length > 0) {
       optionList = (
         <ul className='options'>
@@ -109,7 +125,12 @@ const AutoComplete = ({ options, placeholderText }) => {
               className = 'option-active';
             }
             return (
-              <li className={className} key={optionName} onClick={onClick}>
+              <li
+                className={className}
+                key={optionName}
+                onMouseDown={onOptionMouseDown}
+                onClick={onClick}
+              >
                 {optionName}
               </li>
             );
@@ -127,10 +148,12 @@ const AutoComplete = ({ options, placeholderText }) => {
         type='text'
         placeholder={placeholderText}
         className='search-box'
-        onChange={onChange}
-        onKeyDown={onKeyDown}
         name='userInput'
         value={userInput}
+        onBlur={onBlur}
+        onFocus={onFocus}
+        onChange={onChange}
+        onKeyDown={onKeyDown}
         required
       />
       <div className='search-results'>{optionList}</div>
