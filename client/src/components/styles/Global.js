@@ -45,7 +45,8 @@ ul {
 /* Utility */
 
 /* Input */
-input,
+input[type='text'],
+input[type='number'],
 select, textarea {
   border: none;
   appearance: none;
@@ -53,7 +54,7 @@ select, textarea {
   padding: 0.75rem;
   border-radius: 4px;
   border: 1px grey solid;
-  /* outline: none; */
+  outline: none;
   font-size: 1rem;
   font-family: inherit;
 }
