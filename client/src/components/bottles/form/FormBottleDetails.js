@@ -1,11 +1,8 @@
-import React, { Fragment } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { changeFormProp } from '../../../actions/bottleActions';
 import AutoComplete from './AutoComplete';
-
-import DateFnsUtils from '@date-io/date-fns';
 
 import countries from '../../../data/countries.json';
 import varietals from '../../../data/varietals';
@@ -61,9 +58,17 @@ const StyledFormBottleDetails = styled.div`
   .opened-group {
     align-items: center;
   }
+
+  .btn-group {
+    justify-content: flex-end;
+  }
 `;
 
-const FormBottleDetails = ({ bottleState: { bottleForm }, changeFormProp }) => {
+const FormBottleDetails = ({
+  bottleState: { bottleForm },
+  onSubmit,
+  handleClose,
+}) => {
   const {
     product,
     vintage,
@@ -89,6 +94,31 @@ const FormBottleDetails = ({ bottleState: { bottleForm }, changeFormProp }) => {
     dateReceived,
   } = bottleForm;
 
+  const [formState, setFormState] = useState({
+    product,
+    vintage,
+    producer,
+    varietal,
+    region,
+    country,
+    style,
+    sugar,
+    bubbles,
+    criticsScore,
+    quantity,
+    currency,
+    price,
+    totalCost,
+    size,
+    alcoholPct,
+    vendor,
+    location,
+    notes,
+    opened,
+    datePurchased,
+    dateReceived,
+  });
+
   const handleChange = (e) => {
     if (
       e.target.name === 'price' ||
@@ -97,36 +127,68 @@ const FormBottleDetails = ({ bottleState: { bottleForm }, changeFormProp }) => {
     ) {
       handlePriceCalc(e);
     } else if (e.target.name === 'opened') {
-      changeFormProp(e.target.name, e.target.checked);
+      setFormState({ ...formState, [e.target.name]: e.target.checked });
+    } else if (e.target.name === 'country') {
+      setFormState({
+        ...formState,
+        [e.target.name]: nameToIso(e.target.value),
+      });
     } else {
-      changeFormProp(e.target.name, e.target.value);
+      setFormState({ ...formState, [e.target.name]: e.target.value });
     }
   };
 
   // Dynamically update price, quantity, and total cost
   const handlePriceCalc = (e) => {
     if (e.target.name === 'totalCost') {
-      changeFormProp('totalCost', parseFloat(e.target.value));
-      changeFormProp('price', parseFloat(e.target.value) / quantity);
+      setFormState({
+        ...formState,
+        totalCost: parseFloat(e.target.value),
+        price: parseFloat(e.target.value) / formState.quantity,
+      });
     } else if (e.target.name === 'price') {
-      changeFormProp('price', parseFloat(e.target.value));
-      changeFormProp('totalCost', parseFloat(e.target.value) * quantity);
+      setFormState({
+        ...formState,
+        price: parseFloat(e.target.value),
+        totalCost: parseFloat(e.target.value) * formState.quantity,
+      });
     } else if (e.target.name === 'quantity') {
-      changeFormProp('quantity', parseFloat(e.target.value));
-      if (price > 0) {
-        changeFormProp('totalCost', parseFloat(e.target.value) * price);
-      } else if (totalCost > 0) {
-        changeFormProp('price', totalCost / parseFloat(e.target.value));
+      if (formState.price > 0) {
+        setFormState({
+          ...formState,
+          quantity: parseFloat(e.target.value),
+          totalCost: parseFloat(e.target.value) * formState.price,
+        });
+      } else if (formState.totalCost > 0) {
+        setFormState({
+          ...formState,
+          quantity: parseFloat(e.target.value),
+          price: parseFloat(e.target.value),
+        });
+      } else {
+        setFormState({
+          ...formState,
+          quantity: parseFloat(e.target.value),
+        });
       }
     }
   };
 
-  const datePurchasedChange = (date) => {
-    changeFormProp('datePurchased', date);
+  const isoToName = (isoCode) => {
+    for (const country of countries) {
+      if (country.code === isoCode) {
+        return country.name;
+      }
+    }
+    return '';
   };
 
-  const dateReceivedChange = (date) => {
-    changeFormProp('dateReceived', date);
+  const nameToIso = (name) => {
+    for (const country of countries) {
+      if (country.name === name) {
+        return country.code;
+      }
+    }
   };
 
   const countryToFlag = (isoCode) => {
@@ -175,15 +237,15 @@ const FormBottleDetails = ({ bottleState: { bottleForm }, changeFormProp }) => {
 
   return (
     <StyledFormBottleDetails>
-      <form>
+      <form onSubmit={onSubmit}>
         <div className='form-group'>
           <div className='label-group'>
-            <label for='product'>Product</label>
+            <label htmlFor='product'>Product</label>
             <input
               type='text'
               id='product'
               name='product'
-              value={product}
+              value={formState.product}
               onChange={(e) => handleChange(e)}
               required
             />
@@ -191,70 +253,70 @@ const FormBottleDetails = ({ bottleState: { bottleForm }, changeFormProp }) => {
         </div>
         <div className='form-group'>
           <div className='label-group vintage-group'>
-            <label for='vintage'>Vintage</label>
+            <label htmlFor='vintage'>Vintage</label>
             <input
               type='text'
               id='vintage'
               name='vintage'
-              value={vintage}
+              value={formState.vintage}
               onChange={(e) => handleChange(e)}
             />
           </div>
           <div className='label-group producer-group'>
-            <label for='producer'>Producer</label>
+            <label htmlFor='producer'>Producer</label>
             <input
               type='text'
               id='producer'
               name='producer'
-              value={producer}
+              value={formState.producer}
               onChange={(e) => handleChange(e)}
             />
           </div>
         </div>
         <div className='form-group'>
           <div className='label-group'>
-            <label for='region'>Region</label>
+            <label htmlFor='region'>Region</label>
             <input
               type='text'
               id='region'
               name='region'
-              value={region}
+              value={formState.region}
               onChange={(e) => handleChange(e)}
             />
           </div>
         </div>
         <div className='form-group'>
           <div className='label-group'>
-            <label for='country'>Country</label>
+            <label htmlFor='country'>Country</label>
             <AutoComplete
               options={countries.map((country) => {
-                return country.name + ' ' + countryToFlag(country.code);
+                return country.name;
               })}
               id='country'
               name='country'
-              value={country}
+              value={isoToName(formState.country)}
               onChange={(e) => handleChange(e)}
             />
           </div>
         </div>
         <div className='form-group'>
           <div className='label-group'>
-            <label for='varietal'>Varietal</label>
+            <label htmlFor='varietal'>Varietal</label>
             <AutoComplete
               options={varietals}
               id='varietal'
               name='varietal'
-              value={varietal}
+              value={formState.varietal}
               onChange={(e) => handleChange(e)}
             />
           </div>
           <div className='label-group'>
-            <label for='style'>Style</label>
+            <label htmlFor='style'>Style</label>
             <AutoComplete
               options={styleOptions}
               id='style'
               name='style'
-              value={style}
+              value={formState.style}
               onChange={(e) => handleChange(e)}
             />
           </div>
@@ -262,22 +324,22 @@ const FormBottleDetails = ({ bottleState: { bottleForm }, changeFormProp }) => {
 
         <div className='form-group'>
           <div className='label-group'>
-            <label for='sugar'>Sugar</label>
+            <label htmlFor='sugar'>Sugar</label>
             <AutoComplete
               options={sugarOptions}
               id='sugar'
               name='sugar'
-              value={sugar}
+              value={formState.sugar}
               onChange={(e) => handleChange(e)}
             />
           </div>
           <div className='label-group'>
-            <label for='bubbles'>Bubbles</label>
+            <label htmlFor='bubbles'>Bubbles</label>
             <AutoComplete
               options={bubbleOptions}
               id='bubbles'
               name='bubbles'
-              value={bubbles}
+              value={formState.bubbles}
               onChange={(e) => handleChange(e)}
             />
           </div>
@@ -285,67 +347,69 @@ const FormBottleDetails = ({ bottleState: { bottleForm }, changeFormProp }) => {
 
         <div className='form-group'>
           <div className='label-group quantity-group'>
-            <label for='quantity'>Quantity</label>
+            <label htmlFor='quantity'>Quantity</label>
             <input
               type='number'
               id='quantity'
               name='quantity'
-              value={quantity}
+              value={formState.quantity}
               onChange={(e) => handleChange(e)}
             />
           </div>
           <div className='label-group currency-group'>
-            <label for='currency'>Currency</label>
+            <label htmlFor='currency'>Currency</label>
             <select
               name='currency'
               id='currency'
-              value={currency}
+              value={formState.currency}
               onChange={(e) => handleChange(e)}
             >
               {currencies.map((currency) => (
-                <option value={currency.value}>{currency.label}</option>
+                <option key={currency.label} value={currency.value}>
+                  {currency.label}
+                </option>
               ))}
             </select>
           </div>
           <div className='label-group price-group'>
-            <label for='price'>Price</label>
+            <label htmlFor='price'>Price</label>
             <input
               type='number'
               id='price'
               name='price'
-              value={price}
+              value={formState.price}
               onChange={(e) => handleChange(e)}
             />
           </div>
           <div className='label-group totalCost-group'>
-            <label for='totalCost'>Total cost</label>
+            <label htmlFor='totalCost'>Total cost</label>
             <input
               type='number'
               id='totalCost'
               name='totalCost'
-              value={totalCost}
+              value={formState.totalCost}
               onChange={(e) => handleChange(e)}
             />
           </div>
         </div>
         <div className='form-group'>
           <div className='label-group size-group'>
-            <label for='size'>Bottle size</label>
+            <label htmlFor='size'>Bottle size</label>
             <input
               type='text'
               id='size'
               name='size'
-              value={size}
+              value={formState.size}
               onChange={(e) => handleChange(e)}
             />
           </div>
           <div className='label-group alcoholPct-group'>
-            <label for='alcoholPct'>Alc %</label>
+            <label htmlFor='alcoholPct'>Alc %</label>
             <input
               type='text'
               id='alcoholPct'
               name='alcoholPct'
-              value={alcoholPct}
+              value={formState.alcoholPct}
               onChange={(e) => handleChange(e)}
             />
           </div>
@@ -353,22 +417,22 @@ const FormBottleDetails = ({ bottleState: { bottleForm }, changeFormProp }) => {
 
         <div className='form-group'>
           <div className='label-group vendor-group'>
-            <label for='vendor'>Vendor</label>
+            <label htmlFor='vendor'>Vendor</label>
             <input
               type='text'
               id='vendor'
               name='vendor'
-              value={vendor}
+              value={formState.vendor}
               onChange={(e) => handleChange(e)}
             />
           </div>
           <div className='label-group location-group'>
-            <label for='location'>Location</label>
+            <label htmlFor='location'>Location</label>
             <input
               type='text'
               id='location'
               name='location'
-              value={location}
+              value={formState.location}
               onChange={(e) => handleChange(e)}
             />
           </div>
@@ -376,22 +440,22 @@ const FormBottleDetails = ({ bottleState: { bottleForm }, changeFormProp }) => {
 
         <div className='form-group'>
           <div className='label-group datePurchased-group'>
-            <label for='datePurchased'>Date purchased</label>
+            <label htmlFor='datePurchased'>Date purchased</label>
             <input
               type='date'
               id='datePurchased'
               name='datePurchased'
-              value={datePurchased}
+              value={formState.datePurchased || ''}
               onChange={(e) => handleChange(e)}
             />
           </div>
           <div className='label-group dateReceived-group'>
-            <label for='dateReceived'>Date received</label>
+            <label htmlFor='dateReceived'>Date received</label>
             <input
               type='date'
               id='dateReceived'
               name='dateReceived'
-              value={dateReceived}
+              value={formState.dateReceived || ''}
               onChange={(e) => handleChange(e)}
             />
           </div>
@@ -399,22 +463,22 @@ const FormBottleDetails = ({ bottleState: { bottleForm }, changeFormProp }) => {
 
         <div className='form-group'>
           <div className='label-group criticsScore-group'>
-            <label for='criticsScore'>Critic scores</label>
+            <label htmlFor='criticsScore'>Critic scores</label>
             <input
               type='text'
               id='criticsScore'
               name='criticsScore'
-              value={criticsScore}
+              value={formState.criticsScore}
               onChange={(e) => handleChange(e)}
             />
           </div>
           <div className='label-group opened-group'>
-            <label for='opened'>Opened</label>
+            <label htmlFor='opened'>Opened</label>
             <input
               type='checkbox'
               id='opened'
               name='opened'
-              value={opened}
+              value={formState.opened}
               onChange={(e) => handleChange(e)}
             />
           </div>
@@ -422,14 +486,20 @@ const FormBottleDetails = ({ bottleState: { bottleForm }, changeFormProp }) => {
 
         <div className='form-group'>
           <div className='label-group notes-group'>
-            <label for='notes'>Notes</label>
+            <label htmlFor='notes'>Notes</label>
             <textarea
               id='notes'
               name='notes'
-              value={notes}
+              value={formState.notes}
               onChange={(e) => handleChange(e)}
             />
           </div>
+        </div>
+        <div className='form-group btn-group'>
+          <button onClick={handleClose} className='btn btn-danger'>
+            Cancel
+          </button>
+          <input type='submit' value='Save' className='btn btn-success' />
         </div>
       </form>
     </StyledFormBottleDetails>
@@ -444,6 +514,4 @@ const mapStateToProps = (state) => ({
   bottleState: state.bottleState,
 });
 
-export default connect(mapStateToProps, {
-  changeFormProp,
-})(FormBottleDetails);
+export default connect(mapStateToProps)(FormBottleDetails);

@@ -41,7 +41,7 @@ const StyledAutocomplete = styled.div`
   }
 `;
 
-const AutoComplete = ({ options, placeholderText }) => {
+const AutoComplete = ({ options, placeholderText, required }) => {
   const [state, setState] = useState({
     showOptions: false,
     filteredOptions: [],
@@ -154,7 +154,7 @@ const AutoComplete = ({ options, placeholderText }) => {
         onFocus={onFocus}
         onChange={onChange}
         onKeyDown={onKeyDown}
-        required
+        required={required}
       />
       <div className='search-results'>{optionList}</div>
     </StyledAutocomplete>

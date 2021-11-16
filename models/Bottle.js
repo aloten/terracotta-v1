@@ -31,12 +31,7 @@ const bottleSchema = new mongoose.Schema({
     type: String,
   },
   country: {
-    code: {
-      type: String,
-    },
-    name: {
-      type: String,
-    },
+    type: String,
   },
   criticsScore: {
     type: String,

@@ -47,6 +47,8 @@ ul {
 /* Input */
 input[type='text'],
 input[type='number'],
+input[type='password'],
+input[type='email'],
 select, textarea {
   border: none;
   appearance: none;

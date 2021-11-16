@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import {
   addBottle,
   updateBottle,
+  changeFormProp,
   closeBottleForm,
   clearForm,
   loadCellarStats,
@@ -42,12 +43,6 @@ const StyledFormDialog = styled.div`
     align-items: center;
   }
 
-  .dialog-footer {
-    display: flex;
-    justify-content: flex-end;
-    gap: 1rem;
-  }
-
   .close-btn {
     display: inline-block;
     height: 100%;
@@ -74,6 +69,7 @@ const FormDialog = ({
   bottleState: { bottleForm },
   addBottle,
   updateBottle,
+  changeFormProp,
   closeBottleForm,
   clearForm,
   loadCellarStats,
@@ -85,10 +81,17 @@ const FormDialog = ({
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (bottleForm.product === '') {
+    const form = e.target;
+
+    if (form.producer.value === '') {
       return;
-      // TODO setAlert();
-    } else if (bottleForm._id) {
+    }
+    for (const input of form) {
+      if (input.name) {
+        changeFormProp(input.name, input.value);
+      }
+    }
+    if (bottleForm._id) {
       updateBottle(bottleForm).then(() => {
         loadCellarStats();
       });
@@ -109,15 +112,7 @@ const FormDialog = ({
             &times;
           </span>
         </div>
-        <FormBottleDetails />
-        <div className='dialog-footer'>
-          <button onClick={handleClose} className='btn btn-danger'>
-            Cancel
-          </button>
-          <button onClick={onSubmit} className='btn btn-success'>
-            Save
-          </button>
-        </div>
+        <FormBottleDetails onSubmit={onSubmit} handleClose={handleClose} />
       </div>
     </StyledFormDialog>
   );
@@ -134,6 +129,7 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
   addBottle,
   updateBottle,
+  changeFormProp,
   closeBottleForm,
   clearForm,
   loadCellarStats,

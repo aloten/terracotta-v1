@@ -16,9 +16,17 @@ const AddBottleBySearch = ({ openBottleForm, changeFormProp }) => {
     for (const bottle of uniqueBottles) {
       if (bottle.product === userInput) {
         for (const key in bottle) {
-          changeFormProp(key, bottle[key]);
+          if (key === 'country') {
+            changeFormProp(key, bottle[key].code);
+          } else {
+            changeFormProp(key, bottle[key]);
+          }
         }
-        changeFormProp('totalCost', parseFloat(bottle['price']));
+        if (bottle['price']) {
+          changeFormProp('totalCost', parseFloat(bottle['price']));
+        } else {
+          changeFormProp('price', 0);
+        }
         openBottleForm();
         return;
       }
@@ -32,6 +40,7 @@ const AddBottleBySearch = ({ openBottleForm, changeFormProp }) => {
         <AutoComplete
           options={uniqueProductNames}
           placeholderText='Search for wine to add'
+          required={true}
         />
         <input
           type='submit'
