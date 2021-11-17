@@ -41,12 +41,12 @@ const StyledAutocomplete = styled.div`
   }
 `;
 
-const AutoComplete = ({ options, placeholderText, required }) => {
+const AutoComplete = ({ options, placeholderText, required, name, value }) => {
   const [state, setState] = useState({
     showOptions: false,
     filteredOptions: [],
     activeOption: 0,
-    userInput: '',
+    userInput: value || '',
   });
 
   const { showOptions, filteredOptions, activeOption, userInput } = state;
@@ -148,7 +148,7 @@ const AutoComplete = ({ options, placeholderText, required }) => {
         type='text'
         placeholder={placeholderText}
         className='search-box'
-        name='userInput'
+        name={name}
         value={userInput}
         onBlur={onBlur}
         onFocus={onFocus}

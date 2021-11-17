@@ -42,6 +42,8 @@ router.post(
       opened,
     } = req.body;
 
+    console.log('date received: ' + dateReceived);
+
     try {
       const newBottle = new Bottle({
         user: req.user.id,
@@ -70,6 +72,7 @@ router.post(
       });
 
       const bottle = await newBottle.save();
+
       res.json(bottle);
     } catch (error) {
       console.error(error);

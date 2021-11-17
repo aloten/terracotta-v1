@@ -8,7 +8,7 @@ import uniqueBottles from '../../../data/uniqueBottlesSmall.json';
 const AddBottleBySearch = ({ openBottleForm, changeFormProp }) => {
   const onContinue = (e) => {
     e.preventDefault();
-    const userInput = e.target.userInput.value;
+    const userInput = e.target.product.value;
 
     if (userInput === '') {
       return;
@@ -41,6 +41,7 @@ const AddBottleBySearch = ({ openBottleForm, changeFormProp }) => {
           options={uniqueProductNames}
           placeholderText='Search for wine to add'
           required={true}
+          name='product'
         />
         <input
           type='submit'

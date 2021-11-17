@@ -69,7 +69,6 @@ const FormDialog = ({
   bottleState: { bottleForm },
   addBottle,
   updateBottle,
-  changeFormProp,
   closeBottleForm,
   clearForm,
   loadCellarStats,
@@ -86,17 +85,18 @@ const FormDialog = ({
     if (form.producer.value === '') {
       return;
     }
+    const newBottle = bottleForm;
     for (const input of form) {
       if (input.name) {
-        changeFormProp(input.name, input.value);
+        newBottle[input.name] = input.value;
       }
     }
-    if (bottleForm._id) {
-      updateBottle(bottleForm).then(() => {
+    if (newBottle._id) {
+      updateBottle(newBottle).then(() => {
         loadCellarStats();
       });
     } else {
-      addBottle(bottleForm).then(() => {
+      addBottle(newBottle).then(() => {
         loadCellarStats();
       });
     }

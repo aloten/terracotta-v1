@@ -115,8 +115,10 @@ const FormBottleDetails = ({
     location,
     notes,
     opened,
-    datePurchased,
-    dateReceived,
+    datePurchased:
+      datePurchased !== null ? datePurchased.slice(0, 10) : datePurchased,
+    dateReceived:
+      dateReceived !== null ? dateReceived.slice(0, 10) : dateReceived,
   });
 
   const handleChange = (e) => {
