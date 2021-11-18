@@ -5,17 +5,43 @@ import Inventory from '../bottles/Inventory';
 import Dashboard from '../bottles/Dashboard';
 
 const StyledHome = styled.div`
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 1rem;
+
+  .dashboard {
+    grid-column: 1 / 3;
+    grid-row: 1;
+  }
+  .bottleForm {
+    z-index: 1;
+    grid-column: 1 / 3;
+    grid-row: 2;
+  }
+  .inventory {
+    grid-column: 1 / 3;
+    grid-row: 3;
+  }
+
+  @media (min-width: 700px) {
+    .bottleForm {
+      grid-column: 1 / 2;
+    }
+  }
 `;
 
 const Home = () => {
   return (
     <StyledHome>
-      <Dashboard />
-      <BottleForm />
-      <Inventory />
+      <div className='dashboard'>
+        <Dashboard />
+      </div>
+      <div className='bottleForm'>
+        <BottleForm />
+      </div>
+      <div className='inventory'>
+        <Inventory />
+      </div>
     </StyledHome>
   );
 };

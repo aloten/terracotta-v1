@@ -11,6 +11,7 @@ import {
   loadCellarStats,
 } from '../../../actions/bottleActions';
 import FormBottleDetails from './FormBottleDetails';
+import countries from '../../../data/countries.json';
 
 const StyledFormDialog = styled.div`
   position: fixed;
@@ -78,6 +79,14 @@ const FormDialog = ({
     clearForm();
   };
 
+  const nameToIso = (name) => {
+    for (const country of countries) {
+      if (country.name === name) {
+        return country.code;
+      }
+    }
+  };
+
   const onSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -88,7 +97,12 @@ const FormDialog = ({
     const newBottle = bottleForm;
     for (const input of form) {
       if (input.name) {
-        newBottle[input.name] = input.value;
+        // Convert country name back to 2-digit ISO code, awkward fix due to awkward autcomplete options vs UI
+        if (input.name === 'country') {
+          newBottle[input.name] = nameToIso(input.value);
+        } else {
+          newBottle[input.name] = input.value;
+        }
       }
     }
     if (newBottle._id) {

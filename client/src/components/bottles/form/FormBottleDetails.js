@@ -94,13 +94,25 @@ const FormBottleDetails = ({
     dateReceived,
   } = bottleForm;
 
+  const isoToName = (isoCode) => {
+    if (isoCode === '') {
+      return '';
+    }
+    for (const country of countries) {
+      if (country.code === isoCode) {
+        return country.name;
+      }
+    }
+    return isoCode;
+  };
+
   const [formState, setFormState] = useState({
     product,
     vintage,
     producer,
     varietal,
     region,
-    country,
+    country: isoToName(country),
     style,
     sugar,
     bubbles,
@@ -133,7 +145,7 @@ const FormBottleDetails = ({
     } else if (e.target.name === 'country') {
       setFormState({
         ...formState,
-        [e.target.name]: nameToIso(e.target.value),
+        [e.target.name]: e.target.value,
       });
     } else {
       setFormState({ ...formState, [e.target.name]: e.target.value });
@@ -172,23 +184,6 @@ const FormBottleDetails = ({
           ...formState,
           quantity: parseFloat(e.target.value),
         });
-      }
-    }
-  };
-
-  const isoToName = (isoCode) => {
-    for (const country of countries) {
-      if (country.code === isoCode) {
-        return country.name;
-      }
-    }
-    return '';
-  };
-
-  const nameToIso = (name) => {
-    for (const country of countries) {
-      if (country.name === name) {
-        return country.code;
       }
     }
   };
@@ -296,7 +291,7 @@ const FormBottleDetails = ({
               })}
               id='country'
               name='country'
-              value={isoToName(formState.country)}
+              value={formState.country}
               onChange={(e) => handleChange(e)}
             />
           </div>
@@ -480,6 +475,7 @@ const FormBottleDetails = ({
               type='checkbox'
               id='opened'
               name='opened'
+              checked={formState.opened}
               value={formState.opened}
               onChange={(e) => handleChange(e)}
             />

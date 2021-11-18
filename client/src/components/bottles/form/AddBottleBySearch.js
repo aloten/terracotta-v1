@@ -1,9 +1,23 @@
 import React from 'react';
+import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { openBottleForm, changeFormProp } from '../../../actions/bottleActions';
 import AutoComplete from './AutoComplete';
 import uniqueProductNames from '../../../data/uniqueProductNamesSmall.json';
 import uniqueBottles from '../../../data/uniqueBottlesSmall.json';
+
+const StyledAddBottleBySearch = styled.div`
+  .form {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .form input {
+    grid-column: 2;
+  }
+`;
 
 const AddBottleBySearch = ({ openBottleForm, changeFormProp }) => {
   const onContinue = (e) => {
@@ -35,7 +49,7 @@ const AddBottleBySearch = ({ openBottleForm, changeFormProp }) => {
     openBottleForm();
   };
   return (
-    <>
+    <StyledAddBottleBySearch>
       <form className='form' onSubmit={onContinue}>
         <AutoComplete
           options={uniqueProductNames}
@@ -49,7 +63,7 @@ const AddBottleBySearch = ({ openBottleForm, changeFormProp }) => {
           className='btn btn-primary search-btn'
         />
       </form>
-    </>
+    </StyledAddBottleBySearch>
   );
 };
 
