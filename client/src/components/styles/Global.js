@@ -112,6 +112,28 @@ select, textarea {
 .btn-danger:hover {
   background-color: rgb(207, 37, 37);
 }
+
+i {
+  cursor: pointer;
+}
+
+.icon-danger {
+  color: rgb(206, 81, 81)
+}
+
+.icon-danger:hover {
+  color: rgb(207, 20, 20)
+}
+
+.icon-neutral {
+  color: gray;
+}
+
+.icon-neutral:hover {
+  color: darkgray;
+}
+
+
 `;
 
 export default GlobalStyles;

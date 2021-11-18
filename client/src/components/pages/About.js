@@ -1,16 +1,6 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-
-const useStyles = makeStyles(() => ({
-  item: {
-    display: 'inline',
-    fontSize: '40px',
-    marginRight: '20px',
-  },
-}));
 
 const About = () => {
-  const classes = useStyles();
   return (
     <div>
       <h1>About This App</h1>
@@ -19,7 +9,7 @@ const About = () => {
         social networking
       </p>
       <ul>
-        <li className={classes.item}>
+        <li>
           <a
             href='https://github.com/aloten/terracotta-v1'
             target='_blank'
@@ -28,7 +18,7 @@ const About = () => {
             <i className='fab fa-github-square'></i>
           </a>
         </li>
-        <li className={classes.item}>
+        <li>
           <a
             href='https://www.linkedin.com/in/aidan-loten-a009b9141/'
             target='_blank'

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, Fragment } from 'react';
+import styled from 'styled-components';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
@@ -9,23 +10,46 @@ import {
   loadCellarStats,
 } from '../../actions/bottleActions';
 
-import styled from 'styled-components';
+import currencies from '../../data/currencies';
 
-import {
-  DataGrid,
-  GridToolbarContainer,
-  GridToolbarExport,
-  GridToolbarColumnsButton,
-  GridToolbarFilterButton,
-  GridToolbarDensitySelector,
-} from '@mui/x-data-grid';
-import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
+const StyledInventory = styled.div`
+  .inventory-table {
+    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.24);
+    border-radius: 5px;
+    border-collapse: collapse;
+    width: 100%;
+    background: white;
+  }
 
-// import currencies from '../../data/currencies';
+  tr {
+    border-bottom: 1px solid lightgray;
+  }
 
-const StyledInventory = styled.div``;
+  th,
+  td {
+    padding: 0.5rem;
+  }
+
+  th {
+    text-align: left;
+    font-weight: normal;
+  }
+
+  th.actions {
+    width: 4%;
+  }
+
+  th.vintage {
+    width: 4%;
+  }
+
+  .actions-wrapper {
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+  }
+`;
 
 const Inventory = ({
   bottleState: { bottles },
@@ -42,186 +66,92 @@ const Inventory = ({
     // eslint-disable-next-line
   }, []);
 
-  const [selected, setSelected] = useState(null);
-
-  const [actions, setActions] = useState({
-    delete: false,
-    edit: true,
-  });
-
-  useEffect(() => {
-    if (selected !== null) {
-      if (actions.delete === true) {
-        deleteBottle(
-          bottles[bottles.findIndex((bottle) => bottle.id === selected)]._id
-        ).then(() => {
-          loadCellarStats();
-        });
-        setActions({ ...actions, delete: false });
-        setSelected(null);
-      } else if (actions.edit === true) {
-        const bottle =
-          bottles[bottles.findIndex((bottle) => bottle.id === selected)];
-        delete bottle.id;
-        delete bottle.dateReceivedStr;
-        delete bottle.datePurchasedStr;
-        delete bottle.dateAddedStr;
+  const onEdit = (e, id) => {
+    e.preventDefault();
+    for (const bottle of bottles) {
+      if (bottle._id === id) {
         for (const prop in bottle) {
           changeFormProp(prop, bottle[prop]);
         }
         openBottleForm();
-        setActions({ ...actions, edit: false });
+        return;
       }
     }
-    // eslint-disable-next-line
-  }, [actions]);
-
-  const onSelectionModelChange = (model) => {
-    setSelected(model[0]);
   };
 
-  const onDelete = () => {
-    setActions({ ...actions, delete: true });
+  const onDelete = (e, id) => {
+    e.preventDefault();
+    deleteBottle(id);
   };
-
-  const onEdit = () => {
-    setActions({ ...actions, edit: true });
-  };
-
-  const CustomToolbar = () => {
-    return (
-      <GridToolbarContainer>
-        <GridToolbarColumnsButton />
-        <GridToolbarFilterButton />
-        <GridToolbarDensitySelector />
-        <GridToolbarExport />
-      </GridToolbarContainer>
-    );
-  };
-
-  // format data for data grid rows
-  if (bottles !== null && bottles.length !== 0) {
-    bottles.forEach((bottle) => {
-      bottle.id = bottle._id;
-      if (bottle.dateReceived) {
-        const year = bottle.dateReceived.slice(0, 4);
-        const month = bottle.dateReceived.slice(5, 7);
-        const day = bottle.dateReceived.slice(8, 10);
-        bottle.dateReceivedStr = month + '/' + day + '/' + year;
-      }
-      if (bottle.datePurchased) {
-        const year = bottle.datePurchased.slice(0, 4);
-        const month = bottle.datePurchased.slice(5, 7);
-        const day = bottle.datePurchased.slice(8, 10);
-        bottle.datePurchasedStr = month + '/' + day + '/' + year;
-      }
-      if (bottle.dateAdded) {
-        const year = bottle.dateAdded.slice(0, 4);
-        const month = bottle.dateAdded.slice(5, 7);
-        const day = bottle.dateAdded.slice(8, 10);
-        bottle.dateAddedStr = month + '/' + day + '/' + year;
-      }
-    });
-  }
-
-  const columns = [
-    {
-      field: 'id',
-      headerName: 'ID',
-      hide: true,
-    },
-    {
-      field: 'product',
-      headerName: 'Product',
-      width: 300,
-      headerAlign: 'center',
-      renderCell: (params) => (
-        <Fragment>
-          <IconButton onClick={onEdit}>
-            <EditIcon />
-          </IconButton>
-          <IconButton onClick={onDelete}>
-            <DeleteIcon />
-          </IconButton>
-          {params.value}
-        </Fragment>
-      ),
-    },
-    {
-      field: 'vintage',
-      headerName: 'Vin.',
-      description: 'Vintage',
-      width: 120,
-    },
-    {
-      field: 'quantity',
-      headerName: '#',
-      description: 'Quantity',
-      width: 85,
-    },
-    {
-      field: 'currency',
-      headerName: 'Currency',
-      width: 100,
-    },
-    {
-      field: 'price',
-      headerName: 'Price',
-      width: 110,
-      renderCell: (params) => <Fragment>{params.value}</Fragment>,
-    },
-    {
-      field: 'totalCost',
-      headerName: 'Total Cost',
-      width: 150,
-    },
-    {
-      field: 'datePurchasedStr',
-      headerName: 'Date Purchased',
-      width: 150,
-    },
-    {
-      field: 'dateReceivedStr',
-      headerName: 'Date Received',
-      width: 150,
-    },
-    {
-      field: 'vendor',
-      headerName: 'Vendor',
-      width: 150,
-    },
-    {
-      field: 'dateAddedStr',
-      headerName: 'Date Added',
-      width: 150,
-      hide: true,
-    },
-  ];
 
   return (
     <StyledInventory>
-      <div
-        style={{
-          height: 500,
-          width: '100%',
-          background: 'white',
-        }}
-      >
-        <div style={{ display: 'flex', height: '100%' }}>
-          <div style={{ flexGrow: 1 }}>
-            <DataGrid
-              rows={bottles ? bottles : []}
-              columns={columns}
-              rowHeight={25}
-              components={{
-                Toolbar: CustomToolbar,
-              }}
-              hideFooterSelectedRowCount
-              onSelectionModelChange={onSelectionModelChange}
-            />
-          </div>
-        </div>
-      </div>
+      <table className='inventory-table'>
+        <thead>
+          <tr>
+            <th className='actions'></th>
+            <th className='vintage'>Vintage</th>
+            <th className='product'>Product</th>
+            <th className='quantity'>Quantity</th>
+            <th className='price'>Price</th>
+            <th className='totalCost'>Total cost</th>
+            <th className='datePurchased'>Date Purchased</th>
+            <th className='dateReceived'>Date Received</th>
+            <th className='dateAdded'>Date Added</th>
+          </tr>
+        </thead>
+        <tbody>
+          {bottles &&
+            bottles.map((bottle) => (
+              <tr key={bottle._id}>
+                <td>
+                  <div className='actions-wrapper'>
+                    <i
+                      className='fas fa-edit icon-neutral'
+                      onClick={(e) => onEdit(e, bottle._id)}
+                      title='edit'
+                    ></i>
+                    <i
+                      className='fas fa-trash icon-danger'
+                      onClick={(e) => onDelete(e, bottle._id)}
+                      title='delete'
+                    ></i>
+                  </div>
+                </td>
+                <td>{bottle.vintage}</td>
+                <td>{bottle.product}</td>
+                <td>{bottle.quantity}</td>
+                <td>
+                  {
+                    currencies.filter((currency) => {
+                      if (bottle.currency === currency.value) {
+                        return currency;
+                      }
+                    })[0].label
+                  }
+                  {bottle.price}
+                </td>
+                <td>
+                  {
+                    currencies.filter((currency) => {
+                      if (bottle.currency === currency.value) {
+                        return currency;
+                      }
+                    })[0].label
+                  }
+                  {bottle.totalCost}
+                </td>
+                <td>
+                  {bottle.datePurchased && bottle.datePurchased.slice(0, 10)}
+                </td>
+                <td>
+                  {bottle.dateReceived && bottle.dateReceived.slice(0, 10)}
+                </td>
+                <td>{bottle.dateAdded && bottle.dateAdded.slice(0, 10)}</td>
+              </tr>
+            ))}
+        </tbody>
+      </table>
     </StyledInventory>
   );
 };
