@@ -1,4 +1,4 @@
-import React, { useEffect, Fragment } from 'react';
+import React, { useState, Fragment } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -7,56 +7,50 @@ import { logout } from '../../actions/authActions';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 
-const StyledNavbar = styled.nav`
-  display: block;
-  text-align: center;
+export const StyledNavbar = styled.nav`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   color: white;
   background-color: ${(props) => props.theme.colors.primaryColor};
 
-  .logo {
+  a {
     color: white;
+  }
+
+  .logo {
+    padding: 0.5rem;
+    color: white;
+    background-color: ${(props) => props.theme.colors.primaryColor};
+    font-size: 1.5rem;
   }
 
   .logo:hover {
     cursor: pointer;
   }
 
-  a {
-    color: white;
+  .fa-bars,
+  .fa-times {
+    position: absolute;
+    top: 0.45rem;
+    right: 0.7rem;
   }
 
   .nav-links {
-    display: none;
+    width: 100%;
     text-align: center;
     justify-content: center;
   }
 
-  .nav-links.active {
-    display: block;
-  }
-
-  .hamburger-toggle {
-    position: absolute;
-    top: 0.75rem;
-    right: 1rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 2rem;
-    height: 1.5rem;
-  }
-
-  .hamburger-toggle .bar {
-    height: 3px;
-    width: 100%;
-    background-color: white;
-    border-radius: 10px;
+  .fa-bars,
+  .fa-times {
+    color: white;
+    background-color: ${(props) => props.theme.colors.primaryColor};
   }
 
   .greeting {
     display: inline-block;
-    height: 100%;
-    width: 100%;
     padding: 0.5rem;
     color: white;
   }
@@ -77,23 +71,32 @@ const StyledNavbar = styled.nav`
   }
 
   @media (min-width: 700px) {
-    display: flex;
+    flex-direction: row;
     justify-content: space-between;
     align-items: center;
     padding: 0.7rem 2rem;
     width: 100%;
     margin-bottom: 0;
 
-    .hamburger-toggle {
+    .fa-bars,
+    .fa-times {
       display: none;
+    }
+
+    .logo {
+      width: 100%;
+      text-align: left;
     }
 
     .nav-links {
       display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
     }
 
     .greeting {
-      margin-right: 1rem;
+      width: auto;
+      margin-right: 1.5rem;
     }
 
     .nav-link {
@@ -130,15 +133,13 @@ const Navbar = ({
     history.push('/');
   };
 
-  // Create toggle effect for mobile nav hamburger
-  useEffect(() => {
-    const hamburgerToggle = document.querySelector('.hamburger-toggle');
-    const navLinks = document.querySelector('.nav-links');
+  const windowSize = window.innerWidth >= 700;
 
-    hamburgerToggle.addEventListener('click', () => {
-      navLinks.classList.toggle('active');
-    });
-  }, []);
+  const [toggled, setToggled] = useState(windowSize);
+
+  const toggleBars = () => {
+    setToggled(!toggled);
+  };
 
   const authLinks = (
     <Fragment>
@@ -183,17 +184,16 @@ const Navbar = ({
 
   return (
     <StyledNavbar>
-      <span className='logo' onClick={onLogoClick}>
-        <h1>
-          <i className={icon} /> {title}
-        </h1>
-      </span>
-      <a href='#' className='hamburger-toggle'>
-        <span className='bar'></span>
-        <span className='bar'></span>
-        <span className='bar'></span>
-      </a>
-      <ul className='nav-links'>{isAuthenticated ? authLinks : guestLinks}</ul>
+      <button className='logo' onClick={onLogoClick}>
+        <i className={icon} /> {title}
+      </button>
+      <i
+        onClick={toggleBars}
+        className={toggled ? 'fas fa-times fa-2x' : 'fas fa-bars fa-2x'}
+      ></i>
+      <ul className='nav-links' style={{ display: !toggled && 'none' }}>
+        {toggled && (isAuthenticated ? authLinks : guestLinks)}
+      </ul>
     </StyledNavbar>
   );
 };

@@ -38,6 +38,11 @@ input, button {
   font-family: inherit;
 }
 
+button {
+  border: none;
+  background-color: none;
+}
+
 ul {
   list-style: none;
 }
