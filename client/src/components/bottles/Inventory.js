@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -13,12 +13,14 @@ import {
 import currencies from '../../data/currencies';
 
 const StyledInventory = styled.div`
+  /* Not mobile first design */
   .inventory-table {
     box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.24);
     border-radius: 5px;
     border-collapse: collapse;
     width: 100%;
     background: white;
+    overflow-x: scroll;
   }
 
   tr {
@@ -48,6 +50,32 @@ const StyledInventory = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: end;
+  }
+
+  @media (max-width: 600px) {
+    thead {
+      display: none;
+    }
+
+    td {
+      display: flex;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .actions-wrapper {
+      width: 20%;
+    }
+
+    tr {
+      border-bottom: 5px solid ${(props) => props.theme.colors.bgGrey};
+    }
+
+    td::before {
+      content: attr(label);
+      font-weight: bold;
+      width: 120px;
+      min-width: 120px;
+    }
   }
 `;
 
@@ -104,7 +132,7 @@ const Inventory = ({
           {bottles &&
             bottles.map((bottle) => (
               <tr key={bottle._id}>
-                <td>
+                <td label=''>
                   <div className='actions-wrapper'>
                     <i
                       className='fas fa-edit icon-neutral'
@@ -118,10 +146,10 @@ const Inventory = ({
                     ></i>
                   </div>
                 </td>
-                <td>{bottle.vintage}</td>
-                <td>{bottle.product}</td>
-                <td>{bottle.quantity}</td>
-                <td>
+                <td label='Vintage'>{bottle.vintage}</td>
+                <td label='Product'>{bottle.product}</td>
+                <td label='Quantity'>{bottle.quantity}</td>
+                <td label='Price'>
                   {
                     currencies.filter((currency) => {
                       if (bottle.currency === currency.value) {
@@ -131,7 +159,7 @@ const Inventory = ({
                   }
                   {bottle.price}
                 </td>
-                <td>
+                <td label='Total cost'>
                   {
                     currencies.filter((currency) => {
                       if (bottle.currency === currency.value) {
@@ -141,13 +169,15 @@ const Inventory = ({
                   }
                   {bottle.totalCost}
                 </td>
-                <td>
+                <td label='Date purchased'>
                   {bottle.datePurchased && bottle.datePurchased.slice(0, 10)}
                 </td>
-                <td>
+                <td label='Date received'>
                   {bottle.dateReceived && bottle.dateReceived.slice(0, 10)}
                 </td>
-                <td>{bottle.dateAdded && bottle.dateAdded.slice(0, 10)}</td>
+                <td label='Date added'>
+                  {bottle.dateAdded && bottle.dateAdded.slice(0, 10)}
+                </td>
               </tr>
             ))}
         </tbody>
