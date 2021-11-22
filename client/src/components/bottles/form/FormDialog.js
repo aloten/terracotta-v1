@@ -47,7 +47,6 @@ const StyledFormDialog = styled.div`
   .close-btn {
     display: inline-block;
     height: 100%;
-    color: darkgray;
     font-size: 2rem;
     line-height: 1;
     font-weight: bold;
@@ -62,6 +61,7 @@ const StyledFormDialog = styled.div`
     .dialog-content {
       width: 75%;
       height: 75%;
+      max-width: 768px;
     }
   }
 `;
@@ -122,7 +122,7 @@ const FormDialog = ({
       <div className='dialog-content'>
         <div className='dialog-header'>
           <h3>Edit purchase details</h3>
-          <span onClick={handleClose} className='close-btn'>
+          <span onClick={handleClose} className='close-btn icon-danger'>
             &times;
           </span>
         </div>

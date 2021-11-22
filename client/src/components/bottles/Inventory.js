@@ -52,7 +52,7 @@ const StyledInventory = styled.div`
     align-items: end;
   }
 
-  @media (max-width: 600px) {
+  @media (max-width: 768px) {
     thead {
       display: none;
     }
@@ -150,23 +150,21 @@ const Inventory = ({
                 <td label='Product'>{bottle.product}</td>
                 <td label='Quantity'>{bottle.quantity}</td>
                 <td label='Price'>
-                  {
+                  {bottle.price &&
                     currencies.filter((currency) => {
                       if (bottle.currency === currency.value) {
                         return currency;
                       }
-                    })[0].label
-                  }
+                    })[0].label}
                   {bottle.price}
                 </td>
                 <td label='Total cost'>
-                  {
+                  {bottle.price &&
                     currencies.filter((currency) => {
                       if (bottle.currency === currency.value) {
                         return currency;
                       }
-                    })[0].label
-                  }
+                    })[0].label}
                   {bottle.totalCost}
                 </td>
                 <td label='Date purchased'>

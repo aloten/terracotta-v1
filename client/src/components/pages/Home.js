@@ -6,20 +6,20 @@ import Dashboard from '../bottles/Dashboard';
 
 const StyledHome = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
 
   .dashboard {
-    grid-column: 1 / 3;
+    grid-column: 1 / 4;
     grid-row: 1;
   }
   .bottleForm {
     z-index: 1;
-    grid-column: 1 / 3;
+    grid-column: 1 / 4;
     grid-row: 2;
   }
   .inventory {
-    grid-column: 1 / 3;
+    grid-column: 1 / 4;
     grid-row: 3;
   }
 
