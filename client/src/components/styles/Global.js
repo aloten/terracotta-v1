@@ -66,6 +66,10 @@ select, textarea {
   font-family: inherit;
 }
 
+input[type='submit'] {
+  -webkit-appearance: none;
+}
+
 /* Button */
 .btn {
   display: inline-block;
