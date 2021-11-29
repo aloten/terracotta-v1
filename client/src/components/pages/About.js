@@ -25,8 +25,7 @@ const StyledAbout = styled.div`
     gap: 1rem;
   }
 
-  .fa-envelope-square:hover,
-  .fa-phone-square:hover {
+  .fa-envelope-square:hover {
     cursor: default;
   }
 `;
@@ -53,14 +52,14 @@ const About = () => {
       </div>
       <div className='content'>
         <p>
-          This is a full-stack app for wine cellar inventory management,
-          trading, and social networking.
+          This is a full-stack application for wine inventory management. While
+          popular websites like Cellar Tracker offer many tools, their user
+          interface is needlessly complicated for many users.
+          <br /> Terracotta simplifies the user experience by providing clean,
+          intuitive tools for keeping track of your wine collection.
         </p>
         <span>
           <i className='fas fa-envelope-square'></i> asloten@gmail.com
-        </span>
-        <span>
-          <i className='fas fa-phone-square'></i> +1 (914) 274-7643
         </span>
         <p className='version'>
           <strong>Version: </strong> 1.0.0
