@@ -19,14 +19,14 @@ export const StyledNavbar = styled.nav`
     color: white;
   }
 
-  .logo {
+  .logo-btn {
     padding: 0.5rem;
     color: white;
     background-color: ${(props) => props.theme.colors.primaryColor};
     font-size: 1.5rem;
   }
 
-  .logo:hover {
+  .logo-btn:hover {
     cursor: pointer;
   }
 
@@ -74,7 +74,7 @@ export const StyledNavbar = styled.nav`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 0.7rem 2rem;
+    padding: 0.2rem 2rem;
     width: 100%;
     margin-bottom: 0;
 
@@ -83,7 +83,7 @@ export const StyledNavbar = styled.nav`
       display: none;
     }
 
-    .logo {
+    .logo-btn {
       width: 100%;
       text-align: left;
     }
@@ -184,8 +184,13 @@ const Navbar = ({
 
   return (
     <StyledNavbar>
-      <button className='logo' onClick={onLogoClick}>
-        <i className={icon} /> {title}
+      <button className='logo-btn' onClick={onLogoClick}>
+        <img
+          className='logo'
+          src='TerracottaLogo.png'
+          height='50px'
+          alt={title}
+        />
       </button>
       <i
         onClick={toggleBars}
