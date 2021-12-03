@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import BottleForm from '../bottles/form/BottleForm';
 import Inventory from '../bottles/Inventory';

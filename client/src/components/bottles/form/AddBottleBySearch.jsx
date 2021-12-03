@@ -3,8 +3,11 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { openBottleForm, changeFormProp } from '../../../actions/bottleActions';
 import AutoComplete from './AutoComplete';
-import uniqueProductNames from '../../../data/uniqueProductNamesSmall.json';
-import uniqueBottles from '../../../data/uniqueBottlesSmall.json';
+import { ProductTrie } from '../../../dataStructures/ProductTrie';
+import uniqueDict from '../../../data/uniqueDict.json';
+import uniqueProductNames from '../../../data/uniqueProductNames.json';
+// import uniqueProductNames from '../../../data/uniqueProductNamesSmall.json';
+// import uniqueBottles from '../../../data/uniqueBottlesSmall.json';
 
 const StyledAddBottleBySearch = styled.div`
   .form {
@@ -20,6 +23,13 @@ const StyledAddBottleBySearch = styled.div`
 `;
 
 const AddBottleBySearch = ({ openBottleForm, changeFormProp }) => {
+  const productTrie = new ProductTrie();
+  for (const key in uniqueDict) {
+    productTrie.addSequence(key.toLowerCase(), uniqueDict[key]);
+  }
+
+  // TO DO search trie with input text and get array indices
+
   const onContinue = (e) => {
     e.preventDefault();
     const userInput = e.target.product.value;
