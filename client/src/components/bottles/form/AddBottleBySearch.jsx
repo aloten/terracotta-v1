@@ -1,13 +1,14 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { openBottleForm, changeFormProp } from '../../../actions/bottleActions';
-import AutoComplete from './AutoComplete';
+import AutoCompleteTrie from './AutoCompleteTrie';
+
 import { ProductTrie } from '../../../dataStructures/ProductTrie';
 import uniqueDict from '../../../data/uniqueDict.json';
 import uniqueProductNames from '../../../data/uniqueProductNames.json';
 // import uniqueProductNames from '../../../data/uniqueProductNamesSmall.json';
-// import uniqueBottles from '../../../data/uniqueBottlesSmall.json';
+import uniqueBottles from '../../../data/uniqueBottlesSmall.json';
 
 const StyledAddBottleBySearch = styled.div`
   .form {
@@ -23,12 +24,28 @@ const StyledAddBottleBySearch = styled.div`
 `;
 
 const AddBottleBySearch = ({ openBottleForm, changeFormProp }) => {
-  const productTrie = new ProductTrie();
-  for (const key in uniqueDict) {
-    productTrie.addSequence(key.toLowerCase(), uniqueDict[key]);
-  }
+  // Build up productTrie based on keys, values in uniqueDict
+  // uniqueDict keys correspond to unique product words
+  // uniqueDict values correspond to uniqueProductNames.json indices
+  //
+  // e.g. If "Yellow Tail Shiraz" product name has index of 100 in uniqueProductNames.json
+  // trie node sequences of "y", "ye", "yel"... "yellow" for EACH WORD SEPERATELY
+  // each node "y", "e", "l" ... would have an indices array property which includes 100
+  // so in "y-e-l-l-o-w" node sequence, the ProductNode "w" would have 100 in its indices property
+  // and this component accesses uniqueProductNames[100] to list as an option for the user
+  const [productTrie, setProductTrie] = useState();
 
-  // TO DO search trie with input text and get array indices
+  useEffect(() => {
+    const trie = new ProductTrie();
+    for (const name of uniqueProductNames) {
+      trie.addSequence(name);
+    }
+    setProductTrie(trie);
+  }, []);
+
+  const searchTrie = (searchStr) => {
+    return productTrie.getOptions(searchStr);
+  };
 
   const onContinue = (e) => {
     e.preventDefault();
@@ -61,11 +78,11 @@ const AddBottleBySearch = ({ openBottleForm, changeFormProp }) => {
   return (
     <StyledAddBottleBySearch>
       <form className='form' onSubmit={onContinue}>
-        <AutoComplete
-          options={uniqueProductNames}
+        <AutoCompleteTrie
           placeholderText='Search for wine to add'
           required={true}
           name='product'
+          searchTrie={searchTrie}
         />
         <input
           type='submit'

@@ -1,22 +1,22 @@
 export class ProductNode {
-  letter: string;
-  indices: number[];
-  children: ProductNode[];
+  private letter: string;
+  private children: ProductNode[];
 
-  constructor(letter: string, indices: number[] = []) {
+  constructor(letter: string) {
     this.letter = letter;
-    this.indices = indices;
     this.children = [];
   }
 
-  addChild(letter: string, indices?: number[]): void {
-    const child = new ProductNode(letter, indices);
+  addChild(letter: string): void {
+    const child = new ProductNode(letter);
     this.children.push(child);
   }
 
-  addIndices(indices: number[]) {
-    for (const index of indices) {
-      this.indices.push(index);
-    }
+  getLetter(): string {
+    return this.letter;
+  }
+
+  getChildren(): ProductNode[] {
+    return this.children;
   }
 }
