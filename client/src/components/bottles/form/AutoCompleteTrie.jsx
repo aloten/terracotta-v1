@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
 
 const StyledAutocomplete = styled.div`
   display: flex;

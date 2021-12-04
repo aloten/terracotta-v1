@@ -5,10 +5,8 @@ import { openBottleForm, changeFormProp } from '../../../actions/bottleActions';
 import AutoCompleteTrie from './AutoCompleteTrie';
 
 import { ProductTrie } from '../../../dataStructures/ProductTrie';
-import uniqueDict from '../../../data/uniqueDict.json';
 import uniqueProductNames from '../../../data/uniqueProductNames.json';
-// import uniqueProductNames from '../../../data/uniqueProductNamesSmall.json';
-import uniqueBottles from '../../../data/uniqueBottlesSmall.json';
+import uniqueBottles from '../../../data/uniqueBottles.json';
 
 const StyledAddBottleBySearch = styled.div`
   .form {

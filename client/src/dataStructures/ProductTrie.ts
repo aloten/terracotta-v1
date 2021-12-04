@@ -76,7 +76,7 @@ export class ProductTrie {
     }
   }
 
-  // Get all sequences after searchStr's last node (i.e. last letter)
+  // Return sequences after searchStr's last node (i.e. last letter)
   getAllSequences(
     root: ProductNode,
     sequence: string,
@@ -90,7 +90,7 @@ export class ProductTrie {
       }
       return productArr;
     } else {
-      productArr.push(sequence);
+      productArr.push(sequence + root.getLetter());
       return productArr;
     }
   }
