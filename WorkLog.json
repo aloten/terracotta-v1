@@ -1,20 +1,27 @@
 [
   {
-    "CURRENT ISSUE": "dashboard feature",
-    "progress/notes": "working on making pages resonsive and with monochrome coloring. Need to make prettier, work out fixed forex conversions for value calc, and finally change data structure --> purchases : bottles in purhcases",
-    "cont.": "need to add/change mongoose schema to adapt to purchases/bottles"
+    "CURRENT ISSUE": "autocomplete trie implementation",
+    "progress/notes": "testing, mostly checking data pipeline"
   },
   {
-    "issue": "Bottle search feature",
-    "branch": ""
+    "issue": "Enter key down on autocomplete inputs in FormBottleDetails.jsx needs to select option not exit form"
   },
   {
-    "issue": "Update alcohol buckets of unique bottles from MyWineCellar.csv using Python",
-    "branch": "all"
+    "issue": "Change vintage to number, need validation on FormBottleDetails (e.g. no negative numbers) "
   },
   {
-    "issue": "More efficient data structure if there are many users and many bottles",
-    "branch": ""
+    "issue": "Inventory blank fields set to -- or N/A or something similar, vintage = N.V. "
   },
-  { "issue": "Decide on a type for vintage" }
+  {
+    "issue": "Inventory pagination for many items "
+  },
+  {
+    "issue": "Bottle search Inventory feature"
+  },
+  {
+    "issue": "Merge uniqueBottle datasets, ?clean data?"
+  },
+  {
+    "issue": "More efficient MongoDB data structure if there are many users and many bottles"
+  }
 ]
