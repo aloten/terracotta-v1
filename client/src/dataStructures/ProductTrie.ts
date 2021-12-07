@@ -1,7 +1,7 @@
 import { ProductNode } from './ProductNode';
 
 export class ProductTrie {
-  root: ProductNode;
+  private root: ProductNode;
 
   constructor() {
     this.root = new ProductNode('');
@@ -48,8 +48,9 @@ export class ProductTrie {
     return this.traverse(this.root, searchStr.toLowerCase(), '');
   }
 
-  // Traverse trie of searchStr node sequence, then return
-  traverse(
+  // Traverse trie of searchStr node sequence, building up sequenceStr
+  // then return sequenceStr + all sub sequences as product options
+  private traverse(
     root: ProductNode,
     searchStrRemoving: string,
     sequenceStr: string
@@ -77,7 +78,7 @@ export class ProductTrie {
   }
 
   // Return sequences after searchStr's last node (i.e. last letter)
-  getAllSequences(
+  private getAllSequences(
     root: ProductNode,
     sequence: string,
     productArr: string[]
