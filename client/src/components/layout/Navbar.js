@@ -30,6 +30,11 @@ export const StyledNavbar = styled.nav`
     cursor: pointer;
   }
 
+  .logo {
+    display: flex;
+    align-items: center;
+  }
+
   .fa-bars,
   .fa-times {
     position: absolute;
@@ -116,7 +121,6 @@ export const StyledNavbar = styled.nav`
 
 const Navbar = ({
   title,
-  icon,
   clearBottles,
   authState: { isAuthenticated, user },
   logout,
@@ -205,14 +209,12 @@ const Navbar = ({
 
 Navbar.propTypes = {
   title: PropTypes.string.isRequired,
-  icon: PropTypes.string,
   bottleState: PropTypes.object.isRequired,
   authState: PropTypes.object.isRequired,
 };
 
 Navbar.defaultProps = {
   title: 'terracotta',
-  icon: 'fas fa-wine-bottle',
 };
 
 const mapStateToProps = (state) => ({
