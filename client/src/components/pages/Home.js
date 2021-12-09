@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import BottleForm from '../bottles/form/BottleForm';
 import Inventory from '../bottles/Inventory';
 import Dashboard from '../bottles/Dashboard';
+import WineSearcherBox from '../navigation/WineSearcherBox';
 
 const StyledHome = styled.div`
   display: grid;
@@ -18,6 +19,12 @@ const StyledHome = styled.div`
     grid-column: 1 / 4;
     grid-row: 2;
   }
+
+  .wineSearcherBox {
+    grid-column: 3 / 4;
+    grid-row: 2;
+  }
+
   .inventory {
     grid-column: 1 / 4;
     grid-row: 3;
@@ -38,6 +45,9 @@ const Home = () => {
       </div>
       <div className='bottleForm'>
         <BottleForm />
+      </div>
+      <div className='wineSearcherBox'>
+        <WineSearcherBox />
       </div>
       <div className='inventory'>
         <Inventory />
