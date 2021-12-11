@@ -188,6 +188,8 @@ const FormBottleDetails = ({
     }
   };
 
+  /*
+  // Currently unused
   const countryToFlag = (isoCode) => {
     return typeof String.fromCodePoint !== 'undefined'
       ? isoCode
@@ -197,6 +199,7 @@ const FormBottleDetails = ({
           )
       : isoCode;
   };
+  */
 
   const styleOptions = [
     'Red',
