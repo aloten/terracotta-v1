@@ -1,4 +1,3 @@
-"use strict";
 exports.__esModule = true;
 exports.ProductTrie = void 0;
 var ProductNode_1 = require("./ProductNode");

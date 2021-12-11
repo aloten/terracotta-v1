@@ -8,6 +8,7 @@ const Footer = () => {
         style={{ textDecoration: 'underline' }}
         href='https://www.stephennadler.com/'
         target='_blank'
+	rel="noreferrer"
       >
         Stephen Nadler
       </a>

@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 // import spinner from './spinner.gif';
-import spinner from './WinePourSpinner.gif';
+import spinner from './WinePourSpinner.webp';
 
 const Spinner = () => (
   <Fragment>

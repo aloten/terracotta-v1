@@ -1,4 +1,3 @@
-"use strict";
 exports.__esModule = true;
 exports.ProductNode = void 0;
 var ProductNode = /** @class */ (function () {
