@@ -151,20 +151,12 @@ const Inventory = ({
                 <td label='Quantity'>{bottle.quantity}</td>
                 <td label='Price'>
                   {bottle.price &&
-                    currencies.filter((currency) => {
-                      if (bottle.currency === currency.value) {
-                        return currency;
-                      }
-                    })[0].label}
+                    currencies.find((currency) => bottle.currency === currency.value).label}
                   {bottle.price}
                 </td>
                 <td label='Total cost'>
                   {bottle.price &&
-                    currencies.filter((currency) => {
-                      if (bottle.currency === currency.value) {
-                        return currency;
-                      }
-                    })[0].label}
+                    currencies.find((currency) => bottle.currency === currency.value).label}
                   {bottle.totalCost}
                 </td>
                 <td label='Date purchased'>

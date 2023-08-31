@@ -99,7 +99,7 @@ const Login = ({
           />
           <input className='btn btn-primary' type='submit' value='Log In' />
         </form>
-        <a className='forgot-acct-link' href=''>
+        <a className='forgot-acct-link' href='/'>
           Forgot account?
         </a>
         <div className='gst-reg-btns'>
